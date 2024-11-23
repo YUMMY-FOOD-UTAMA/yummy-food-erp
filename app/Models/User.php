@@ -3,25 +3,29 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Geographic\District;
+use App\Models\Geographic\Province;
+use App\Models\Geographic\SubDistrict;
+use App\Models\Geographic\SubDistrictVillage;
+use App\Notifications\ResetPasswordNotification;
+use App\Trait\AuditTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles, AuditTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,5 +48,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'id')->withTrashed();
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id')->withTrashed();
+    }
+
+    public function subDistrict()
+    {
+        return $this->belongsTo(SubDistrict::class, 'sub_district_id', 'id')->withTrashed();
+    }
+
+    public function subDistrictVillage()
+    {
+        return $this->belongsTo(SubDistrictVillage::class)->withTrashed();
     }
 }

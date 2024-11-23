@@ -1,0 +1,6 @@
+.fixed-actions-table thead th:last-child,
+.fixed-actions-table tbody td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 1;
+}
