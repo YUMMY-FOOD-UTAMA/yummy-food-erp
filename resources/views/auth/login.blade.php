@@ -1,74 +1,118 @@
-@extends('layouts.auth')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Yummy Food Utama CRM</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Arial:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif; /* Menggunakan font Arial untuk teks lainnya */
+        }
 
-@section('content')
-    <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
-        <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
-            <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
-                <div class="d-flex flex-center flex-column-fluid pb-15 pb-lg-20">
-                    <form class="form w-100" novalidate="novalidate" method="POST" action="{{route('login.store')}}">
-                        @csrf
-                        <div class="text-center mb-11">
-                            <h1 class="text-dark fw-bolder mb-3">Sign In</h1>
-                            <div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
-                        </div>
-                        <div class="row g-3 mb-9">
-                            @feature('social-lite.google')
-                            <div class="@feature('social-lite.facebook') col-md-6 @else col-md-12 @endfeature">
-                                <a href="#"
-                                   class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                                    <img alt="Logo" src="{{asset('assets/media/svg/brand-logos/google-icon.svg')}}"
-                                         class="h-15px me-3"/>Sign in with Google</a>
-                            </div>
-                            @endfeature
-                            @feature('social-lite.facebook')
-                            <div class="@feature('social-lite.google') col-md-6 @else col-md-12 @endfeature">
-                                <a href="#"
-                                   class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-                                    <img alt="Logo" src="{{asset('assets/media/svg/brand-logos/facebook-2.svg')}}"
-                                         class="theme-light-show h-15px me-3"/>
-                                    <img alt="Logo"
-                                         src="{{asset('assets/media/svg/brand-logos/facebook-2.svg')}}"
-                                         class="theme-dark-show h-15px me-3"/>Sign in with Facebook</a>
-                            </div>
-                            @endfeature
-                        </div>
-                        <div class="separator separator-content my-14">
-                            <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
-                        </div>
-                        <div class="fv-row mb-8">
-                            <input type="text" placeholder="Email" name="email" autocomplete="off"
-                                   class="form-control bg-transparent"/>
-                            <x-input-error :messages="$errors->get('email')" class="mt-2"/>
-                        </div>
-                        <div class="fv-row mb-3">
-                            <input type="password" placeholder="Password" name="password" autocomplete="off"
-                                   class="form-control bg-transparent"/>
-                        </div>
-                        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-                            <div></div>
-                            <a href="{{route('password.request')}}"
-                               class="link-primary">Forgot Password ?</a>
-                        </div>
-                        <div class="d-grid mb-10">
-                            <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
-                                <span class="indicator-label">Sign In</span>
-                                <span class="indicator-progress">Please wait...
-											<span
-                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                        </div>
-                        @feature('register')
-                        <div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet?
-                            <a href="{{route('register')}}"
-                               class="link-primary">Sign up</a></div>
-                        @endfeature
-                    </form>
-                </div>
-            </div>
-        </div>
+        body {
+            background: linear-gradient(135deg, #ff4e50, #b81d24); /* Warna merah dominan */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px; /* Tambahan padding untuk tampilan di perangkat kecil */
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-container img {
+            width: 120px; /* Ukuran logo */
+            margin-bottom: 10px;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 22px; /* Ukuran font lebih kecil */
+            font-family: 'Poppins', sans-serif; /* Font lebih soft */
+            color: #b81d24; /* Warna merah gelap */
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px; /* Ukuran font untuk input */
+        }
+
+        .login-container button {
+            background: #b81d24; /* Warna merah */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .login-container button:hover {
+            background: #ff4e50; /* Warna merah yang lebih terang */
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Media Queries untuk Responsif */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px; /* Mengurangi padding di perangkat lebih kecil */
+            }
+
+            .login-container h1 {
+                font-size: 18px; /* Mengurangi ukuran font judul */
+            }
+
+            .login-container input {
+                padding: 10px; /* Mengurangi padding input */
+                font-size: 12px; /* Mengurangi ukuran font input */
+            }
+
+            .login-container button {
+                font-size: 14px; /* Mengurangi ukuran font tombol */
+                padding: 10px; /* Mengurangi padding tombol */
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <img src="{{asset('assets/images/logo-new.png')}}" alt="Yummy Food Utama Logo">
+    <h1>Yummy Food Utama</h1>
+    <form action="{{route('login')}}" method="post">
+        @csrf
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <div class="footer">
+        &copy; 2024 Yummy Food Utama. All rights reserved.
     </div>
-@endsection
-
-@push('script')
-    <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>
-@endpush
+</div>
+</body>
+</html>

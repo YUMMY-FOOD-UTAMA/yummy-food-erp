@@ -360,6 +360,14 @@
                         <span class="menu-title">Role Management</span>
                     </a>
                 </div>
+{{--                <div class="menu-item">--}}
+{{--                    <a class="menu-link {{Route::is('user*') ? 'active' : ''}}" href="{{route('user.index')}}">--}}
+{{--                        <span class="menu-icon">--}}
+{{--                        <i class="fa-sharp fa-solid fa-users"></i>--}}
+{{--                        </span>--}}
+{{--                            <span class="menu-title">Users</span>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
@@ -32,6 +33,16 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(PermissionRole::class)->group(function () {
+
+        Route::group(['prefix' => 'user-management'], function () {
+            Route::get('/', [EmployeeController::class, 'index'])->name('user-management.employee.index');
+            Route::get('/trash', [EmployeeController::class, 'trash'])->name('user-management.employee.trash');
+            Route::post('/create', [EmployeeController::class, 'store'])->name('user-management.employee.store');
+            Route::get('/detail/{employee}', [EmployeeController::class, 'show'])->name('user-management.employee.show');
+            Route::put('/detail/{employee}', [EmployeeController::class, 'update'])->name('user-management.employee.update');
+            Route::delete('/delete/{employee}', [EmployeeController::class, 'destroy'])->name('user-management.employee.destroy');
+            Route::put('/restore/{employee}', [EmployeeController::class, 'restore'])->name('user-management.employee.restore');
+        });
 
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', [UserController::class, 'index'])->name('user.index');

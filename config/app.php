@@ -127,5 +127,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'FileHelper' => \App\Utils\Helpers\FileHelper::class,
+        'StatusEmployee'=>\App\Utils\Primitives\Enum\EmployeeStatus::class,
     ])->toArray(),
 ];
