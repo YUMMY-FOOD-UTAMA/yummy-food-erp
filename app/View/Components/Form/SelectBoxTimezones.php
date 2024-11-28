@@ -14,8 +14,9 @@ class SelectBoxTimezones extends Component
     public string $type;
     public $uuid;
     public $dropDownParentID;
+    public $sizeForm;
 
-    public function __construct(string $timezone = '', $uuid = null, string $type = 'inline', string $dropDownParentID = '')
+    public function __construct(string $timezone = '', $uuid = null, string $type = 'inline', string $dropDownParentID = '', $sizeForm = 'lg')
     {
         $this->timezone = $timezone;
         $this->type = $type;
@@ -27,6 +28,7 @@ class SelectBoxTimezones extends Component
         if ($this->dropDownParentID != '') {
             $this->dropDownParentID = "#" . $this->dropDownParentID;
         }
+        $this->sizeForm = $sizeForm;
     }
 
     /**

@@ -1,8 +1,8 @@
 <x-table.general-table :data-table="$employees">
     @slot('slotTheadTh')
-        <th class="min-w-125px">Num</th>
-        <th class="min-w-125px">Nik</th>
+        <th class="min-w-30px">No</th>
         <th class="min-w-125px">Name</th>
+        <th class="min-w-125px">Nik</th>
         <th class="min-w-125px">Email</th>
         <th class="min-w-125px">Sub Department</th>
         <th class="min-w-125px">Position</th>
@@ -13,8 +13,8 @@
         @foreach($employees as $employee)
             <tr>
                 <td>{{$loop->iteration}}</td>
-                <td>{{$employee->nik}}</td>
                 <td>{{$employee->user->name}}</td>
+                <td>{{$employee->nik}}</td>
                 <td>{{$employee->user->email}}</td>
                 <td>{{$employee->subDepartment->name}}</td>
                 <td>{{$employee->position}}</td>

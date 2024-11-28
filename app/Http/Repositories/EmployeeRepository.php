@@ -24,16 +24,19 @@ class EmployeeRepository
                         $query->select('id', 'name', 'division_id')->with('division');
                     }
                 ]);
-            }
+            },
+            'user'
         ]);
         if ($onlyTrashed) {
             $employees = $employees->onlyTrashed();
         }
         if ($searchKeyword != '') {
             $employees->where(function ($query) use ($searchKeyword) {
-                $query->where('name', 'like', '%' . $searchKeyword . '%')
-                    ->orWhere('email', 'like', '%' . $searchKeyword . '%')
-                    ->orWhere('position', 'like', '%' . $searchKeyword . '%')
+                $query->where('position', 'like', '%' . $searchKeyword . '%')
+                    ->orWhereHas('user', function ($query) use ($searchKeyword) {
+                        $query->where('name', 'like', '%' . $searchKeyword . '%')
+                            ->orWhere('email', 'like', '%' . $searchKeyword . '%');
+                    })
                     ->orWhere('nik', 'like', '%' . $searchKeyword . '%');
             });
         }

@@ -11,14 +11,16 @@ class BasicFilterAndExport extends Component
 {
     public string $name;
     public $exportRoute;
+    public $withFilters;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($exportRoute = null, $name = null)
+    public function __construct($exportRoute = null, $withFilters = false, $name = null)
     {
         $this->exportRoute = $exportRoute;
         $this->name = $name;
+        $this->withFilters = $withFilters;
     }
 
     /**

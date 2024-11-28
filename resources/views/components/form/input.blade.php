@@ -6,7 +6,7 @@
                    title="{{$tooltip}}"></i>
             @endif
         </label>
-        <input type="text" disabled class="form-control form-control-solid"
+        <input type="text" disabled class="form-control form-control-solid form-control-{{$sizeForm}}"
                name="{{$name}}" value="{{$defaultValue}}"/>
     </div>
 @else
@@ -19,7 +19,7 @@
             @endif
         </label>
         <input type="{{$type == "date"? "text": $type}}"
-               {{$required ? 'required':''}} class="form-control form-control-solid"
+               {{$required ? 'required':''}} class="form-control form-control-solid form-control-{{$sizeForm}}"
                placeholder="{{$placeholder}}"
                name="{{$name}}" value="{{old($name,$defaultValue)}}" id="{{$id.$uuid}}"/>
         <x-input-error :messages="$errors->get($name)" class="mt-2"></x-input-error>

@@ -20,11 +20,12 @@ class SelectBoxGeographic extends Component
     public string $type;
     public $formMethod;
     public $dropDownParentID;
+    public $sizeForm;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($provinceID = null, $districtID = null, $subDistrictID = null, $subDistrictVillageID = null, $type = "inline", $formMethod = null, $dropDownParentID = "")
+    public function __construct($sizeForm = 'lg', $provinceID = null, $districtID = null, $subDistrictID = null, $subDistrictVillageID = null, $type = "inline", $formMethod = null, $dropDownParentID = "")
     {
         $this->province_id = $provinceID;
         $this->district_id = $districtID;
@@ -36,6 +37,7 @@ class SelectBoxGeographic extends Component
         if ($this->dropDownParentID != '') {
             $this->dropDownParentID = "#" . $this->dropDownParentID;
         }
+        $this->sizeForm = $sizeForm;
     }
 
     /**

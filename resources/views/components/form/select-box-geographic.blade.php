@@ -5,7 +5,7 @@
             <select name="province_id" aria-label="Select a Province" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a province.."
-                    class="form-select form-select-solid form-select-lg" id="selectProvince{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectProvince{{$id}}">
                 <option value="">Select a Province..</option>
                 @foreach($province as $p)
                     <option value="{{ $p->id }}"
@@ -23,7 +23,7 @@
             <select name="district_id" aria-label="Select a District" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a district.."
-                    class="form-select form-select-solid form-select-lg" id="selectDistrict{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectDistrict{{$id}}">
                 <option value="">Select a District..</option>
                 @if($district_id)
                     @foreach($district as $d)
@@ -43,7 +43,7 @@
             <select name="sub_district_id" aria-label="Select a Sub-District" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a sub-district.."
-                    class="form-select form-select-solid form-select-lg" id="selectSubDistrict{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubDistrict{{$id}}">
                 <option value="">Select a Sub-District..</option>
                 @if($sub_district_id)
                     @foreach($subDistrict as $sd)
@@ -63,7 +63,7 @@
             <select name="sub_district_village_id" aria-label="Select a Village"
                     data-control="select2" data-placeholder="Select a village.." data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
-                    class="form-select form-select-solid form-select-lg" id="selectVillage{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectVillage{{$id}}">
                 <option value="">Select a Village..</option>
                 @if($sub_district_village_id)
                     @foreach($subDistrictVillage as $v)
@@ -77,75 +77,76 @@
         </div>
     </div>
 @elseif($type=='row')
-    <div class="row g-9 mb-8">
-        <div class="col-md-6 fv-row">
-            <label class="col-lg-4 col-form-label fw-semibold fs-6">Province</label>
-            <select name="province_id" aria-label="Select a Province" data-allow-clear="true"
-                    data-dropdown-parent="{{$dropDownParentID}}"
-                    data-control="select2" data-placeholder="Select a province.."
-                    class="form-select form-select-solid form-select-lg" id="selectProvince{{$id}}">
-                <option value="">Select a Province..</option>
-                @foreach($province as $p)
-                    <option value="{{ $p->id }}"
-                        @selected(old('province_id', $province_id) == $p->id)>
-                        {{ $p->name }}
+    <div {{$attributes->merge(['class' => ''])}}>
+        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">Province</label>
+        <select name="province_id" aria-label="Select a Province" data-allow-clear="true"
+                data-dropdown-parent="{{$dropDownParentID}}"
+                data-control="select2" data-placeholder="Select a province.."
+                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectProvince{{$id}}">
+            <option value="">Select a Province..</option>
+            @foreach($province as $p)
+                <option value="{{ $p->id }}"
+                    @selected(old('province_id', $province_id) == $p->id)>
+                    {{ $p->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div {{$attributes->merge(['class' => ''])}} id="districtRow{{$id}}"
+         style="{{ $district_id ? '' : 'display: none;' }}">
+        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">District</label>
+        <select name="district_id" aria-label="Select a District" data-allow-clear="true"
+                data-dropdown-parent="{{$dropDownParentID}}"
+                data-control="select2" data-placeholder="Select a district.."
+                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectDistrict{{$id}}">
+            <option value="">Select a District..</option>
+            @if($district_id)
+                @foreach($district as $d)
+                    <option value="{{ $d->id }}"
+                        @selected(old('district_id', $district_id) == $d->id)>
+                        {{ $d->name }}
                     </option>
                 @endforeach
-            </select>
-        </div>
-        <div class="col-md-6 fv-row" id="districtRow{{$id}}" style="{{ $district_id ? '' : 'display: none;' }}">
-            <label class="col-lg-4 col-form-label fw-semibold fs-6">District</label>
-            <select name="district_id" aria-label="Select a District" data-allow-clear="true"
-                    data-dropdown-parent="{{$dropDownParentID}}"
-                    data-control="select2" data-placeholder="Select a district.."
-                    class="form-select form-select-solid form-select-lg" id="selectDistrict{{$id}}">
-                <option value="">Select a District..</option>
-                @if($district_id)
-                    @foreach($district as $d)
-                        <option value="{{ $d->id }}"
-                            @selected(old('district_id', $district_id) == $d->id)>
-                            {{ $d->name }}
-                        </option>
-                    @endforeach
-                @endif
-            </select>
-        </div>
-        <div class="col-md-6 fv-row" id="subDistrictRow{{$id}}" style="{{ $sub_district_id ? '' : 'display: none;' }}">
-            <label class="col-lg-4 col-form-label fw-semibold fs-6">Sub District</label>
-            <select name="sub_district_id" aria-label="Select a Sub-District" data-allow-clear="true"
-                    data-dropdown-parent="{{$dropDownParentID}}"
-                    data-control="select2" data-placeholder="Select a sub-district.."
-                    class="form-select form-select-solid form-select-lg" id="selectSubDistrict{{$id}}">
-                <option value="">Select a Sub-District..</option>
-                @if($sub_district_id)
-                    @foreach($subDistrict as $sd)
-                        <option value="{{ $sd->id }}"
-                            @selected(old('sub_district_id', $sub_district_id) == $sd->id)>
-                            {{ $sd->name }}
-                        </option>
-                    @endforeach
-                @endif
-            </select>
-        </div>
+            @endif
+        </select>
+    </div>
+    <div {{$attributes->merge(['class' => ''])}} id="subDistrictRow{{$id}}"
+         style="{{ $sub_district_id ? '' : 'display: none;' }}">
+        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">Sub District</label>
+        <select name="sub_district_id" aria-label="Select a Sub-District" data-allow-clear="true"
+                data-dropdown-parent="{{$dropDownParentID}}"
+                data-control="select2" data-placeholder="Select a sub-district.."
+                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubDistrict{{$id}}">
+            <option value="">Select a Sub-District..</option>
+            @if($sub_district_id)
+                @foreach($subDistrict as $sd)
+                    <option value="{{ $sd->id }}"
+                        @selected(old('sub_district_id', $sub_district_id) == $sd->id)>
+                        {{ $sd->name }}
+                    </option>
+                @endforeach
+            @endif
+        </select>
+    </div>
 
-        <div class="col-md-6 fv-row" id="villageRow{{$id}}"
-             style="{{ $sub_district_village_id ? '' : 'display: none;' }}">
-            <label class="col-lg-4 col-form-label fw-semibold fs-6">Village</label>
-            <select name="sub_district_village_id" aria-label="Select a Village" data-allow-clear="true"
-                    data-dropdown-parent="{{$dropDownParentID}}"
-                    data-control="select2" data-placeholder="Select a village.."
-                    class="form-select form-select-solid form-select-lg" id="selectVillage{{$id}}">
-                <option value="">Select a Village..</option>
-                @if($sub_district_village_id)
-                    @foreach($subDistrictVillage as $v)
-                        <option value="{{ $v->id }}"
-                            @selected(old('sub_district_village_id', $sub_district_village_id) == $v->id)>
-                            {{ $v->name }} ({{$v->zip}})
-                        </option>
-                    @endforeach
-                @endif
-            </select>
-        </div>
+    <div {{$attributes->merge(['class' => ''])}} id="villageRow{{$id}}"
+         style="{{ $sub_district_village_id ? '' : 'display: none;' }}">
+        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">Village</label>
+        <select name="sub_district_village_id" aria-label="Select a Village" data-allow-clear="true"
+                data-dropdown-parent="{{$dropDownParentID}}"
+                data-control="select2" data-placeholder="Select a village.."
+                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectVillage{{$id}}">
+            <option value="">Select a Village..</option>
+            @if($sub_district_village_id)
+                @foreach($subDistrictVillage as $v)
+                    <option value="{{ $v->id }}"
+                        @selected(old('sub_district_village_id', $sub_district_village_id) == $v->id)>
+                        {{ $v->name }} ({{$v->zip}})
+                    </option>
+                @endforeach
+            @endif
+        </select>
     </div>
 @else
     <div class="row mb-6">
@@ -154,7 +155,7 @@
             <select name="province_id" aria-label="Select a Province" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a province.."
-                    class="form-select form-select-solid form-select-lg" id="selectProvince{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectProvince{{$id}}">
                 <option value="">Select a Province..</option>
                 @foreach($province as $p)
                     <option value="{{ $p->id }}"
@@ -172,7 +173,7 @@
             <select name="district_id" aria-label="Select a District" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a district.."
-                    class="form-select form-select-solid form-select-lg" id="selectDistrict{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectDistrict{{$id}}">
                 <option value="">Select a District..</option>
                 @if($district_id)
                     @foreach($district as $d)
@@ -192,7 +193,7 @@
             <select name="sub_district_id" aria-label="Select a Sub-District" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a sub-district.."
-                    class="form-select form-select-solid form-select-lg" id="selectSubDistrict{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubDistrict{{$id}}">
                 <option value="">Select a Sub-District..</option>
                 @if($sub_district_id)
                     @foreach($subDistrict as $sd)
@@ -212,7 +213,7 @@
             <select name="sub_district_village_id" aria-label="Select a Village" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a village.."
-                    class="form-select form-select-solid form-select-lg" id="selectVillage{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectVillage{{$id}}">
                 <option value="">Select a Village..</option>
                 @if($sub_district_village_id)
                     @foreach($subDistrictVillage as $v)

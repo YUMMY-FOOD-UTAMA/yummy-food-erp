@@ -59,8 +59,10 @@
                                                :items="StatusEmployee::valuesObject()"/>
                         </div>
                         <x-form.radio-button-gender class="flex-column mb-8"/>
-                        <x-form.select-box-geographic type="row" drop-down-parent-i-d="modal_createEmployee"
+                        <div class="row g-9 mb-8">
+                        <x-form.select-box-geographic type="row" class="col-md-6 fv-row" drop-down-parent-i-d="modal_createEmployee"
                                                       form-method="POST"/>
+                        </div>
                         <x-form.text-area class="d-flex flex-column mb-8" auto-resize="true" row="2" label="Address"
                                           name="address"
                                           placeholder="Address..."/>

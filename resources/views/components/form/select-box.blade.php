@@ -11,7 +11,7 @@
             <select name="{{$name}}" aria-label="{{$placeholder}}" data-allow-clear="true"
                     data-control="select2" data-placeholder="{{$placeholder}}"
                     data-dropdown-parent="{{$dropDownParentID}}" {{$required ? 'required':''}}
-                    class="form-select form-select-solid form-select-lg">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}">
                 <option value="">{{$placeholder}}</option>
                 @foreach($items as $t)
                     <option value="{{$t->$valueKey}}" @selected(old($name, $defaultValue) == $t->$valueKey)>
@@ -35,7 +35,7 @@
         <select name="{{$name}}" aria-label="{{$placeholder}}" data-allow-clear="true"
                 data-control="select2" data-placeholder="{{$placeholder}}"
                 data-dropdown-parent="{{$dropDownParentID}}" {{$required ? 'required':''}}
-                class="form-select form-select-solid form-select-lg">
+                class="form-select form-select-solid form-select-{{$sizeForm}}">
             <option value="">{{$placeholder}}</option>
             @foreach($items as $t)
                 <option value="{{$t->$valueKey}}" @selected(old($name, $defaultValue) == $t->$valueKey)>

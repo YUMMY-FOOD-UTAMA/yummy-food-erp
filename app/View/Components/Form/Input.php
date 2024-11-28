@@ -19,12 +19,14 @@ class Input extends Component
     public $uuid;
     public bool $required;
     public bool $viewOnly;
+    public $sizeForm;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $label, $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
+    public function __construct($name, $label, $sizeForm = 'lg', $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
     {
+        $this->sizeForm = $sizeForm;
         $this->name = $name;
         $this->defaultValue = $defaultValue;
         $this->label = $label;
