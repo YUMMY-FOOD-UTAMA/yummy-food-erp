@@ -3,7 +3,7 @@
 @section('content')
     <x-general-section-content>
         @slot('slotToolbar')
-            <x-toolbar name="Employee" route-list-name="user-management.employee.index" route-create-name="user-management.employee.store"
+            <x-toolbar name="Employee" heading-name="Sales Department Trash" route-list-name="user-management.employee.sales.index" route-create-name="user-management.employee.store"
                        using-create-modal="true">
                 @include('user_management.partials.create_employee_modal')
             </x-toolbar>

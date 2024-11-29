@@ -6,7 +6,7 @@
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}" class="h-45px app-sidebar-logo-default"/>
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}"
                  class="h-20px app-sidebar-logo-minimize"/>
-                 <span class="fw-bold fs-2 text-white">ugy</span>
+            <span class="fw-bold fs-2 text-white">erp</span>
         </a>
         <div id="kt_app_sidebar_toggle"
              class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate"
@@ -61,10 +61,17 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link {{Route::is('user-management.employee.*')?'active':''}}"
-                               href="{{route('user-management.employee.index')}}">
+                            <a class="menu-link {{ Route::is('user-management.employee.*') && !Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
+                               href="{{ route('user-management.employee.index') }}">
                                 <i class="bi bi-person-circle menu-icon"></i>
                                 <span class="menu-title">All Department</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
+                               href="{{ route('user-management.employee.sales.index') }}">
+                                <i class="bi bi-person-circle menu-icon"></i>
+                                <span class="menu-title">Sales Department</span>
                             </a>
                         </div>
                     </div>

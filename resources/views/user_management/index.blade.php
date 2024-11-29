@@ -9,12 +9,8 @@
             </x-toolbar>
         @endslot
         <div class="card">
-            <x-table.advance-filter using-apply-button="true">
-                <x-form.select-box-timezones size-form="sm" class="col-12 col-md-3 mb-5" type="row"/>
-                <x-form.select-box-geographic size-form="sm" class="col-12 col-md-3 mb-5" type="row"/>
-                <x-form.input type="date" name="periode" placeholder="periode" label="periode" class="col-12 col-md-3 mb-5" size-form="sm"></x-form.input>
-            </x-table.advance-filter>
-            <x-table.basic-filter-and-export name="Employee"/>
+            @include('user_management.partials.filter-employee')
+            <x-table.basic-filter-and-export name="Employee" />
 
             @include('user_management.partials.employee_table',['isTrash'=>false])
         </div>
