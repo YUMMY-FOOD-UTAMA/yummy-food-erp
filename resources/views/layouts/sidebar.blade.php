@@ -76,7 +76,8 @@
                         </div>
                     </div>
                 </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <div data-kt-menu-trigger="click"
+                     class="menu-item menu-accordion {{Route::is('receivable.*') ? 'show':''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <i>
@@ -164,8 +165,8 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link"
-                               href="../../demo1/dist/authentication/extended/multi-steps-sign-up.html">
+                            <a class="menu-link {{Route::is('receivable.customer.*')?'active':''}}"
+                               href="{{route('receivable.customer.index')}}">
                                 <span class="menu-icon">
                                     <i>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"

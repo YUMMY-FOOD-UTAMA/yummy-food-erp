@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->foreignId('province_id')->constrained('provinces');
             $table->string('name');
             $table->string('type');
+            $table->string('code');
+            $table->string('full_code');
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('created_by')->nullable()->constrained('users');

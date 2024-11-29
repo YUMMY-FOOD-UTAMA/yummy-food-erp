@@ -16,6 +16,7 @@
         </div>
         <div class="d-flex p-5 justify-content-end">
         {!! $employees->links() !!}
+        </div>
     </x-general-section-content>
 
 @endsection

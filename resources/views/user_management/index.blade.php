@@ -10,12 +10,13 @@
         @endslot
         <div class="card">
             @include('user_management.partials.filter-employee')
-            <x-table.basic-filter-and-export name="Employee" />
+            <x-table.basic-filter-and-export name="Employee"/>
 
             @include('user_management.partials.employee_table',['isTrash'=>false])
         </div>
         <div class="d-flex p-5 justify-content-end">
-        {!! $employees->links() !!}
+            {!! $employees->links() !!}
+        </div>
     </x-general-section-content>
 
 @endsection

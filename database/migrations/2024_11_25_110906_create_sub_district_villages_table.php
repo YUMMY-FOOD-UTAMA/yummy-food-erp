@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::create('sub_district_villages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('province_id')->constrained('provinces');
-            $table->foreignId('district_id')->constrained('districts');
             $table->foreignId('sub_district_id')->constrained('sub_districts');
             $table->string('name');
+            $table->string('code');
+            $table->string('full_code');
             $table->string('zip');
             $table->timestamps();
             $table->softDeletes();

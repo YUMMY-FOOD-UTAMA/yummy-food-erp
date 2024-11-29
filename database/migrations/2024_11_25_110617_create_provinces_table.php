@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('provinces', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('code');
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('created_by')->nullable()->constrained('users');

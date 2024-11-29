@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
@@ -34,6 +35,19 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(PermissionRole::class)->group(function () {
 
+        Route::group(['prefix' => 'receivable'], function () {
+            Route::group(['prefix' => 'customer'], function () {
+                Route::get('/', [CustomerController::class, 'index'])->name('receivable.customer.index');
+                Route::get('/trash', [CustomerController::class, 'trash'])->name('receivable.customer.trash');
+                Route::delete('/destroy/{customer}', [CustomerController::class, 'destroy'])->name('receivable.customer.destroy');
+                Route::put('/restore/{customer}', [CustomerController::class, 'restore'])->name('receivable.customer.restore');
+
+                Route::post('/create', [CustomerController::class, 'index'])->name('receivable.customer.store');
+                Route::get('/detail/{customer}', [CustomerController::class, 'index'])->name('receivable.customer.detail');
+                Route::put('/update/{customer}', [CustomerController::class, 'update'])->name('receivable.customer.update');
+            });
+        });
+
         Route::group(['prefix' => 'user-management'], function () {
             Route::get('/', [EmployeeController::class, 'index'])->name('user-management.employee.index');
             Route::get('/trash', [EmployeeController::class, 'trash'])->name('user-management.employee.trash');
@@ -44,17 +58,6 @@ Route::middleware('auth')->group(function () {
             Route::put('/detail/{employee}', [EmployeeController::class, 'update'])->name('user-management.employee.update');
             Route::delete('/delete/{employee}', [EmployeeController::class, 'destroy'])->name('user-management.employee.destroy');
             Route::put('/restore/{employee}', [EmployeeController::class, 'restore'])->name('user-management.employee.restore');
-        });
-
-        Route::group(['prefix' => 'user'], function () {
-            Route::get('/', [UserController::class, 'index'])->name('user.index');
-            Route::get('/trash', [UserController::class, 'trash'])->name('user.trash');
-            Route::get('/detail/{user}', [UserController::class, 'show'])->name('user.show');
-            Route::put('/detail/{user}', [UserController::class, 'edit'])->name('user.edit');
-            Route::post('/create', [UserController::class, 'store'])->name('user.store');
-            Route::put('/restore/{user}', [UserController::class, 'restore'])->name('user.restore');
-            Route::delete('/delete/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-            Route::delete('/force-delete/{user}', [UserController::class, 'forceDelete'])->name('user.force-delete');
         });
 
     });

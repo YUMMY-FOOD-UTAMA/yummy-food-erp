@@ -47,7 +47,11 @@ class EmployeeRepository
                     }
                 ]);
             },
-            'user'
+            'user',
+            'user.district',
+            'user.subDistrict',
+            'user.subDistrictVillage',
+            'user.province',
         ]);
         if ($this->onlyTrashed) {
             $employees = $employees->onlyTrashed();
@@ -57,7 +61,7 @@ class EmployeeRepository
                 $query->where('name', 'like', '%sales%');
             });
         }
-        if ($searchKeyword != '') {
+        if ($searchKeyword) {
             $employees->where(function ($query) use ($searchKeyword) {
                 $query->where('position', 'like', '%' . $searchKeyword . '%')
                     ->orWhereHas('user', function ($query) use ($searchKeyword) {
@@ -67,7 +71,7 @@ class EmployeeRepository
                     ->orWhere('nik', 'like', '%' . $searchKeyword . '%');
             });
         }
-        if ($status != '') {
+        if ($status) {
             $employees->where('status', $status);
         }
         if ($provinceID) {

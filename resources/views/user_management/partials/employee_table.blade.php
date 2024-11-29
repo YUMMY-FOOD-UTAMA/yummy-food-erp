@@ -1,12 +1,12 @@
 <x-table.general-table :data-table="$employees">
     @slot('slotTheadTh')
-        <th class="min-w-30px">No</th>
-        <th class="min-w-125px">Name</th>
-        <th class="min-w-125px">Nik</th>
-        <th class="min-w-125px">Email</th>
-        <th class="min-w-125px">Sub Department</th>
-        <th class="min-w-125px">Position</th>
-        <th class="min-w-125px">Level Name</th>
+        <th style="width: 20px; vertical-align: middle; text-align: left;">No</th>
+        <th style="vertical-align: middle; text-align: left;">Name</th>
+        <th style="vertical-align: middle; text-align: left;">Nik</th>
+        <th style="vertical-align: middle; text-align: left;">Email</th>
+        <th style="vertical-align: middle; text-align: left;">Sub Department</th>
+        <th style="vertical-align: middle; text-align: left;">Position</th>
+        <th style="vertical-align: middle; text-align: left;">Level Name</th>
         <th class="text-end min-w-70px">Actions</th>
     @endslot
     @slot('slotTbodyTr')
