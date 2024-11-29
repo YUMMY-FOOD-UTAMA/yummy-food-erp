@@ -48631,9 +48631,6 @@ body,
 [data-kt-app-layout=dark-sidebar] .app-sidebar .hover-scroll-overlay-y:hover::-webkit-scrollbar-corner {
   background-color: transparent;
 }
-[data-kt-app-layout=dark-sidebar] .app-sidebar .app-sidebar-logo {
-  border-bottom: 1px dashed white;
-}
 [data-kt-app-layout=dark-sidebar] .app-sidebar .btn-custom {
   color: #B5B5C3;
   background-color: rgba(63, 66, 84, 0.35);
