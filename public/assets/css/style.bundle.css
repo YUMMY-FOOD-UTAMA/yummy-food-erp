@@ -48552,6 +48552,9 @@ body,
   [data-kt-app-sidebar-minimize=on]:not([data-kt-app-sidebar-hoverable=true]) .app-sidebar .app-sidebar-logo .app-sidebar-logo-minimize {
     display: inline-block;
   }
+  [data-kt-app-sidebar-minimize=on]:not([data-kt-app-sidebar-hoverable=true]) .app-sidebar .app-sidebar-logo .text-logo {
+    display: none;
+  }
   [data-kt-app-sidebar-minimize=on]:not([data-kt-app-sidebar-hoverable=true]) .app-sidebar .app-sidebar-wrapper {
     width: var(--bs-app-sidebar-width-actual);
   }
@@ -48582,6 +48585,9 @@ body,
   }
   [data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] .app-sidebar:not(:hover) .app-sidebar-logo .app-sidebar-logo-minimize {
     display: inline-block;
+  }
+  [data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] .app-sidebar:not(:hover) .app-sidebar-logo .text-logo {
+    display: none;
   }
   [data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] .app-sidebar:not(:hover) .app-sidebar-wrapper {
     width: var(--bs-app-sidebar-width-actual);
@@ -48653,6 +48659,7 @@ body,
   transition: color 0.2s ease;
   background-color: #D43D43 !important;
   color: var(--bs-primary-inverse);
+  margin-right: 0 !important;
 }
 .sidebar-menu-admin .menu-item .menu-link{
   color: var(--bs-primary-inverse) !important;
