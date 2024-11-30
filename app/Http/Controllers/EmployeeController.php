@@ -21,9 +21,12 @@ class EmployeeController extends Controller
 
     public function index(Request $request)
     {
+        $employees = New EmployeeRepository;
+        $employees->setRequest($request);
+        $employees = $employees->getAll();
+
         $subDepartments = SubDepartment::all();
         $levelGrades = LevelGrade::all();
-        $employees = EmployeeRepository::getAllFromRequest($request);
         $pageSizes = ListPageSize::pageSizes();
         $title = 'user management';
         return view('user_management.index', compact(
@@ -32,6 +35,67 @@ class EmployeeController extends Controller
             'levelGrades',
             'subDepartments',
             'pageSizes',
+        ));
+    }
+
+    public function trash(Request $request)
+    {
+        $employees = New EmployeeRepository;
+        $employees->setRequest($request);
+        $employees->setOnlyTrashed(true);
+        $employees = $employees->getAll();
+
+        $subDepartments = SubDepartment::all();
+        $levelGrades = LevelGrade::all();
+        $pageSizes = ListPageSize::pageSizes();
+        $title = 'user management';
+        return view('user_management.trash', compact(
+            'title',
+            'employees',
+            'pageSizes',
+            'subDepartments',
+            'levelGrades',
+        ));
+    }
+
+    public function indexSales(Request $request)
+    {
+        $employees = New EmployeeRepository;
+        $employees->setRequest($request);
+        $employees->setOnlySales(true);
+        $employees = $employees->getAll();
+
+        $subDepartments = SubDepartment::all();
+        $levelGrades = LevelGrade::all();
+        $pageSizes = ListPageSize::pageSizes();
+        $title = 'user management';
+        return view('user_management.sales.index', compact(
+            'title',
+            'employees',
+            'levelGrades',
+            'subDepartments',
+            'pageSizes',
+        ));
+    }
+
+    public function trashSales(Request $request)
+    {
+        $employees = New EmployeeRepository;
+        $employees->setRequest($request);
+        $employees->setOnlyTrashed(true);
+        $employees->setOnlySales(true);
+        $employees = $employees->getAll();
+
+        $subDepartments = SubDepartment::all();
+        $levelGrades = LevelGrade::all();
+        $pageSizes = ListPageSize::pageSizes();
+        $title = 'user management';
+        return view('user_management.sales.trash', compact(
+            'title',
+            'employees',
+            'pageSizes',
+            'subDepartments',
+            'levelGrades',
         ));
     }
 
@@ -121,21 +185,5 @@ class EmployeeController extends Controller
             'status' => 'success',
             'message' => 'Employee restored successfully!'
         ]);
-    }
-
-    public function trash(Request $request)
-    {
-        $subDepartments = SubDepartment::all();
-        $levelGrades = LevelGrade::all();
-        $employees = EmployeeRepository::getAllFromRequest($request, true);
-        $pageSizes = ListPageSize::pageSizes();
-        $title = 'user management';
-        return view('user_management.trash', compact(
-            'title',
-            'employees',
-            'pageSizes',
-            'subDepartments',
-            'levelGrades',
-        ));
     }
 }

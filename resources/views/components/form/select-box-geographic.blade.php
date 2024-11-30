@@ -383,6 +383,7 @@
                 oldVillageId = "{{old('sub_district_village_id', $sub_district_village_id)}}"
             } else if ("{{$formMethod}}" == "GET") {
                 oldProvinceId = "{{ request()->province_id}}"
+                console.log(oldProvinceId)
                 oldDistrictId = "{{request()->district_id}}"
                 oldSubDistrictId = "{{request()->sub_district_id}}"
                 oldVillageId = "{{request()->sub_district_village_id}}"

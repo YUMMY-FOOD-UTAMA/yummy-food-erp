@@ -20,11 +20,6 @@ class SubDistrict extends Model
         return $this->belongsTo(District::class, 'district_id')->withTrashed();
     }
 
-    public function province()
-    {
-        return $this->belongsTo(Province::class, 'province_id')->withTrashed();
-    }
-
     public function subDistrictvillages()
     {
         return $this->hasMany(SubDistrictVillage::class)->withTrashed();

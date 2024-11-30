@@ -21,14 +21,14 @@ class AccountController extends Controller
 
     public function index()
     {
-        return view('user.account.index', [
+        return view('account.index', [
             'title' => 'Account',
         ]);
     }
 
     public function setting()
     {
-        return view('user.account.setting', [
+        return view('account.setting', [
             'title' => 'Account setting',
         ]);
     }

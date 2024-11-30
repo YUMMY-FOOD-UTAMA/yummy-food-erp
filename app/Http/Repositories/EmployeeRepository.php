@@ -8,12 +8,34 @@ use Illuminate\Http\Request;
 
 class EmployeeRepository
 {
-    public static function getAllFromRequest(Request $request, $onlyTrashed = false)
+    private Request $request;
+    private bool $onlyTrashed = false;
+    private bool $onlySales = false;
+
+    public function setRequest(Request $request): void
     {
-        $status = $request->get('status');
-        $pageSize = $request->query('page_size', ListPageSize::defaultPageSize());
-        $salesData = $request->query('is_sales');
-        $searchKeyword = $request->query('search');
+        $this->request = $request;
+    }
+
+    public function setOnlyTrashed(bool $onlyTrashed): void
+    {
+        $this->onlyTrashed = $onlyTrashed;
+    }
+
+    public function setOnlySales(bool $onlySales): void
+    {
+        $this->onlySales = $onlySales;
+    }
+
+    public function getAll()
+    {
+        $status = $this->request->query('status');
+        $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
+        $searchKeyword = $this->request->query('search');
+        $provinceID = $this->request->query('province_id');
+        $districtID = $this->request->query('district_id');
+        $subDistrictID = $this->request->query('sub_district_id');
+        $subDistrictVillageID = $this->request->query('sub_district_village_id');
         $employees = Employee::with([
             'levelGrade' => function ($query) {
                 $query->select('id', 'name', 'level_name_id')->with('levelName');
@@ -25,12 +47,21 @@ class EmployeeRepository
                     }
                 ]);
             },
-            'user'
+            'user',
+            'user.district',
+            'user.subDistrict',
+            'user.subDistrictVillage',
+            'user.province',
         ]);
-        if ($onlyTrashed) {
+        if ($this->onlyTrashed) {
             $employees = $employees->onlyTrashed();
         }
-        if ($searchKeyword != '') {
+        if ($this->onlySales) {
+            $employees->whereHas('subDepartment.department.subDepartments', function ($query) {
+                $query->where('name', 'like', '%sales%');
+            });
+        }
+        if ($searchKeyword) {
             $employees->where(function ($query) use ($searchKeyword) {
                 $query->where('position', 'like', '%' . $searchKeyword . '%')
                     ->orWhereHas('user', function ($query) use ($searchKeyword) {
@@ -40,14 +71,30 @@ class EmployeeRepository
                     ->orWhere('nik', 'like', '%' . $searchKeyword . '%');
             });
         }
-        if ($status != '') {
+        if ($status) {
             $employees->where('status', $status);
         }
-        if ($salesData) {
-            $employees->whereHas('subDepartment.department.subDepartments', function ($query) use ($salesData) {
-                $query->where('name', 'like', '%sales%');
+        if ($provinceID) {
+            $employees->whereHas('user', function ($query) use ($provinceID) {
+                $query->where('province_id', $provinceID);
             });
         }
+        if ($districtID) {
+            $employees->whereHas('user', function ($query) use ($districtID) {
+                $query->where('district_id', $districtID);
+            });
+        }
+        if ($subDistrictID) {
+            $employees->whereHas('user', function ($query) use ($subDistrictID) {
+                $query->where('sub_district_id', $subDistrictID);
+            });
+        }
+        if ($subDistrictVillageID) {
+            $employees->whereHas('user', function ($query) use ($subDistrictVillageID) {
+                $query->where('sub_district_village_id', $subDistrictVillageID);
+            });
+        }
+
         $employees = $employees->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
 
         return $employees;

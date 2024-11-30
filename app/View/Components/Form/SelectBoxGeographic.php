@@ -53,10 +53,10 @@ class SelectBoxGeographic extends Component
             $district = District::where('province_id', $this->province_id)->get();
         }
         if ($this->sub_district_id) {
-            $subDistrict = SubDistrict::where('province_id', $this->province_id)->get();
+            $subDistrict = SubDistrict::where('district_id', $this->district_id)->get();
         }
         if ($this->sub_district_village_id) {
-            $subDistrictVillage = SubDistrictVillage::where('province_id', $this->province_id)->get();
+            $subDistrictVillage = SubDistrictVillage::where('sub_district_id', $this->sub_district_id)->get();
         }
         $id = str_replace('-', '', Uuid::uuid4()->toString());;
         return view('components.form.select-box-geographic', compact(

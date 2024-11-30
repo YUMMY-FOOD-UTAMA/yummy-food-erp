@@ -9,17 +9,14 @@
             </x-toolbar>
         @endslot
         <div class="card">
-            <x-table.basic-filter-and-export name="User">
-                @slot('slotFilterForm')
-                @endslot
-                @slot('slotFilterExport')
-                @endslot
-            </x-table.basic-filter-and-export>
+            @include('user_management.partials.filter-employee')
+            <x-table.basic-filter-and-export name="Employee" />
 
             @include('user_management.partials.employee_table',['isTrash'=>true])
         </div>
         <div class="d-flex p-5 justify-content-end">
         {!! $employees->links() !!}
+        </div>
     </x-general-section-content>
 
 @endsection

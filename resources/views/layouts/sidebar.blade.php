@@ -61,15 +61,23 @@
                     </span>
                     <div class="menu-sub menu-sub-accordion">
                         <div class="menu-item">
-                            <a class="menu-link {{Route::is('user-management.employee.*')?'active':''}}"
-                               href="{{route('user-management.employee.index')}}">
+                            <a class="menu-link {{ Route::is('user-management.employee.*') && !Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
+                               href="{{ route('user-management.employee.index') }}">
                                 <i class="bi bi-person-circle menu-icon"></i>
                                 <span class="menu-title">All Department</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
+                               href="{{ route('user-management.employee.sales.index') }}">
+                                <i class="bi bi-person-circle menu-icon"></i>
+                                <span class="menu-title">Sales Department</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <div data-kt-menu-trigger="click"
+                     class="menu-item menu-accordion {{Route::is('receivable.*') ? 'show':''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <i>
@@ -157,8 +165,8 @@
                             </div>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link"
-                               href="../../demo1/dist/authentication/extended/multi-steps-sign-up.html">
+                            <a class="menu-link {{Route::is('receivable.customer.*')?'active':''}}"
+                               href="{{route('receivable.customer.index')}}">
                                 <span class="menu-icon">
                                     <i>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"

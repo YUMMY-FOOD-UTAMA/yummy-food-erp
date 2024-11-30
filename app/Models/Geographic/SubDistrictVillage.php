@@ -15,18 +15,9 @@ class SubDistrictVillage extends Model
     protected $table = 'sub_district_villages';
     protected $guarded = ['id'];
 
-    public function district()
-    {
-        return $this->belongsTo(District::class, 'district_id')->withTrashed();
-    }
 
     public function subDistrict()
     {
         return $this->belongsTo(SubDistrict::class, 'sub_district_id')->withTrashed();
-    }
-
-    public function province()
-    {
-        return $this->belongsTo(Province::class, 'province_id')->withTrashed();
     }
 }
