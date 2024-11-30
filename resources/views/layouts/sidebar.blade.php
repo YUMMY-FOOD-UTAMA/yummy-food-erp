@@ -6,7 +6,7 @@
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}" class="h-45px app-sidebar-logo-default"/>
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}"
                  class="h-20px app-sidebar-logo-minimize"/>
-                 <span class="fw-bold fs-2 text-white text-logo">rp</span>
+            <span class="fw-bold fs-2 text-white text-logo">rp</span>
         </a>
         <div id="kt_app_sidebar_toggle"
              class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate"
@@ -74,6 +74,22 @@
                                 <span class="menu-title">Sales Department</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link">
+                                <span class="menu-icon">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-person-vcard" viewBox="0 0 16 16">
+                                        <path
+                                            d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5"/>
+                                        <path
+                                            d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z"/>
+                                    </svg>
+                                </i>
+                                </span>
+                                <span class="menu-title">Role Management</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div data-kt-menu-trigger="click"
@@ -111,11 +127,9 @@
                                     <a class="menu-link" href="">
                                         <span class="menu-icon">
                                             <i>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                     class="size-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"/>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd"
+                                                        d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
                                                 </svg>
                                             </i>
                                         </span>
@@ -158,7 +172,15 @@
                                 </div>
                                 <div class="menu-item">
                                     <a class="menu-link" href="">
-                                        <i class="bi bi-check-circle menu-icon"></i>
+                                        <span class="menu-icon">
+                                        <i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-flag" viewBox="0 0 16 16">
+                                              <path
+                                                  d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z"/>
+                                            </svg>
+                                        </i>
+                                        </span>
                                         <span class="menu-title">Sales Visit Report</span>
                                     </a>
                                 </div>
@@ -347,25 +369,20 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link">
-                        <i class="bi bi-house-door menu-icon"></i>
+                    <a class="menu-link {{Route::is('management_setting.*')? 'active':''}}"
+                       href="{{route('management_setting.index')}}">
+                        <span class="menu-icon">
+                        <i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-sliders" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z"/>
+                            </svg>
+                        </i>
+                        </span>
                         <span class="menu-title">Management Setting</span>
                     </a>
                 </div>
-                <div class="menu-item">
-                    <a class="menu-link">
-                        <i class="bi bi-house-door menu-icon"></i>
-                        <span class="menu-title">Role Management</span>
-                    </a>
-                </div>
-                {{--                <div class="menu-item">--}}
-                {{--                    <a class="menu-link {{Route::is('user*') ? 'active' : ''}}" href="{{route('user.index')}}">--}}
-                {{--                        <span class="menu-icon">--}}
-                {{--                        <i class="fa-sharp fa-solid fa-users"></i>--}}
-                {{--                        </span>--}}
-                {{--                            <span class="menu-title">Users</span>--}}
-                {{--                    </a>--}}
-                {{--                </div>--}}
             </div>
         </div>
     </div>

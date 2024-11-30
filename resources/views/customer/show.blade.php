@@ -4,7 +4,7 @@
     <x-general-section-content>
         @slot('slotToolbar')
             <x-toolbar name="Customer"
-                       heading-name="Edit Data {{$customer->name == null ? $customer->name :'Customer'}}"
+                       heading-name="Edit Data {{$customer->name != null ? $customer->name :'Customer'}}"
                        route-create-name="receivable.customer.store" using-create-modal="true"
                        route-trash-name="receivable.customer.trash" route-list-name="receivable.customer.index">
                 @include('customer.partials.create_customer_modal')
