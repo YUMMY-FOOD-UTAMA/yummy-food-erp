@@ -48532,11 +48532,11 @@ body,
     margin-left: 0.115rem;
   }
 }
-@media (max-width: 991.98px) {
-  .app-sidebar-logo {
+/* @media (max-width: 991.98px) { */
+  /* .app-sidebar-logo {
     display: none;
-  }
-}
+  } */
+/* } */
 .app-sidebar-logo-minimize {
   display: none;
 }
