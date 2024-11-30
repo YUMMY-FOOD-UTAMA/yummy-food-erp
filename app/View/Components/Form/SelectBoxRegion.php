@@ -29,7 +29,9 @@ class SelectBoxRegion extends Component
         $this->subRegionID = $subRegionID;
         $this->areaID = $areaID;
         $this->formMethod = $formMethod;
-        $this->dropDownParentID = $dropDownParentID;
+        if ($dropDownParentID) {
+            $this->dropDownParentID = '#' . $dropDownParentID;
+        }
         $this->sizeForm = $sizeForm;
         $this->type = $type;
     }
@@ -48,7 +50,7 @@ class SelectBoxRegion extends Component
         if ($this->subRegionID) {
             $areas = Area::where('sub_region_id', $this->subRegionID)->get();
         }
-        $id = str_replace('-', '', Uuid::uuid4()->toString());;
+        $id = 'a' . str_replace('-', '', Uuid::uuid4()->toString());;
         return view('components.form.select-box-region', compact(
             'regions',
             'subRegions',

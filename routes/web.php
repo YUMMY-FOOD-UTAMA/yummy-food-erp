@@ -47,9 +47,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('/trash', [CustomerController::class, 'trash'])->name('receivable.customer.trash');
                 Route::delete('/destroy/{customer}', [CustomerController::class, 'destroy'])->name('receivable.customer.destroy');
                 Route::put('/restore/{customer}', [CustomerController::class, 'restore'])->name('receivable.customer.restore');
-
-                Route::post('/create', [CustomerController::class, 'index'])->name('receivable.customer.store');
-                Route::get('/detail/{customer}', [CustomerController::class, 'index'])->name('receivable.customer.detail');
+                Route::post('/create', [CustomerController::class, 'store'])->name('receivable.customer.store');
+                Route::get('/detail/{customer}', [CustomerController::class, 'show'])->name('receivable.customer.show');
                 Route::put('/update/{customer}', [CustomerController::class, 'update'])->name('receivable.customer.update');
             });
         });

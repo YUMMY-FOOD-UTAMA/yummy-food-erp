@@ -1,65 +1,111 @@
 @slot('slotModalForm')
-    <div class="d-flex flex-column flex-lg-row align-items-start mb-10">
-        <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
-            <div class="card card-flush">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h2>Avatar</h2>
-                    </div>
-                </div>
-                <div class="card-body text-center pt-0">
-                    <x-form.image-input name="avatar"/>
-                </div>
-            </div>
+    <x-card title="Customer Information" id="createCustomerInfo">
+        <div class="row g-9 mb-8">
+            <x-form.input class="col-md-6 fv-row"
+                          label="Customer Name" :required="true"
+                          placeholder="Customer Name..."
+                          name="name"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Company Name" :required="true"
+                          placeholder="Company Name..."
+                          name="company_name"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Outlet Name" :required="true"
+                          placeholder="Outlet Name..."
+                          name="outlet_name"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Alias"
+                          placeholder="Alias..."
+                          name="alias"/>
+            <x-form.select-box class="col-md-6 fv-row" type="row" :items="\App\Models\Customer\CustomerSegment::all()"
+                               name="customer_segment_id" :required="true"
+                               placeholder="Select Customer Segment..."
+                               drop-down-parent-i-d="modal_createCustomer" label="Customer Segment"/>
+            <x-form.select-box class="col-md-6 fv-row" type="row" :items="CustomerStatus::valuesObject()"
+                               name="status" :required="true"
+                               placeholder="Select Status Customer..."
+                               drop-down-parent-i-d="modal_createCustomer" label="Customer Status"/>
+            <x-form.select-box class="col-md-6 fv-row" type="row" :items="\App\Models\Customer\CustomerCategory::all()"
+                               name="customer_category_id" :required="true"
+                               placeholder="Select Customer Category..."
+                               drop-down-parent-i-d="modal_createCustomer" label="Customer Category"/>
+            <x-form.select-box class="col-md-6 fv-row" type="row" :items="\App\Models\Customer\CustomerGroup::all()"
+                               name="customer_group_id"
+                               placeholder="Select Customer Group..."
+                               drop-down-parent-i-d="modal_createCustomer" label="Customer Group"/>
         </div>
+    </x-card>
 
-        <div class="d-flex flex-column gap-7 gap-lg-10 w-100">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex flex-column me-n7 pe-7">
-                        <div class="row g-9 mb-8">
-                            <x-form.input class="col-md-6 fv-row" type="text" label="Full Name" name="full_name"
-                                          placeholder="Full Name..."/>
-                            <x-form.input class="col-md-6 fv-row" type="text" label="Name" name="name"
-                                          placeholder="Name..."/>
-                            <x-form.input class="col-md-6 fv-row" type="text" label="NIK" name="nik"
-                                          placeholder="NIK..."/>
-                            <x-form.input class="col-md-6 fv-row" type="text" label="Email" name="email"
-                                          placeholder="Email..."/>
-                            <x-form.input class="col-md-6 fv-row" type="text" label="Bio" name="bio"
-                                          placeholder="Biography..."/>
-                            <x-form.input class="col-md-6 fv-row" type="date" label="Date Of Birth" name="date_of_birth"
-                                          placeholder="Date Of Birth..."/>
-                            <x-form.select-box-timezones type="row" drop-down-parent-i-d="modal_createEmployee"
-                                                         class="col-md-6 fv-row"/>
-
-                            <x-form.input class="col-md-6 fv-row" type="text" label="Position" name="position"
-                                          placeholder="Position..."/>
-
-                            <x-form.input class="col-md-6 fv-row" type="date" label="Join Date" name="join_date"
-                                          placeholder="Join Date..."/>
-
-                            <x-form.input class="col-md-6 fv-row" type="date" label="Date Of Exchange Status"
-                                          name="date_of_exchange_status"
-                                          placeholder="Date Of Exchange Status..."/>
-
-                            <x-form.select-box name="status" class="col-md-6 fv-row" type="row"
-                                               placeholder="Status..."
-                                               label="Status" drop-down-parent-i-d="modal_createEmployee"
-                                               :items="StatusEmployee::valuesObject()"/>
-                        </div>
-                        <x-form.radio-button-gender class="flex-column mb-8"/>
-                        <div class="row g-9 mb-8">
-                        <x-form.select-box-geographic type="row" class="col-md-6 fv-row" drop-down-parent-i-d="modal_createEmployee"
-                                                      form-method="POST"/>
-                        </div>
-                        <x-form.text-area class="d-flex flex-column mb-8" auto-resize="true" row="2" label="Address"
-                                          name="address"
-                                          placeholder="Address..."/>
-                    </div>
-                </div>
-            </div>
+    <x-card title="Region & Location Information" id="createCustomerRegionAndLocationInfo">
+        <div class="row g-9 mb-8">
+            <x-form.select-box-region class="col-md-6 fv-row" :region-i-d="old('region_id')" type="row"
+                                      form-method="POST"
+                                      drop-down-parent-i-d="modal_createCustomer"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Province"
+                          placeholder="Province..."
+                          name="province"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="District"
+                          placeholder="District..."
+                          name="district"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Sub District"
+                          placeholder="Sub District..."
+                          name="sub_district"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Village"
+                          placeholder="Village..."
+                          name="village"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Postal Code"
+                          type="number"
+                          placeholder="Postal Code..."
+                          name="postal_code"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Address"
+                          placeholder="Address..."
+                          name="address"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Address Number"
+                          type="number"
+                          placeholder="Address Number..."
+                          name="address_number"/>
+            <x-form.input-masking class="col-md-6 fv-row" type="rt_rw" :placeholder="true"
+                                  name="rt_rw"
+                                  label="RT RW"></x-form.input-masking>
         </div>
-    </div>
+    </x-card>
 
+    <x-card title="Tax Information & Contact Information" id="createCustomerTaxInfoAndContactInfo">
+        <div class="row g-9 mb-8">
+            <x-form.input class="col-md-6 fv-row"
+                          label="NPWP"
+                          placeholder="NPWP..."
+                          name="npwp"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="NPWP Name"
+                          placeholder="NPWP Name..."
+                          name="npwp_name"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="NPWP Address"
+                          placeholder="NPWP Address..."
+                          name="npwp_address"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="NPPKP"
+                          placeholder="NPPKP..."
+                          name="nppkp"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Contact Person Name"
+                          placeholder="Contact Person Name..."
+                          name="contact_person_name"/>
+            <x-form.input class="col-md-6 fv-row"
+                          label="Contact Person Title"
+                          placeholder="Contact Person Title..."
+                          name="contact_person_title"/>
+            <x-form.input-masking class="col-md-6 fv-row" type="phone_number" :placeholder="true"
+                                  name="contact_person_phone"
+                                  label="Contact Person Phone"></x-form.input-masking>
+        </div>
+    </x-card>
 @endslot

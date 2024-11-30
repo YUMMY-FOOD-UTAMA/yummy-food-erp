@@ -36,23 +36,24 @@
                 @endif
             </tr>
             <x-modal id="modal_view{{$customer->id}}"
-                     :route-view-data="route('receivable.customer.detail',$customer->id)"
+                     :route-view-data="route('receivable.customer.show',$customer->id)"
                      title="Data {{$customer->name ? $customer->name : 'Customer'}}" size="1000">
 
-                <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#customer_info{{$customer->id}}">Customer Information</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#region_and_location_information{{$customer->id}}">Region & Location Information</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#tax_info_and_contact_info{{$customer->id}}">Tax Information & Contact Information</a>
-                    </li>
-                </ul>
-
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="customer_info{{$customer->id}}" role="tabpanel">
+                <x-tabs :tabs="[
+                        [
+                            'id'=>'customer_info'.$customer->id,
+                            'title'=>'Customer Information'
+                        ],
+                        [
+                            'id'=>'region_and_location_information'.$customer->id,
+                            'title'=>'Region & Location Information'
+                        ],
+                        [
+                            'id'=>'tax_info_and_contact_info'.$customer->id,
+                            'title'=>'Tax Information & Contact Information'
+                        ],
+                ]">
+                    @slot('slot0')
                         <div class="row g-9 mb-8">
                             <x-form.input class="col-md-6 fv-row" view-only="true"
                                           :default-value="$customer->code"
@@ -60,12 +61,20 @@
                                           name="customer_code"/>
                             <x-form.input class="col-md-6 fv-row" view-only="true"
                                           :default-value="$customer->name"
-                                          label="Name"
-                                          name="name"/>
+                                          label="Customer Name"
+                                          name="customer_name"/>
                             <x-form.input class="col-md-6 fv-row" view-only="true"
                                           :default-value="$customer->company_name"
                                           label="Company Name"
                                           name="company_name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->outlet_name"
+                                          label="Outlet Name"
+                                          name="outlet_name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->alias"
+                                          label="Alias"
+                                          name="alias"/>
                             <x-form.input class="col-md-6 fv-row" view-only="true"
                                           :default-value="$customer->status"
                                           label="Status"
@@ -83,8 +92,8 @@
                                           label="Customer Group"
                                           name="customer_group"/>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="region_and_location_information{{$customer->id}}" role="tabpanel">
+                    @endslot
+                    @slot('slot1')
                         <div class="row g-9 mb-8">
                             <x-form.input class="col-md-6 fv-row" view-only="true"
                                           :default-value="$customer->area->subRegion->region->name"
@@ -122,9 +131,21 @@
                                           :default-value="$customer->postal_code"
                                           label="Postal Code"
                                           name="postal_code"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->address"
+                                          label="Address"
+                                          name="address"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->address_number"
+                                          label="Address Number"
+                                          name="address_number"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->rt_rw"
+                                          label="RT RW"
+                                          name="rt_rw"/>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="tax_info_and_contact_info{{$customer->id}}" role="tabpanel">
+                    @endslot
+                    @slot('slot2')
                         <div class="row g-9 mb-8">
                             <x-form.input class="col-md-6 fv-row" view-only="true"
                                           :default-value="$customer->npwp"
@@ -155,8 +176,8 @@
                                           label="Contact Person Phone"
                                           name="contact_person_phone"/>
                         </div>
-                    </div>
-                </div>
+                    @endslot
+                </x-tabs>
             </x-modal>
         @endforeach
     @endslot

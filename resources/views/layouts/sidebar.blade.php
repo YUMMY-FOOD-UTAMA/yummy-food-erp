@@ -2,7 +2,7 @@
      data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px"
      data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo" style="background-color: #C3252B !important;">
-        <a href="{{ route('dashboard') }}" class="d-flex align-items-end">
+        <a href="{{ route('dashboard') }}" class="mt-5 d-flex align-items-end">
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}" class="h-45px app-sidebar-logo-default"/>
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}"
                  class="h-20px app-sidebar-logo-minimize"/>

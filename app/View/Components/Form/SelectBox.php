@@ -31,8 +31,8 @@ class SelectBox extends Component
     public function __construct($name, $label, $items, $sizeForm = 'lg', $customNameKey = null, $valueKey = 'id', $nameKey = 'name', $dropDownParentID = '', $placeholder = '', $uuid = null, $tooltip = null, $id = null, $type = 'inline', $defaultValue = null, $required = false)
     {
         $this->sizeForm = $sizeForm;
-        if ($this->dropDownParentID != '') {
-            $this->dropDownParentID = "#" . $this->dropDownParentID;
+        if ($dropDownParentID != '') {
+            $this->dropDownParentID = "#" . $dropDownParentID;
         }
         $this->customNameKey = $customNameKey;
         $this->defaultValue = $defaultValue;

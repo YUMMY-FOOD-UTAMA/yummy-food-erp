@@ -36,7 +36,6 @@ return new class extends Migration {
             $table->string("postal_code")->nullable();
             $table->string("contact_person_name")->nullable();
             $table->string("contact_person_phone")->nullable();
-            $table->string("title")->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('created_by')->nullable()->constrained('users');
