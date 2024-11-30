@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\EmployeeRepository;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
 use App\Models\Division\SubDepartment;
 use App\Models\Employee;
 use App\Models\Level\LevelGrade;
 use App\Models\User;
+use App\Repositories\EmployeeRepository;
+use App\Trait\ApiResponseTrait;
 use App\Utils\Helpers\FileHelper;
 use App\Utils\Helpers\Transaction;
-use App\Utils\Primitives\Enum\EmployeeStatus;
 use App\Utils\Primitives\ListPageSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class EmployeeController extends Controller
 {
+    use ApiResponseTrait;
+
     private string $avatarPath = "users/avatar";
 
     public function index(Request $request)
     {
-        $employees = New EmployeeRepository;
+        $employees = new EmployeeRepository;
         $employees->setRequest($request);
         $employees = $employees->getAll();
 
@@ -40,7 +42,7 @@ class EmployeeController extends Controller
 
     public function trash(Request $request)
     {
-        $employees = New EmployeeRepository;
+        $employees = new EmployeeRepository;
         $employees->setRequest($request);
         $employees->setOnlyTrashed(true);
         $employees = $employees->getAll();
@@ -60,7 +62,7 @@ class EmployeeController extends Controller
 
     public function indexSales(Request $request)
     {
-        $employees = New EmployeeRepository;
+        $employees = new EmployeeRepository;
         $employees->setRequest($request);
         $employees->setOnlySales(true);
         $employees = $employees->getAll();
@@ -80,7 +82,7 @@ class EmployeeController extends Controller
 
     public function trashSales(Request $request)
     {
-        $employees = New EmployeeRepository;
+        $employees = new EmployeeRepository;
         $employees->setRequest($request);
         $employees->setOnlyTrashed(true);
         $employees->setOnlySales(true);
@@ -185,5 +187,17 @@ class EmployeeController extends Controller
             'status' => 'success',
             'message' => 'Employee restored successfully!'
         ]);
+    }
+
+    public function apiGet(Request $request)
+    {
+        $employees = new EmployeeRepository;
+        $employees->setRequest($request);
+        $employees->setOnlySales($request->query('only_sales', false));
+        $employees->setOnlyTrashed($request->query('only_trashed', false));
+        $employees->setWithTrashed($request->query('with_trashed', false));
+
+        $employees = $employees->getAll();
+        return $this->successResponse($employees);
     }
 }

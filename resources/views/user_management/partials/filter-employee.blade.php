@@ -1,4 +1,4 @@
-<x-table.advance-filter using-apply-button="true">
+<x-table.advance-filter using-apply-button="true" class="mt-5 ms-6 me-6">
     <x-form.select-box name="status" :items="StatusEmployee::valuesObject()" label="Employee Status"
                        :default-value="request()->status" placeholder="Select Employee Status..."
                        class="col-12 col-md-3 mb-5"

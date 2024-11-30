@@ -58,7 +58,7 @@ class SelectBoxGeographic extends Component
         if ($this->sub_district_village_id) {
             $subDistrictVillage = SubDistrictVillage::where('sub_district_id', $this->sub_district_id)->get();
         }
-        $id = str_replace('-', '', Uuid::uuid4()->toString());;
+        $id = 'a'.str_replace('-', '', Uuid::uuid4()->toString());;
         return view('components.form.select-box-geographic', compact(
             'province',
             'district',

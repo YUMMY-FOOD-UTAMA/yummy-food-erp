@@ -6,6 +6,7 @@
     <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/app.css')}}" rel="stylesheet" type="text/css"/>
+    @stack('css')
 </head>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
       data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\GeneralSettingRepository;
 use App\Http\Requests\ManagementSettingUpSertRequest;
 use App\Models\GeneralSetting;
-use Illuminate\Http\Request;
+use App\Repositories\GeneralSettingRepository;
 
 class ManagementSettingController extends Controller
 {

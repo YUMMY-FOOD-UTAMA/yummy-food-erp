@@ -52,7 +52,7 @@ enum SalesScheduleVisitStatus
             ],
         ];
 
-        $isConfirmVisit = strpos($_SERVER['REQUEST_URI'], 'confirm-visit') !== false;
+        $isConfirmVisit = strpos($_SERVER['REQUEST_URI'], 'sales-confirm-visit') !== false;
         return array_map(function ($item) use ($isConfirmVisit) {
             if ($isConfirmVisit && $item['id'] === self::APPROVED) {
                 $item['name'] = 'pending';

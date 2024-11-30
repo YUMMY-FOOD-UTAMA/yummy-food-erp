@@ -116,7 +116,8 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div class="menu-sub menu-sub-accordion">
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <div data-kt-menu-trigger="click"
+                             class="menu-item menu-accordion {{Route::is('receivable.crm.*')?'show':''}}">
                             <span class="menu-link">
                                 <span class="menu-icon">
                                     <i>
@@ -132,10 +133,12 @@
                             </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
                                 <div class="menu-item">
-                                    <a class="menu-link" href="">
+                                    <a class="menu-link {{Route::is('receivable.crm.sales-mapping.*')?'active':''}}"
+                                       href="{{route('receivable.crm.sales-mapping.index')}}">
                                         <span class="menu-icon">
                                             <i>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
                                                   <path fill-rule="evenodd"
                                                         d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
                                                 </svg>
@@ -145,8 +148,9 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="">
-                                        <span class="menu-icon">
+                                    <a class="menu-link {{Route::is('receivable.crm.schedule-visit.*')?'active':''}}"
+                                       href="{{route('receivable.crm.schedule-visit.index')}}">
+                                    <span class="menu-icon">
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
                                                      viewBox="0 0 24 24" stroke="currentColor">
@@ -159,7 +163,8 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="">
+                                    <a class="menu-link {{Route::is('receivable.crm.sales-approval.*')?'active':''}}"
+                                       href="{{route('receivable.crm.sales-approval.index')}}">
                                         <span class="menu-icon">
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
@@ -173,7 +178,8 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="">
+                                    <a class="menu-link {{Route::is('receivable.crm.sales-confirm-visit.*')?'active':''}}"
+                                       href="{{route('receivable.crm.sales-confirm-visit.index')}}">
                                         <i class="bi bi-check-circle menu-icon"></i>
                                         <span class="menu-title">Sales Confirm Visit</span>
                                     </a>

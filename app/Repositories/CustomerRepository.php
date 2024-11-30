@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories;
 
-use App\Helpers\GetParams;
 use App\Models\Customer\Customer;
 use Illuminate\Http\Request;
 
 class CustomerRepository
 {
     private Request $request;
+    private bool $nameIsNotNull = false;
+    private bool $onlyTrashed = false;
+    private bool $withTrashed = false;
+    private bool $withBookedBy = false;
+    private bool $withEmployeeDetail = false;
+    private bool $withCustomerDetail = false;
 
     public function setRequest(Request $request): void
     {
@@ -20,7 +25,31 @@ class CustomerRepository
         $this->onlyTrashed = $onlyTrashed;
     }
 
-    private bool $onlyTrashed = false;
+    public function setNameIsNotNull(bool $nameIsNotNull): void
+    {
+        $this->nameIsNotNull = $nameIsNotNull;
+    }
+
+    public function setWithTrashedOnly(bool $withTrashed): void
+    {
+        $this->withTrashed = $withTrashed;
+    }
+
+    public function setWithBookedBy(bool $withBookedBy): void
+    {
+        $this->withBookedBy = $withBookedBy;
+    }
+
+    private function setWithEmployeeDetail(bool $withEmployeeDetail): void
+    {
+        $this->withEmployeeDetail = $withEmployeeDetail;
+    }
+
+    private function setWithCustomerDetail(bool $withCustomerDetail): void
+    {
+        $this->withCustomerDetail = $withCustomerDetail;
+    }
+
 
     public function getAll()
     {
@@ -30,6 +59,7 @@ class CustomerRepository
         $areaID = $this->request->query('area_id');
         $customerCategoryID = $this->request->query('customer_category_id');
         $searchKeyword = $this->request->query('search');
+        $availableCustomer = $this->request->query("available_customer");
 
         $customers = Customer::with([
             'customerCategory' => function ($query) {
@@ -53,8 +83,27 @@ class CustomerRepository
                 ]);
             }
         ]);
+        if ($this->withBookedBy) {
+            $customers->with(['bookedBys.employee.user']);
+        } else if ($this->withEmployeeDetail) {
+            $customers->with(['employee.user']);
+        }
+
         if ($this->onlyTrashed) {
             $customers->onlyTrashed();
+        }
+        if ($this->withTrashed) {
+            $customers->withTrashed();
+        }
+        if (($availableCustomer == 0 || $availableCustomer == 1) && $availableCustomer != null) {
+            if ($availableCustomer == 1) {
+                $customers->where('is_booked_by_sales', false);
+            } else {
+                $customers->where('is_booked_by_sales', true);
+            }
+        }
+        if ($this->nameIsNotNull) {
+            $customers->whereNotNull('name')->where('name', '<>', '');
         }
         if ($areaID) {
             $customers->where('area_id', $areaID);

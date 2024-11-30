@@ -41,7 +41,7 @@
             <select name="sub_region_id" aria-label="Select a Sub Region" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a Sub Region.."
-                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubRegion{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectRegionSubRegion{{$id}}">
                 <option value="">Select a Sub Region..</option>
                 @if($subRegionID)
                     @foreach($subRegions as $d)
@@ -61,7 +61,7 @@
             <select name="area_id" aria-label="Select a Area Name" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a Area Name.."
-                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectArea{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectRegionArea{{$id}}">
                 <option value="">Select a Area Name..</option>
                 @if($areaID)
                     @foreach($areas as $sd)
@@ -113,7 +113,7 @@
         <select name="sub_region_id" aria-label="Select a Sub Region" data-allow-clear="true"
                 data-dropdown-parent="{{$dropDownParentID}}"
                 data-control="select2" data-placeholder="Select a Sub Region.."
-                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubRegion{{$id}}">
+                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectRegionSubRegion{{$id}}">
             <option value="">Select a Sub Region..</option>
             @if($subRegionID)
                 @foreach($subRegions as $d)
@@ -131,7 +131,7 @@
         <select name="area_id" aria-label="Select a Area Name" data-allow-clear="true"
                 data-dropdown-parent="{{$dropDownParentID}}"
                 data-control="select2" data-placeholder="Select a Area Name.."
-                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectArea{{$id}}">
+                class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectRegionArea{{$id}}">
             <option value="">Select a Area Name..</option>
             @if($areaID)
                 @foreach($areas as $sd)
@@ -187,7 +187,7 @@
             <select name="sub_region_id" aria-label="Select a Sub Region" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a Sub Region.."
-                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubRegion{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectRegionSubRegion{{$id}}">
                 <option value="">Select a Sub Region..</option>
                 @if($subRegionID)
                     @foreach($subRegions as $d)
@@ -207,7 +207,7 @@
             <select name="area_id" aria-label="Select a Area Name" data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a Area Name.."
-                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectArea{{$id}}">
+                    class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectRegionArea{{$id}}">
                 <option value="">Select a Area Name..</option>
                 @if($areaID)
                     @foreach($areas as $sd)
@@ -231,7 +231,7 @@
                     url: `/region/sub-region?region_id=${oldRegionCoveredId}`,
                     type: 'GET',
                     success: function (data) {
-                        const subRegionSelect = $('#selectSubRegion{{$id}}');
+                        const subRegionSelect = $('#selectRegionSubRegion{{$id}}');
                         subRegionSelect.empty().append('<option value="">Select a Sub Region..</option>');
                         data.result.forEach(function (subRegion) {
                             subRegionSelect.append(
@@ -245,7 +245,7 @@
                                 url: `/region/sub-region/area?sub_region_id=${oldSubRegionId}`,
                                 type: 'GET',
                                 success: function (data) {
-                                    const areaSelect = $('#selectArea{{$id}}');
+                                    const areaSelect = $('#selectRegionArea{{$id}}');
                                     areaSelect.empty().append('<option value="">Select an Area Name..</option>');
                                     data.result.forEach(function (area) {
                                         areaSelect.append(
@@ -286,7 +286,7 @@
                         url: `/region/sub-region?region_id=${regionId}`,
                         type: 'GET',
                         success: function (data) {
-                            const subRegionSelect = $('#selectSubRegion{{$id}}');
+                            const subRegionSelect = $('#selectRegionSubRegion{{$id}}');
                             subRegionSelect.empty().append('<option value="">Select a Sub Region..</option>');
                             data.result.forEach(function (subRegion) {
                                 subRegionSelect.append(`<option value="${subRegion.id}">${subRegion.name}</option>`);
@@ -298,7 +298,7 @@
                 }
             });
 
-            $('#selectSubRegion{{$id}}').on('change', function () {
+            $('#selectRegionSubRegion{{$id}}').on('change', function () {
                 const subRegionId = $(this).val();
                 if (subRegionId) {
                     $('#areaRow{{$id}}').css('display', display);
@@ -306,7 +306,7 @@
                         url: `/region/sub-region/area?sub_region_id=${subRegionId}`,
                         type: 'GET',
                         success: function (data) {
-                            const areaSelect = $('#selectArea{{$id}}');
+                            const areaSelect = $('#selectRegionArea{{$id}}');
                             areaSelect.empty().append('<option value="">Select an Area Name..</option>');
                             data.result.forEach(function (area) {
                                 areaSelect.append(`<option value="${area.id}">${area.name}</option>`);

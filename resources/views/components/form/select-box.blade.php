@@ -9,7 +9,7 @@
         </label>
         <div class="col-lg-8 fv-row">
             <select name="{{$name}}" aria-label="{{$placeholder}}" data-allow-clear="true"
-                    data-control="select2" data-placeholder="{{$placeholder}}"
+                    data-control="select2" data-placeholder="{{$placeholder}}" id="{{$id}}"
                     data-dropdown-parent="{{$dropDownParentID}}" {{$required ? 'required':''}}
                     class="form-select form-select-solid form-select-{{$sizeForm}}">
                 <option value="">{{$placeholder}}</option>
@@ -33,7 +33,7 @@
             @endif
         </label>
         <select name="{{$name}}" aria-label="{{$placeholder}}" data-allow-clear="true"
-                data-control="select2" data-placeholder="{{$placeholder}}"
+                data-control="select2" data-placeholder="{{$placeholder}}" id="{{$id}}"
                 data-dropdown-parent="{{$dropDownParentID}}" {{$required ? 'required':''}}
                 class="form-select form-select-solid form-select-{{$sizeForm}}">
             <option value="">{{$placeholder}}</option>

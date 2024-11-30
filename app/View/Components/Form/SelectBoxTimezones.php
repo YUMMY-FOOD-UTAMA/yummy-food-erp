@@ -21,7 +21,7 @@ class SelectBoxTimezones extends Component
         $this->timezone = $timezone;
         $this->type = $type;
         $this->dropDownParentID = $dropDownParentID;
-        $this->uuid = Uuid::uuid4()->toString();
+        $this->uuid = "a".Uuid::uuid4()->toString();
         if ($uuid) {
             $this->uuid = $uuid;
         }

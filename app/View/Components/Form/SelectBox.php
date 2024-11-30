@@ -46,7 +46,7 @@ class SelectBox extends Component
         $this->id = $name;
         $this->required = $required;
         $this->nameKey = $nameKey;
-        $this->uuid = Uuid::uuid4()->toString();
+        $this->uuid = 'a'.Uuid::uuid4()->toString();
         if ($uuid) {
             $this->uuid = $uuid;
         }

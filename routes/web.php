@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CRM\SalesApprovalController;
+use App\Http\Controllers\CRM\SalesConfirmVisitController;
+use App\Http\Controllers\CRM\SalesMappingController;
+use App\Http\Controllers\CRM\ScheduleVisitController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ManagementSettingController;
@@ -40,6 +44,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/sub-region/area', [RegionController::class, 'getAreas'])->name('region.sub-region.area.index');
     });
 
+    Route::group(['prefix' => 'api'], function () {
+        Route::get('/employees', [EmployeeController::class, 'apiGet'])->name('api.get.employees');
+        Route::get('/customers', [CustomerController::class, 'apiGet'])->name('api.get.customers');
+    });
+
     Route::middleware(PermissionRole::class)->group(function () {
 
         Route::group(['prefix' => 'management-setting'], function () {
@@ -48,6 +57,30 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::group(['prefix' => 'receivable'], function () {
+
+            Route::group(['prefix' => 'crm'], function () {
+                Route::group(['prefix' => 'sales-mapping'], function () {
+                    Route::get('/', [SalesMappingController::class, 'index'])->name('receivable.crm.sales-mapping.index');
+                });
+
+                Route::group(['prefix' => 'schedule-visit'], function () {
+                    Route::get('/', [ScheduleVisitController::class, 'index'])->name('receivable.crm.schedule-visit.index');
+                    Route::get('/create', [ScheduleVisitController::class, 'create'])->name('receivable.crm.schedule-visit.create');
+                    Route::post('/create', [ScheduleVisitController::class, 'store'])->name('receivable.crm.schedule-visit.store');
+                    Route::put('/cancel/{id}', [ScheduleVisitController::class, 'cancel'])->name('receivable.crm.schedule-visit.cancel');
+                });
+
+                Route::group(['prefix' => 'sales-approval'], function () {
+                    Route::get('/', [SalesApprovalController::class, 'index'])->name('receivable.crm.sales-approval.index');
+                    Route::put('/approvals', [SalesApprovalController::class, 'approval'])->name('receivable.crm.sales-approval.approval');
+                });
+
+                Route::group(['prefix' => 'sales-confirm-visit'], function () {
+                    Route::get('/', [SalesConfirmVisitController::class, 'index'])->name('receivable.crm.sales-confirm-visit.index');
+                    Route::put('/confirm-visit/{schedule_visit}', [SalesConfirmVisitController::class, 'visitConfirmation'])->name('receivable.crm.sales-confirm-visit.confirm');
+                });
+            });
+
             Route::group(['prefix' => 'customer'], function () {
                 Route::get('/', [CustomerController::class, 'index'])->name('receivable.customer.index');
                 Route::get('/trash', [CustomerController::class, 'trash'])->name('receivable.customer.trash');

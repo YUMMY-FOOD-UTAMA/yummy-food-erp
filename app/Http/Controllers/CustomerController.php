@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\CustomerRepository;
 use App\Http\Requests\Customer\CreateCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerCategory;
-use GuzzleHttp\Promise\Create;
+use App\Repositories\CustomerRepository;
+use App\Trait\ApiResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class CustomerController extends Controller
 {
+    use ApiResponseTrait;
+
     public function index(Request $request)
     {
         $customers = new CustomerRepository;
@@ -86,5 +88,18 @@ class CustomerController extends Controller
             'status' => 'success',
             'message' => 'Customer has been restored!.'
         ]);
+    }
+
+    public function apiGet(Request $request)
+    {
+        $customers = new CustomerRepository;
+        $customers->setRequest($request);
+        $customers->setWithBookedBy($request->query('with_booked_by', false));
+        $customers->setNameIsNotNull($request->query('name_is_not_null', false));
+        $customers->setOnlyTrashed($request->query('only_trashed', false));
+        $customers->setWithTrashedOnly($request->query('with_trashed', false));
+        $customers = $customers->getAll();
+
+        return $this->successResponse($customers);
     }
 }

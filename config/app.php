@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -127,7 +127,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'FileHelper' => \App\Utils\Helpers\FileHelper::class,
-        'StatusEmployee'=>\App\Utils\Primitives\Enum\EmployeeStatus::class,
-        'CustomerStatus'=>\App\Utils\Primitives\Enum\CustomerStatus::class,
+        'StatusEmployee' => \App\Utils\Primitives\Enum\EmployeeStatus::class,
+        'CustomerStatus' => \App\Utils\Primitives\Enum\CustomerStatus::class,
+        'VisitStatus' => \App\Utils\Primitives\Enum\SalesScheduleVisitStatus::class,
+        'VisitCategory' => \App\Utils\Primitives\Enum\SalesScheduleVisitCategory::class,
     ])->toArray(),
 ];

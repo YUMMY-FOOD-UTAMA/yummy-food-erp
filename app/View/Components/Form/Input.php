@@ -35,7 +35,7 @@ class Input extends Component
         $this->tooltip = $tooltip;
         $this->id = $name;
         $this->required = $required;
-        $this->uuid = Uuid::uuid4()->toString();
+        $this->uuid = 'a'.Uuid::uuid4()->toString();
         $this->viewOnly = $viewOnly;
         if ($uuid) {
             $this->uuid = $uuid;

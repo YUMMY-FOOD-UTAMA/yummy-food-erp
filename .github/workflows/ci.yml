@@ -1,0 +1,31 @@
+name: 🚀 Deploy on push main and staging
+
+on:
+  push:
+    branches:
+#      - main
+      - staging
+      - dev
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v2
+
+      - name: 📂 Deploy to server via ssh
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            if [ "${{ github.ref_name }}" == "dev" ]; then
+              cd /home/u409594432/domains/dev.yummyrp.com/public_html && sh ./.scripts/deploy.sh
+            elif [ "${{ github.ref_name }}" == "staging" ]; then
+              cd /home/u409594432/domains/stg.yummyrp.com/public_html && sh ./.scripts/deploy.sh
+            fi

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Repositories;
+namespace App\Repositories;
 
 use App\Models\Employee;
 use App\Utils\Primitives\ListPageSize;
@@ -11,7 +11,7 @@ class EmployeeRepository
     private Request $request;
     private bool $onlyTrashed = false;
     private bool $onlySales = false;
-
+    private bool $withTrashed = false;
     public function setRequest(Request $request): void
     {
         $this->request = $request;
@@ -25,6 +25,11 @@ class EmployeeRepository
     public function setOnlySales(bool $onlySales): void
     {
         $this->onlySales = $onlySales;
+    }
+
+    public function setWithTrashed(bool $withTrashed): void
+    {
+        $this->withTrashed = $withTrashed;
     }
 
     public function getAll()
@@ -60,6 +65,9 @@ class EmployeeRepository
             $employees->whereHas('subDepartment.department.subDepartments', function ($query) {
                 $query->where('name', 'like', '%sales%');
             });
+        }
+        if ($this->withTrashed) {
+            $employees = $employees->withTrashed();
         }
         if ($searchKeyword) {
             $employees->where(function ($query) use ($searchKeyword) {

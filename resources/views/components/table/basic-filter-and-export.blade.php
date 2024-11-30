@@ -72,7 +72,7 @@
             </div>
         @endif
         <div class="card-title">
-            <div class="d-flex align-items-center position-relative me-3">
+            <div class="d-flex align-items-center position-relative">
                 <select id="page-size" name="page_size" class="form-select form-select-solid w-auto"
                         onchange="handleSelectChangeQueryParams(this)">
                     @foreach($pageSizes as $pageSize)

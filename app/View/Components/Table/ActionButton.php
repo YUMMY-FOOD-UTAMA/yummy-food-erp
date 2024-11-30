@@ -34,7 +34,7 @@ class ActionButton extends Component
      */
     public function render(): View|Closure|string
     {
-        $id = str_replace('-', '', Uuid::uuid4()->toString());;
+        $id = 'a'.str_replace('-', '', Uuid::uuid4()->toString());;
         return view('components.table.action-button', compact('id'));
     }
 }

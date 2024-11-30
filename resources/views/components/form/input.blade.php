@@ -7,7 +7,7 @@
             @endif
         </label>
         <input type="text" disabled class="form-control form-control-solid form-control-{{$sizeForm}}"
-               name="{{$name}}" value="{{$defaultValue}}"/>
+               name="{{$name}}" value="{{$defaultValue}}" id="{{$id}}"/>
     </div>
 @else
     <div {{$attributes->merge(['class' => ''])}}>
