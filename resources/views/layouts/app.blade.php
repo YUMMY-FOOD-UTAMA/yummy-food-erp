@@ -47,6 +47,52 @@
 
 <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
+
+<script>
+    function appendQueryParams(form) {
+        let url = new URL(form.action);
+        let params = new URLSearchParams(window.location.search);
+
+        let formData = new FormData(form);
+        for (let pair of formData.entries()) {
+            params.set(pair[0], pair[1]);
+        }
+        window.location.href = url.origin + url.pathname + '?' + params.toString();
+    }
+
+    function handleSelectChangeQueryParams(selectElement) {
+        const selectedValue = selectElement.value;
+        const selectId = selectElement.id;
+        const selectName = selectElement.name;
+
+        console.log(`Selected ${selectId}: ${selectedValue}`);
+
+        const currentUrl = new URL(window.location.href);
+
+        if (selectedValue) {
+            currentUrl.searchParams.set(selectName, selectedValue);
+        } else {
+            currentUrl.searchParams.delete(selectName);
+        }
+
+        window.location.href = currentUrl.toString();
+    }
+
+    function handleInputChangeQueryParams(inputElement) {
+        const inputValue = inputElement.value;
+        const selectName = inputElement.name;
+
+        const currentUrl = new URL(window.location.href);
+
+        if (inputValue) {
+            currentUrl.searchParams.set(selectName, inputValue);
+        } else {
+            currentUrl.searchParams.delete(selectName);
+        }
+
+        window.location.href = currentUrl.toString();
+    }
+</script>
 @stack('script')
 </body>
 </html>

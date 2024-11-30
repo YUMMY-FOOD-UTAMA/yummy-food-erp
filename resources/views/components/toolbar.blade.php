@@ -14,17 +14,17 @@
         <div class="d-flex align-items-center gap-2 gap-lg-3">
             @if($routeCreateName)
                 @if($usingCreateModal)
-                    <a href="#" class="btn btn-sm fw-bold btn-primary" data-bs-toggle="modal"
+                    <a href="#" class="btn btn-sm fw-bold btn-primary hover-scale" data-bs-toggle="modal"
                        data-bs-target="#modal_create{{$name}}">Create</a>
                 @else
-                    <a href="{{route($routeCreateName)}}" class="btn btn-sm fw-bold btn-primary">Create {{$name}}</a>
+                    <a href="{{route($routeCreateName)}}" class="btn btn-sm fw-bold hover-scale btn-primary">Create {{$name}}</a>
                 @endif
             @endif
             @if($routeTrashName)
-                <a href="{{route($routeTrashName)}}" class="btn btn-sm fw-bold btn-secondary">View Trash</a>
+                <a href="{{route($routeTrashName)}}" class="btn btn-sm fw-bold hover-scale btn-secondary">View Trash</a>
             @endif
             @if($routeListName)
-                <a href="{{route($routeListName)}}" class="btn btn-sm fw-bold btn-secondary">{{$name}} List</a>
+                <a href="{{route($routeListName)}}" class="btn btn-sm fw-bold hover-scale btn-secondary">{{$name}} List</a>
             @endif
         </div>
     </div>
@@ -90,7 +90,7 @@
                         {{--                        </div>--}}
                         {{--                    </div>--}}
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary hover-scale">
                                 <span class="indicator-label">Submit</span>
                             </button>
                         </div>

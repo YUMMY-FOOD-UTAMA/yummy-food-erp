@@ -2,13 +2,12 @@
     @push('script')
         <script>
             toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": false,
+                "closeButton": true,
+                "debug": true,
+                "newestOnTop": true,
+                "progressBar": true,
                 "positionClass": "toastr-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
+                "preventDuplicates": true,
                 "showDuration": "300",
                 "hideDuration": "1000",
                 "timeOut": "5000",

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\CustomerRepository;
+use App\Http\Requests\Customer\CreateCustomerRequest;
+use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerCategory;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -35,6 +38,34 @@ class CustomerController extends Controller
             'customers',
             'customerCategories',
         ));
+    }
+
+    public function store(CreateCustomerRequest $request)
+    {
+        $code = Customer::generateCustomerCode($request->region_id, $request->sub_region_id, $request->area_id, $request->customer_segment_id, $request->customer_category_id);
+        $request->merge(['code' => $code]);
+        Customer::create($request->all());
+        return redirect()->route('receivable.customer.index')->with([
+            'status' => 'success',
+            'message' => 'created customer successfully'
+        ]);
+    }
+
+    public function show($id)
+    {
+        $customer = Customer::find($id);
+        return view('customer.show', compact('customer'));
+    }
+
+    public function update(UpdateCustomerRequest $request, $id)
+    {
+        $customer = Customer::find($id);
+        $customer->update($request->all());
+
+        return Redirect::back()->with([
+            'status' => 'success',
+            'message' => 'updated customer successfully'
+        ]);
     }
 
     public function destroy(Customer $customer)

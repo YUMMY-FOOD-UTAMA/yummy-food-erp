@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MasterData\RegionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\PermissionRole;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/sub-district-village', [GeographicController::class, 'getVillage'])->name('geographic.sub-village-district');
     });
 
+    Route::group(['prefix' => 'region'], function () {
+        Route::get('/sub-region', [RegionController::class, 'getSubRegions'])->name('region.sub-region.index');
+        Route::get('/sub-region/area', [RegionController::class, 'getAreas'])->name('region.sub-region.area.index');
+    });
+
     Route::middleware(PermissionRole::class)->group(function () {
 
         Route::group(['prefix' => 'receivable'], function () {
@@ -41,9 +47,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('/trash', [CustomerController::class, 'trash'])->name('receivable.customer.trash');
                 Route::delete('/destroy/{customer}', [CustomerController::class, 'destroy'])->name('receivable.customer.destroy');
                 Route::put('/restore/{customer}', [CustomerController::class, 'restore'])->name('receivable.customer.restore');
-
-                Route::post('/create', [CustomerController::class, 'index'])->name('receivable.customer.store');
-                Route::get('/detail/{customer}', [CustomerController::class, 'index'])->name('receivable.customer.detail');
+                Route::post('/create', [CustomerController::class, 'store'])->name('receivable.customer.store');
+                Route::get('/detail/{customer}', [CustomerController::class, 'show'])->name('receivable.customer.show');
                 Route::put('/update/{customer}', [CustomerController::class, 'update'])->name('receivable.customer.update');
             });
         });
