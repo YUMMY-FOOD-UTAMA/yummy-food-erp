@@ -6,7 +6,7 @@
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}" class="h-45px app-sidebar-logo-default"/>
             <img alt="Logo" src="{{ asset('assets/images/logo.png') }}"
                  class="h-20px app-sidebar-logo-minimize"/>
-                 <span class="fw-bold fs-2 text-white text-logo">ugy</span>
+                 <span class="fw-bold fs-2 text-white text-logo">rp</span>
         </a>
         <div id="kt_app_sidebar_toggle"
              class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate"
