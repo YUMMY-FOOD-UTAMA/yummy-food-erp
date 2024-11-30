@@ -1,12 +1,12 @@
 <div class="card-body pt-0">
     <div class="table-responsive">
-        <table class="table align-middle table-row-dashed fs-6 gy-5">
+        <table class="table table-rounded table-bordered gy-7 gs-7">
             <thead>
-            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+            <tr style="height: 45px;padding: 10px 0;">
                 {{$slotTheadTh ?? ''}}
             </tr>
             </thead>
-            <tbody class="fw-semibold text-gray-600">
+            <tbody class="fw-semibold text-gray-800">
             @if(!$dataTable || $dataTable->total() == 0)
                 <tr>
                     <td class="no-data-row text-center">
