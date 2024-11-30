@@ -1,14 +1,14 @@
-<form action="{{url()->current()}}">
+<form id="{{$id}}" action="{{url()->current()}}">
     <div class="row p-10">
         <div class="col-12 {{ $usingApplyButton ? 'col-md-10' : '' }} mb-3">
             <div class="row">
                 {{$slot}}
 
-{{--                <div class="col-12 col-md-3 mb-3">--}}
-{{--                    <label class="form-label">Visit Range Date</label>--}}
-{{--                    <input class="form-control form-control-solid form-control-sm" placeholder="Pick date rage"--}}
-{{--                           id="kt_daterangepicker_1"/>--}}
-{{--                </div>--}}
+                {{--                <div class="col-12 col-md-3 mb-3">--}}
+                {{--                    <label class="form-label">Visit Range Date</label>--}}
+                {{--                    <input class="form-control form-control-solid form-control-sm" placeholder="Pick date rage"--}}
+                {{--                           id="kt_daterangepicker_1"/>--}}
+                {{--                </div>--}}
 
             </div>
         </div>
@@ -22,6 +22,10 @@
 </form>
 @push('script')
     <script>
+        document.getElementById('{{$id}}').addEventListener('submit', function (event) {
+            event.preventDefault();
+            appendQueryParams(this);
+        });
         $("#kt_daterangepicker_1").daterangepicker();
     </script>
 @endpush

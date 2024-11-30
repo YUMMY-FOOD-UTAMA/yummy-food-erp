@@ -32,118 +32,132 @@
                     <x-table.action-button
                         modal-view-i-d="modal_view{{$customer->id}}"
                         soft-delete-route="{{route('receivable.customer.destroy',$customer->id)}}"
-                        delete-preview="{{$customer->name ?$customer->name :'Customer'}}"/>
+                        delete-preview="{{$customer->name ?$customer->name:'Customer'}}"/>
                 @endif
             </tr>
-            {{--            <x-modal id="modal_view{{$customer->id}}"--}}
-            {{--                     title="Data {{$customer->user->email}}" size="1000">--}}
-            {{--                <div class="d-flex flex-column flex-lg-row align-items-start mb-10">--}}
-            {{--                    <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">--}}
-            {{--                        <div class="card card-flush">--}}
-            {{--                            <div class="card-header">--}}
-            {{--                                <div class="card-title">--}}
-            {{--                                    <h2>Avatar</h2>--}}
-            {{--                                </div>--}}
-            {{--                            </div>--}}
-            {{--                            <div class="card-body text-center pt-0">--}}
-            {{--                                <x-form.image-input :view-only="true"--}}
-            {{--                                                    :image="$customer->user->avatar?'users/avatar/'.$customer->user->avatar:''"--}}
-            {{--                                                    name="profile_picture"/>--}}
-            {{--                            </div>--}}
-            {{--                        </div>--}}
-            {{--                    </div>--}}
-            {{--                    <div class="d-flex flex-column gap-7 gap-lg-10 w-100">--}}
-            {{--                        <div class="card">--}}
-            {{--                            <div class="card-body">--}}
-            {{--                                <div class="d-flex flex-column me-n7 pe-7">--}}
-            {{--                                    <x-form.input class="fv-row mb-10" :default-value="$employee->user->full_name"--}}
-            {{--                                                  view-only="true"--}}
-            {{--                                                  label="Full Name" name="full_name"/>--}}
-            {{--                                    <div class="row g-9 mb-8">--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->nik"--}}
-            {{--                                                      label="Nik"--}}
-            {{--                                                      name="nik"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->user->name"--}}
-            {{--                                                      label="Name"--}}
-            {{--                                                      name="name"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->subDepartment->name"--}}
-            {{--                                                      label="Sub Department"--}}
-            {{--                                                      name="sub_department"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->position"--}}
-            {{--                                                      label="Position"--}}
-            {{--                                                      name="position"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->levelGrade->name"--}}
-            {{--                                                      label="Level Grade"--}}
-            {{--                                                      name="level_grade"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->levelGrade->levelName->name"--}}
-            {{--                                                      label="Level Name"--}}
-            {{--                                                      name="level_name"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->join_date"--}}
-            {{--                                                      label="Join Date"--}}
-            {{--                                                      name="join_date"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->date_of_exchange_status"--}}
-            {{--                                                      label="Date Of Exchange Status"--}}
-            {{--                                                      name="date_of_exchange_status"/>--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true"--}}
-            {{--                                                      :default-value="$employee->status"--}}
-            {{--                                                      label="Status"--}}
-            {{--                                                      name="status"/>--}}
+            <x-modal id="modal_view{{$customer->id}}"
+                     :route-view-data="route('receivable.customer.detail',$customer->id)"
+                     title="Data {{$customer->name ? $customer->name : 'Customer'}}" size="1000">
 
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="Email"--}}
-            {{--                                                      :default-value="$employee->user->email"--}}
-            {{--                                                      name="email"/>--}}
-            {{--                                    </div>--}}
-            {{--                                    <x-form.input class="fv-row mb-10" view-only="true" label="Bio"--}}
-            {{--                                                  :default-value="$employee->user->bio"--}}
-            {{--                                                  name="bio"/>--}}
+                <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#customer_info{{$customer->id}}">Customer Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#region_and_location_information{{$customer->id}}">Region & Location Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tax_info_and_contact_info{{$customer->id}}">Tax Information & Contact Information</a>
+                    </li>
+                </ul>
 
-            {{--                                    <div class="row g-9 mb-8">--}}
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="Gender"--}}
-            {{--                                                      :default-value="$employee->user->gender"--}}
-            {{--                                                      name="gender"/>--}}
-
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="Date Of Birth"--}}
-            {{--                                                      :default-value="$employee->user->date_of_birth"--}}
-            {{--                                                      name="date_of_birth"/>--}}
-
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="Timezone"--}}
-            {{--                                                      :default-value="$employee->user->timezone"--}}
-            {{--                                                      name="timezone"/>--}}
-
-
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="Province"--}}
-            {{--                                                      :default-value="$employee->user->province?->name"--}}
-            {{--                                                      name="province"/>--}}
-
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="District"--}}
-            {{--                                                      :default-value="$employee->user->district?->name"--}}
-            {{--                                                      name="District"/>--}}
-
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="Sub District"--}}
-            {{--                                                      :default-value="$employee->user->subDistrict?->name"--}}
-            {{--                                                      name="sub_district"/>--}}
-
-            {{--                                        <x-form.input class="col-md-6 fv-row" view-only="true" label="Village"--}}
-            {{--                                                      :default-value="$employee->user->subDistrictVillage?->name"--}}
-            {{--                                                      name="sub_district_village"/>--}}
-            {{--                                    </div>--}}
-            {{--                                    <x-form.text-area view-only="true" class="fv-row mb-10"--}}
-            {{--                                                      label="Address"--}}
-            {{--                                                      name="address" :default-value="$employee->user->address"--}}
-            {{--                                                      placeholder="Address..."></x-form.text-area>--}}
-            {{--                                </div>--}}
-            {{--                            </div>--}}
-            {{--                        </div>--}}
-            {{--                    </div>--}}
-            {{--            </x-modal>--}}
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="customer_info{{$customer->id}}" role="tabpanel">
+                        <div class="row g-9 mb-8">
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->code"
+                                          label="Customer Code"
+                                          name="customer_code"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->name"
+                                          label="Name"
+                                          name="name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->company_name"
+                                          label="Company Name"
+                                          name="company_name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->status"
+                                          label="Status"
+                                          name="status"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->customerSegment->name"
+                                          label="Customer Segment"
+                                          name="customer_segment"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->customerCategory->name"
+                                          label="Customer Category"
+                                          name="customer_category"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->customerGroup?->name"
+                                          label="Customer Group"
+                                          name="customer_group"/>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="region_and_location_information{{$customer->id}}" role="tabpanel">
+                        <div class="row g-9 mb-8">
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->area->subRegion->region->name"
+                                          label="Region Name"
+                                          name="region_name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->area->subRegion->region->covered"
+                                          label="Region Covered"
+                                          name="region_covered"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->area->subRegion->name"
+                                          label="Sub Region Name"
+                                          name="name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->area->name"
+                                          label="Area Name"
+                                          name="area_name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->province"
+                                          label="Province"
+                                          name="province"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->district"
+                                          label="District"
+                                          name="district"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->sub_district"
+                                          label="Sub District"
+                                          name="sub_district"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->village"
+                                          label="Village"
+                                          name="village"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->postal_code"
+                                          label="Postal Code"
+                                          name="postal_code"/>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tax_info_and_contact_info{{$customer->id}}" role="tabpanel">
+                        <div class="row g-9 mb-8">
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->npwp"
+                                          label="NPWP"
+                                          name="npwp"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->npwp_name"
+                                          label="NPWP Name"
+                                          name="npwp_name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->npwp_address"
+                                          label="NPWP Address"
+                                          name="npwp_address"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->nppkp"
+                                          label="NPPKP"
+                                          name="nppkp"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->contact_person_name"
+                                          label="Contact Person Name"
+                                          name="contact_person_name"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->contact_person_title"
+                                          label="Contact Person Title"
+                                          name="contact_person_title"/>
+                            <x-form.input class="col-md-6 fv-row" view-only="true"
+                                          :default-value="$customer->contact_person_phone"
+                                          label="Contact Person Phone"
+                                          name="contact_person_phone"/>
+                        </div>
+                    </div>
+                </div>
+            </x-modal>
         @endforeach
     @endslot
 </x-table.general-table>

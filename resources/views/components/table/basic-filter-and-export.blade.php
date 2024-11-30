@@ -10,10 +10,9 @@
                         fill="currentColor"/>
                 </svg>
             </span>
-            <form action="{{ url()->current() }}">
-                <input type="text" data-kt-user-table-filter="search" name="search" value="{{ request()->search }}"
-                       class="form-control form-control-solid w-250px ps-14" placeholder="Search {{ $name }}"/>
-            </form>
+            <input type="text" data-kt-user-table-filter="search" id="search_keyword" name="search"
+                   value="{{ request()->search }}"
+                   class="form-control form-control-solid w-250px ps-14" placeholder="Search {{ $name }}"/>
         </div>
     </div>
 
@@ -72,21 +71,19 @@
                 </form>
             </div>
         @endif
-        <form action="{{url()->current()}}">
-            <div class="card-title">
-                <div class="d-flex align-items-center position-relative me-3">
-                    <select id="page-size" name="page_size" class="form-select form-select-solid w-auto"
-                            onchange="this.form.submit()">
-                        @foreach($pageSizes as $pageSize)
-                            <option
-                                value="{{$pageSize->id}}" @selected(old('page_size',$pageSize->id) == request()->page_size)>
-                                {{$pageSize->name}}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+        <div class="card-title">
+            <div class="d-flex align-items-center position-relative me-3">
+                <select id="page-size" name="page_size" class="form-select form-select-solid w-auto"
+                        onchange="handleSelectChangeQueryParams(this)">
+                    @foreach($pageSizes as $pageSize)
+                        <option
+                            value="{{$pageSize->id}}" @selected(old('page_size',$pageSize->id) == request()->page_size)>
+                            {{$pageSize->name}}
+                        </option>
+                    @endforeach
+                </select>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 @if ($exportRoute)
@@ -148,9 +145,9 @@
             window.location.href = baseUrl;
         });
         @endif
+
         $('#search_keyword').on('change', function () {
-            $(this).closest('form').submit();
-        })
-        ;
+            handleInputChangeQueryParams(this)
+        });
     </script>
 @endpush

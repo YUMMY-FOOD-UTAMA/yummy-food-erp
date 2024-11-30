@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MasterData\RegionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\PermissionRole;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/district', [GeographicController::class, 'getDistrict'])->name('geographic.district');
         Route::get('/sub-district', [GeographicController::class, 'getSubDistrict'])->name('geographic.sub-district');
         Route::get('/sub-district-village', [GeographicController::class, 'getVillage'])->name('geographic.sub-village-district');
+    });
+
+    Route::group(['prefix' => 'region'], function () {
+        Route::get('/sub-region', [RegionController::class, 'getSubRegions'])->name('region.sub-region.index');
+        Route::get('/sub-region/area', [RegionController::class, 'getAreas'])->name('region.sub-region.area.index');
     });
 
     Route::middleware(PermissionRole::class)->group(function () {
