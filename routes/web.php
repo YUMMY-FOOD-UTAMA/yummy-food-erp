@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ManagementSettingController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterData\RegionController;
@@ -40,6 +41,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(PermissionRole::class)->group(function () {
+
+        Route::group(['prefix' => 'management-setting'], function () {
+            Route::get('/', [ManagementSettingController::class, 'index'])->name('management_setting.index');
+            Route::put('/', [ManagementSettingController::class, 'upsert'])->name('management_setting.upsert');
+        });
 
         Route::group(['prefix' => 'receivable'], function () {
             Route::group(['prefix' => 'customer'], function () {
