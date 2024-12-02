@@ -26,6 +26,6 @@ jobs:
           script: |
             if [ "${{ github.ref_name }}" == "dev" ]; then
               cd /home/u409594432/domains/dev.yummyrp.com/public_html && sh ./.scripts/deploy.sh
-            elif [ "${{ github.ref_name }}" == "staging" ]; then
+            elif [ "${{ github.ref_name }}" == "stg" ]; then
               cd /home/u409594432/domains/stg.yummyrp.com/public_html && sh ./.scripts/deploy.sh
             fi
