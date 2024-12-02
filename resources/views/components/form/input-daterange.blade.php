@@ -9,7 +9,8 @@
     'id' => 'input',
     'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
     'withRange'=>false,
-    'maximum_range_date' =>null
+    'maximum_range_date' =>null,
+    'minimum_range_date'=>null
 ])
 
 <div {{$attributes->merge(['class' => ''])}}>
@@ -77,9 +78,9 @@
             const formattedStartDate = startDate.format('YYYY-MM-DD');
             const formattedEndDate = endDate.format('YYYY-MM-DD');
 
+            const rangeInDays = endDate.diff(startDate, 'days') + 1;
             @if($maximum_range_date)
             const maxRange = {{$maximum_range_date}};
-            const rangeInDays = endDate.diff(startDate, 'days') + 1;
 
             if (rangeInDays > maxRange) {
                 toastr.error(`The date range cannot be more than ${maxRange} days.`);
@@ -89,8 +90,19 @@
                 return;
             }
             @endif
+            @if($minimum_range_date)
+            const minRange = {{$minimum_range_date}};
+            if (rangeInDays < minRange) {
+                toastr.error(`The date range cannot be less than ${minRange} days.`);
+                $('#{{$id.$uuid}}').val('');
+                $('#start_date{{$uuid}}').val('');
+                $('#end_date{{$uuid}}').val('');
+                return;
+            }
+            @endif
 
-            $('#{{$id.$uuid}}').val(startDate.format("MMMM D, YYYY") + ' - ' + endDate.format("MMMM D, YYYY"));
+            $('#{{$id.$uuid}}').val(startDate.format("MMMM D, YYYY") + ' - ' + endDate.format("MMMM D, YYYY"))
+            ;
             $('#start_date{{$uuid}}').val(formattedStartDate);
             $('#end_date{{$uuid}}').val(formattedEndDate);
 

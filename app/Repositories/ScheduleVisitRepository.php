@@ -3,15 +3,23 @@
 namespace App\Repositories;
 
 use App\Models\SalesScheduleVisit;
+use App\Utils\Primitives\Enum\SalesScheduleVisitStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ScheduleVisitRepository
 {
     private Request $request;
+    private array $statuses = [];
 
     public function setRequest(Request $request): void
     {
         $this->request = $request;
+    }
+
+    public function setStatuses(array $statuses): void
+    {
+        $this->statuses = $statuses;
     }
 
     public function getAll()
@@ -28,6 +36,8 @@ class ScheduleVisitRepository
         $scheduleVisit = SalesScheduleVisit::with([
             'customer',
             'employee.user',
+            'employee.subDepartment.department.division',
+            'employee.levelGrade.levelName',
             'customer.area.subRegion.region',
             'customer.customerCategory',
             'customer.customerSegment',
@@ -55,6 +65,9 @@ class ScheduleVisitRepository
                 });
             });
         }
+        if ($this->statuses) {
+            $scheduleVisit = $scheduleVisit->whereIn('status', $this->statuses);
+        }
         if ($customerStatus) {
             $scheduleVisit = $scheduleVisit->whereHas('customer', function ($query) use ($customerStatus) {
                 $query->where('status', $customerStatus);
@@ -63,5 +76,64 @@ class ScheduleVisitRepository
         $scheduleVisit = $scheduleVisit->orderByDesc("created_at")->paginate($pageSize)->appends(request()->query());;
 
         return $scheduleVisit;
+    }
+
+    public function calculateStatistic()
+    {
+        $startDate = $this->request->query("start_date");
+        $endDate = $this->request->query("end_date");
+        $customerID = $this->request->query("customer_id");
+        $employeeID = $this->request->query("employee_id");
+
+        $salesMappingStatisticVisited = null;
+        $salesMappingStatisticScheduledNotVisited = null;
+        $salesTrackRecord = null;
+
+        if ($startDate && $endDate) {
+            $salesMappingStatisticVisited = SalesScheduleVisit::selectRaw('DATE(start_visit) as visit_date, COUNT(*) as total')
+                ->where('status', SalesScheduleVisitStatus::VISITED)
+                ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                    return $query->whereBetween('start_visit', [$startDate, $endDate]);
+                })
+                ->groupBy('visit_date')
+                ->orderBy('visit_date');
+            $salesMappingStatisticScheduledNotVisited = SalesScheduleVisit::selectRaw('DATE(start_visit) as visit_date, COUNT(*) as total')
+                ->where('status', SalesScheduleVisitStatus::APPROVED)
+                ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                    return $query->whereBetween('start_visit', [$startDate, $endDate]);
+                })
+                ->groupBy('visit_date')
+                ->orderBy('visit_date');
+            if ($customerID) {
+                $salesMappingStatisticScheduledNotVisited = $salesMappingStatisticScheduledNotVisited->where('customer_id', $customerID);
+                $salesMappingStatisticVisited = $salesMappingStatisticVisited->where('customer_id', $customerID);
+            }
+            if ($employeeID) {
+                $salesMappingStatisticScheduledNotVisited = $salesMappingStatisticScheduledNotVisited->where('employee_id', $employeeID);
+                $salesMappingStatisticVisited = $salesMappingStatisticVisited->where('employee_id', $employeeID);
+            }
+
+
+            $salesMappingStatisticVisited = $salesMappingStatisticVisited->get();
+            $salesMappingStatisticScheduledNotVisited = $salesMappingStatisticScheduledNotVisited->get();
+
+            $totalSalesMappingVisited = 0;
+            $totalSalesScheduledNotVisited = 0;
+            foreach ($salesMappingStatisticVisited as $s) {
+                $totalSalesMappingVisited += $s->total;
+            }
+            foreach ($salesMappingStatisticScheduledNotVisited as $s) {
+                $totalSalesScheduledNotVisited += $s->total;
+            }
+
+            $salesTrackRecord = $totalSalesMappingVisited / ($totalSalesMappingVisited + $totalSalesScheduledNotVisited) * 100;
+            $salesTrackRecord = intval(ceil($salesTrackRecord));
+
+        }
+        return [
+            'sales_mapping_statistic_visited' => $salesMappingStatisticVisited,
+            'sales_mapping_statistic_scheduled_not_visited' => $salesMappingStatisticScheduledNotVisited,
+            'sales_track_record' => $salesTrackRecord,
+        ];
     }
 }

@@ -9,7 +9,8 @@
                        :default-value="request()->customer_status"/>
     <x-form.select-box name="visit_status" label="Visit Status" form-method="GET"
                        class="col-12 col-md-3 mb-5" type="row" placeholder="Select Visit Status..."
-                       size-form="sm" :items="VisitStatus::valuesObject()" :default-value="request()->visit_status"/>
+                       size-form="sm" :items="VisitStatus::valuesObject()"
+                       :default-value="request()->visit_status"/>
     <x-form.input-daterange label="Visit Range Date" size-form="sm" placeholder="Input Visit Range Date..."
                             class="col-12 col-md-3 mb-5"
                             :default-value-start-date="request()->start_date"
