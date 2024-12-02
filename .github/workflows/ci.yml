@@ -3,8 +3,8 @@ name: 🚀 Deploy on push main and staging
 on:
   push:
     branches:
-#      - main
-      - staging
+      - main
+      - stg
       - dev
 
 jobs:
