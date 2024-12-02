@@ -185,7 +185,8 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
-                                    <a class="menu-link" href="">
+                                    <a class="menu-link {{Route::is('receivable.crm.sales-visit-report.*')?'active':''}}"
+                                       href="{{route('receivable.crm.sales-visit-report.index')}}">
                                         <span class="menu-icon">
                                         <i>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

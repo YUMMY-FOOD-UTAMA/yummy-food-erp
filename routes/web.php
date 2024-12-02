@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CRM\SalesApprovalController;
 use App\Http\Controllers\CRM\SalesConfirmVisitController;
 use App\Http\Controllers\CRM\SalesMappingController;
+use App\Http\Controllers\CRM\SalesVisitReportController;
 use App\Http\Controllers\CRM\ScheduleVisitController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
@@ -78,6 +79,10 @@ Route::middleware('auth')->group(function () {
                 Route::group(['prefix' => 'sales-confirm-visit'], function () {
                     Route::get('/', [SalesConfirmVisitController::class, 'index'])->name('receivable.crm.sales-confirm-visit.index');
                     Route::put('/confirm-visit/{schedule_visit}', [SalesConfirmVisitController::class, 'visitConfirmation'])->name('receivable.crm.sales-confirm-visit.confirm');
+                });
+
+                Route::group(['prefix' => 'sales-visit-report'], function () {
+                    Route::get('/', [SalesVisitReportController::class, 'index'])->name('receivable.crm.sales-visit-report.index');
                 });
             });
 
