@@ -22,16 +22,14 @@
                     {{ \Carbon\Carbon::parse($scheduleVisit->end_visit)->addDay()->format('d M Y') }}
                 </td>
                 <td>
-                    <div class="d-flex">
-                        @if($scheduleVisit->status === VisitStatus::APPROVED)
-                            <a href="" data-bs-toggle="modal" id="triggerMap{{$scheduleVisit->id}}"
-                               data-bs-target="#modal_visit{{$scheduleVisit->id}}"
-                               class="btn btn-primary btn-sm mx-1 edit-td-action-btn">
-                                Visit
-                            </a>
-                        @endif
-                        @include('crm.partials.crm_modal_view_detail', ['scheduleVisit' => $scheduleVisit])
-                    </div>
+                    @if($scheduleVisit->status === VisitStatus::APPROVED)
+                        <a href="" data-bs-toggle="modal" id="triggerMap{{$scheduleVisit->id}}"
+                           data-bs-target="#modal_visit{{$scheduleVisit->id}}"
+                           class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2">
+                            Visit
+                        </a>
+                    @endif
+                    @include('crm.partials.crm_modal_view_detail', ['scheduleVisit' => $scheduleVisit])
                 </td>
             </tr>
             <x-modal id="modal_visit{{$scheduleVisit->id}}"

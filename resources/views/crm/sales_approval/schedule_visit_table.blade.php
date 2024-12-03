@@ -19,7 +19,9 @@
         @foreach($scheduleVisits as $scheduleVisit)
             <tr>
                 <td>
-                    <input type="checkbox" {{$scheduleVisit->status != VisitStatus::WAITING_APPROVAL ? 'disabled' : ''}} class="select-item" value="{{ $scheduleVisit->id }}">
+                    <input type="checkbox"
+                           {{$scheduleVisit->status != VisitStatus::WAITING_APPROVAL ? 'disabled' : ''}} class="select-item"
+                           value="{{ $scheduleVisit->id }}">
                 </td>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{$scheduleVisit->customer->company_name}}</td>
@@ -30,41 +32,40 @@
                     <strong>{{ $scheduleVisit->status }}</strong>
                 </td>
                 <td>
-                    <div class="d-flex">
-                        <form action="{{ route('receivable.crm.sales-approval.approval') }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="schedule_visit_ids" value="{{ $scheduleVisit->id }}">
-                            <input type="hidden" name="decision" value="">
+                    <form action="{{ route('receivable.crm.sales-approval.approval') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="schedule_visit_ids" value="{{ $scheduleVisit->id }}">
+                        <input type="hidden" name="decision" value="">
 
-                            <a href=""
-                               onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::APPROVED}}');"
-                               class="btn btn-success btn-sm mx-1 edit-td-action-btn"
-                               @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
-                                   disabled
-                               style="pointer-events: none; opacity: 0.6;"
-                                @endif>
-                                Approve
-                            </a>
+                        <a href=""
+                           onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::APPROVED}}');"
+                           class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2"
+                           @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
+                               disabled
+                           style="pointer-events: none; opacity: 0.6;"
+                            @endif>
+                            Approve
+                        </a>
 
-                            <a href=""
-                               onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::REJECTED}}');"
-                               class="btn btn-danger btn-sm mx-1 edit-td-action-btn"
-                               @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
-                                   disabled
-                               style="pointer-events: none; opacity: 0.6;"
-                                @endif>
-                                Reject
-                            </a>
-                        </form>
-                        @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
-                    </div>
+                        <a href=""
+                           onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::REJECTED}}');"
+                           class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2"
+                           @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
+                               disabled
+                           style="pointer-events: none; opacity: 0.6;"
+                            @endif>
+                            Reject
+                        </a>
+                    </form>
+                    @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
                 </td>
             </tr>
         @endforeach
     @endslot
 </x-table.general-table>
-<form id="bulkActionForm" action="{{ route('receivable.crm.sales-approval.approval') }}" method="POST" style="display: none;">
+<form id="bulkActionForm" action="{{ route('receivable.crm.sales-approval.approval') }}" method="POST"
+      style="display: none;">
     @csrf
     @method('PUT')
     <input type="hidden" name="decision" id="bulkDecision">

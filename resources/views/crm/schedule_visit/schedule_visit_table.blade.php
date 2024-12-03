@@ -30,22 +30,20 @@
                 </td>
                 <td>{{$scheduleVisit->expiredAtTheDay()}}</td>
                 <td>
-                    <div class="d-flex">
-                        <form action="{{ route('receivable.crm.schedule-visit.cancel', $scheduleVisit->id) }}"
-                              method="POST">
-                            @csrf
-                            @method('PUT')
-                            <a href="" onclick="event.preventDefault();this.closest('form').submit();"
-                               class="btn btn-danger btn-sm mx-1 edit-td-action-btn"
-                               @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
-                                   disabled
-                               style="pointer-events: none; opacity: 0.6;"
-                                @endif>
-                                Cancelled
-                            </a>
-                        </form>
-                        @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
-                    </div>
+                    <form action="{{ route('receivable.crm.schedule-visit.cancel', $scheduleVisit->id) }}"
+                          method="POST">
+                        @csrf
+                        @method('PUT')
+                        <a href="" onclick="event.preventDefault();this.closest('form').submit();"
+                           class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2"
+                           @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
+                               disabled
+                           style="pointer-events: none; opacity: 0.6;"
+                            @endif>
+                            Cancelled
+                        </a>
+                    </form>
+                    @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
                 </td>
             </tr>
         @endforeach

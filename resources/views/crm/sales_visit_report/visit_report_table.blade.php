@@ -22,9 +22,7 @@
                 <td>{{$scheduleVisit->expiredAtTheDay()}}</td>
                 <td>......%</td>
                 <td>
-                    <div class="d-flex">
-                        @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
-                    </div>
+                    @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
                 </td>
             </tr>
         @endforeach

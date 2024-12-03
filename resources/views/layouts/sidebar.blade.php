@@ -83,7 +83,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link">
+                            <a class="menu-link {{ Route::is('user-management.role-management.*') ? 'active' : '' }}"
+                               href="{{ route('user-management.role-management.index') }}">
                                 <span class="menu-icon">
                                 <i>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
