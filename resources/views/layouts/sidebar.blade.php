@@ -8,6 +8,7 @@
                  class="h-20px app-sidebar-logo-minimize"/>
             <span class="fw-bold fs-2 text-white text-logo">rp</span>
         </a>
+
         <div id="kt_app_sidebar_toggle"
              class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate"
              data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
@@ -25,6 +26,7 @@
             </span>
         </div>
     </div>
+
     <div class="app-sidebar-menu overflow-hidden flex-column-fluid" style="background-color: #C3252B !important;">
         <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5"
              data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto"
@@ -32,8 +34,10 @@
              data-kt-scroll-save-state="true">
             <div class="menu menu-column menu-rounded menu-sub-indention px-3 sidebar-menu-admin"
                  id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-                <div class="menu-item">
-                    <a class="menu-link {{ Route::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                @can('dashboard')
+                    <div class="menu-item">
+                        <a class="menu-link {{ Route::is('dashboard') ? 'active' : '' }}"
+                           href="{{ route('dashboard') }}">
                        <span class="menu-icon">
                         <i>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="none" viewBox="0 0 24 24"
@@ -43,17 +47,20 @@
                             </svg>
                         </i>
                        </span>
-                        <span class="menu-title">Dashboards</span>
-                    </a>
-                </div>
+                            <span class="menu-title">Dashboards</span>
+                        </a>
+                    </div>
+                @endcan()
 
                 <div class="menu-item pt-5">
                     <div class="menu-content">
                         <span class="menu-heading fw-bold text-uppercase fs-7">Pages</span>
                     </div>
                 </div>
-                <div data-kt-menu-trigger="click"
-                     class="{{Route::is('user-management.*')? 'show':''}} menu-item menu-accordion">
+
+                @if(Auth::user()->hasPermissionStartingWith('user-management.'))
+                    <div data-kt-menu-trigger="click"
+                         class="{{Route::is('user-management.*')? 'show':''}} menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <i>
@@ -67,24 +74,30 @@
                         <span class="menu-title">User Management</span>
                         <span class="menu-arrow"></span>
                     </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link {{ Route::is('user-management.employee.*') && !Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
-                               href="{{ route('user-management.employee.index') }}">
-                                <i class="bi bi-person-circle menu-icon"></i>
-                                <span class="menu-title">All Department</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link {{ Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
-                               href="{{ route('user-management.employee.sales.index') }}">
-                                <i class="bi bi-person-circle menu-icon"></i>
-                                <span class="menu-title">Sales Department</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link {{ Route::is('user-management.role-management.*') ? 'active' : '' }}"
-                               href="{{ route('user-management.role-management.index') }}">
+                        <div class="menu-sub menu-sub-accordion">
+                            @can('user-management.employee.index')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ Route::is('user-management.employee.*') && !Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
+                                       href="{{ route('user-management.employee.index') }}">
+                                        <i class="bi bi-person-circle menu-icon"></i>
+                                        <span class="menu-title">All Department</span>
+                                    </a>
+                                </div>
+                            @endcan
+                            @can('user-management.employee.sales.index')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
+                                       href="{{ route('user-management.employee.sales.index') }}">
+                                        <i class="bi bi-person-circle menu-icon"></i>
+                                        <span class="menu-title">Sales Department</span>
+                                    </a>
+                                </div>
+                            @endcan
+
+                            @can('user-management.role-management.index')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ Route::is('user-management.role-management.*') ? 'active' : '' }}"
+                                       href="{{ route('user-management.role-management.index') }}">
                                 <span class="menu-icon">
                                 <i>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -96,13 +109,18 @@
                                     </svg>
                                 </i>
                                 </span>
-                                <span class="menu-title">Role Management</span>
-                            </a>
+                                        <span class="menu-title">Role Management</span>
+                                    </a>
+                                </div>
+                            @endcan
+
                         </div>
                     </div>
-                </div>
-                <div data-kt-menu-trigger="click"
-                     class="menu-item menu-accordion {{Route::is('receivable.*') ? 'show':''}}">
+                @endif
+
+                @if(Auth::user()->hasPermissionStartingWith('receivable.'))
+                    <div data-kt-menu-trigger="click"
+                         class="menu-item menu-accordion {{Route::is('receivable.*') ? 'show':''}}">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <i>
@@ -116,109 +134,135 @@
                         <span class="menu-title">Account Receivable</span>
                         <span class="menu-arrow"></span>
                     </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div data-kt-menu-trigger="click"
-                             class="menu-item menu-accordion {{Route::is('receivable.crm.*')?'show':''}}">
-                            <span class="menu-link">
-                                <span class="menu-icon">
-                                    <i>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M16 11V7a4 4 0 10-8 0v4M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804"/>
-                                        </svg>
-                                    </i>
-                                </span>
-                                <span class="menu-title">CRM</span>
-                                <span class="menu-arrow"></span>
-                            </span>
-                            <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                <div class="menu-item">
-                                    <a class="menu-link {{Route::is('receivable.crm.sales-mapping.*')?'active':''}}"
-                                       href="{{route('receivable.crm.sales-mapping.index')}}">
-                                        <span class="menu-icon">
-                                            <i>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
-                                                  <path fill-rule="evenodd"
-                                                        d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
-                                                </svg>
-                                            </i>
-                                        </span>
-                                        <span class="menu-title">Sales Mapping</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link {{Route::is('receivable.crm.schedule-visit.*')?'active':''}}"
-                                       href="{{route('receivable.crm.schedule-visit.index')}}">
-                                    <span class="menu-icon">
-                                            <i>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
-                                                     viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          stroke-width="2" d="M9 12h6M9 8h6M9 16h6"/>
-                                                </svg>
-                                            </i>
-                                        </span>
-                                        <span class="menu-title">Scheduling Visit</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link {{Route::is('receivable.crm.sales-approval.*')?'active':''}}"
-                                       href="{{route('receivable.crm.sales-approval.index')}}">
+                        <div class="menu-sub menu-sub-accordion">
+                            @if(Auth::user()->hasPermissionStartingWith('receivable.crm.'))
+                                <div data-kt-menu-trigger="click"
+                                     class="menu-item menu-accordion {{Route::is('receivable.crm.*')?'show':''}}">
+                                    <span class="menu-link">
                                         <span class="menu-icon">
                                             <i>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
                                                      viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                          stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                          stroke-width="2"
+                                                          d="M16 11V7a4 4 0 10-8 0v4M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804"/>
                                                 </svg>
                                             </i>
                                         </span>
-                                        <span class="menu-title">Sales Approval</span>
-                                    </a>
+                                        <span class="menu-title">CRM</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                        @can('receivable.crm.sales-mapping.index')
+                                            <div class="menu-item">
+                                                <a class="menu-link {{Route::is('receivable.crm.sales-mapping.*')?'active':''}}"
+                                                   href="{{route('receivable.crm.sales-mapping.index')}}">
+                                                    <span class="menu-icon">
+                                                        <i>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                 height="16"
+                                                                 fill="currentColor" class="bi bi-diagram-3"
+                                                                 viewBox="0 0 16 16">
+                                                              <path fill-rule="evenodd"
+                                                                    d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+                                                            </svg>
+                                                        </i>
+                                                    </span>
+                                                    <span class="menu-title">Sales Mapping</span>
+                                                </a>
+                                            </div>
+                                        @endcan
+
+                                        @can('receivable.crm.schedule-visit.index')
+                                            <div class="menu-item">
+                                                <a class="menu-link {{Route::is('receivable.crm.schedule-visit.*')?'active':''}}"
+                                                   href="{{route('receivable.crm.schedule-visit.index')}}">
+                                                <span class="menu-icon">
+                                                <i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
+                                                         viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              stroke-width="2" d="M9 12h6M9 8h6M9 16h6"/>
+                                                    </svg>
+                                                </i>
+                                                </span>
+                                                    <span class="menu-title">Scheduling Visit</span>
+                                                </a>
+                                            </div>
+                                        @endcan
+
+                                        @can('receivable.crm.sales-approval.index')
+                                            <div class="menu-item">
+                                                <a class="menu-link {{Route::is('receivable.crm.sales-approval.*')?'active':''}}"
+                                                   href="{{route('receivable.crm.sales-approval.index')}}">
+                                                    <span class="menu-icon">
+                                                        <i>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                                                 fill="none"
+                                                                 viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                      stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                            </svg>
+                                                        </i>
+                                                    </span>
+                                                    <span class="menu-title">Sales Approval</span>
+                                                </a>
+                                            </div>
+                                        @endcan
+
+                                        @can('receivable.crm.sales-confirm-visit.index')
+                                            <div class="menu-item">
+                                                <a class="menu-link {{Route::is('receivable.crm.sales-confirm-visit.*')?'active':''}}"
+                                                   href="{{route('receivable.crm.sales-confirm-visit.index')}}">
+                                                    <i class="bi bi-check-circle menu-icon"></i>
+                                                    <span class="menu-title">Sales Confirm Visit</span>
+                                                </a>
+                                            </div>
+                                        @endcan
+
+                                        @can('receivable.crm.sales-visit-report.index')
+                                            <div class="menu-item">
+                                                <a class="menu-link {{Route::is('receivable.crm.sales-visit-report.*')?'active':''}}"
+                                                   href="{{route('receivable.crm.sales-visit-report.index')}}">
+                                                    <span class="menu-icon">
+                                                    <i>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-flag" viewBox="0 0 16 16">
+                                                          <path
+                                                              d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z"/>
+                                                        </svg>
+                                                    </i>
+                                                    </span>
+                                                    <span class="menu-title">Sales Visit Report</span>
+                                                </a>
+                                            </div>
+                                        @endcan
+                                    </div>
                                 </div>
+                            @endif
+
+                            @can('receivable.customer.index')
                                 <div class="menu-item">
-                                    <a class="menu-link {{Route::is('receivable.crm.sales-confirm-visit.*')?'active':''}}"
-                                       href="{{route('receivable.crm.sales-confirm-visit.index')}}">
-                                        <i class="bi bi-check-circle menu-icon"></i>
-                                        <span class="menu-title">Sales Confirm Visit</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link {{Route::is('receivable.crm.sales-visit-report.*')?'active':''}}"
-                                       href="{{route('receivable.crm.sales-visit-report.index')}}">
+                                    <a class="menu-link {{Route::is('receivable.customer.*')?'active':''}}"
+                                       href="{{route('receivable.customer.index')}}">
                                         <span class="menu-icon">
-                                        <i>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-flag" viewBox="0 0 16 16">
-                                              <path
-                                                  d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z"/>
-                                            </svg>
-                                        </i>
+                                            <i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"/>
+                                                </svg>
+                                            </i>
                                         </span>
-                                        <span class="menu-title">Sales Visit Report</span>
+                                        <span class="menu-title">List Of Customer</span>
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link {{Route::is('receivable.customer.*')?'active':''}}"
-                               href="{{route('receivable.customer.index')}}">
-                                <span class="menu-icon">
-                                    <i>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"/>
-                                        </svg>
-                                    </i>
-                                </span>
-                                <span class="menu-title">List Of Customer</span>
-                            </a>
+                            @endcan
                         </div>
                     </div>
-                </div>
+                @endif
+
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -384,9 +428,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="menu-item">
-                    <a class="menu-link {{Route::is('management_setting.*')? 'active':''}}"
-                       href="{{route('management_setting.index')}}">
+                @can('management_setting.index')
+                    <div class="menu-item">
+                        <a class="menu-link {{Route::is('management_setting.*')? 'active':''}}"
+                           href="{{route('management_setting.index')}}">
                         <span class="menu-icon">
                         <i>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -396,9 +441,10 @@
                             </svg>
                         </i>
                         </span>
-                        <span class="menu-title">Management Setting</span>
-                    </a>
-                </div>
+                            <span class="menu-title">Management Setting</span>
+                        </a>
+                    </div>
+                @endcan
             </div>
         </div>
     </div>

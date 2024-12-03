@@ -13,17 +13,19 @@ class Modal extends Component
     public $description;
     public $routeViewData;
     public string $id;
+    public $routeViewName;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($id, $description = null, $size = "", $title = "", $routeViewData = null)
+    public function __construct($id, $routeViewName, $description = null, $size = "", $title = "", $routeViewData = null)
     {
         $this->size = $size;
         $this->title = $title;
         $this->description = $description;
         $this->routeViewData = $routeViewData;
         $this->id = $id;
+        $this->routeViewName = $routeViewName;
     }
 
     /**

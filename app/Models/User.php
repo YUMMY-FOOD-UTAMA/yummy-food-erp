@@ -50,6 +50,15 @@ class User extends Authenticatable
         ];
     }
 
+    public function hasPermissionStartingWith($prefix)
+    {
+        $permissions = $this->getPermissionsViaRoles();
+
+        return $permissions->contains(function ($permission) use ($prefix) {
+            return strpos($permission->name, $prefix) === 0;
+        });
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));

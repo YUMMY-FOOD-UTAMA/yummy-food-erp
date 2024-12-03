@@ -23,9 +23,11 @@
                 </div>
                 {{$slot ?? ''}}
                 @if($routeViewData)
-                    <div class="text-start">
-                        <a class="btn btn-primary hover-scale" href="{{$routeViewData}}">Edit</a>
-                    </div>
+                    @can($routeViewName)
+                        <div class="text-start">
+                            <a class="btn btn-primary hover-scale" href="{{$routeViewData}}">Edit</a>
+                        </div>
+                    @endcan
                 @endif
             </div>
         </div>
