@@ -263,6 +263,7 @@
                     </div>
                 @endif
 
+                @role('Super Admin')
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -295,6 +296,8 @@
                         </div>
                     </div>
                 </div>
+                @endrole
+
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -327,6 +330,8 @@
                         </div>
                     </div>
                 </div>
+
+                @role('Super Admin')
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -428,6 +433,8 @@
                         </div>
                     </div>
                 </div>
+                @endrole
+
                 @can('management_setting.index')
                     <div class="menu-item">
                         <a class="menu-link {{Route::is('management_setting.*')? 'active':''}}"

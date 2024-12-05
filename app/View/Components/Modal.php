@@ -18,7 +18,7 @@ class Modal extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($id, $routeViewName, $description = null, $size = "", $title = "", $routeViewData = null)
+    public function __construct($id, $routeViewName = null, $description = null, $size = "", $title = "", $routeViewData = null)
     {
         $this->size = $size;
         $this->title = $title;
