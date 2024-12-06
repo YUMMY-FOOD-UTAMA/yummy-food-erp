@@ -12,6 +12,7 @@ use App\Http\Controllers\ManagementSettingController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterData\RegionController;
+use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\PermissionRole;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +108,17 @@ Route::middleware('auth')->group(function () {
             Route::put('/detail/{employee}', [EmployeeController::class, 'update'])->name('user-management.employee.update');
             Route::delete('/delete/{employee}', [EmployeeController::class, 'destroy'])->name('user-management.employee.destroy');
             Route::put('/restore/{employee}', [EmployeeController::class, 'restore'])->name('user-management.employee.restore');
+
+            Route::group(['prefix' => 'role-management'], function () {
+                Route::get('/', [RoleManagementController::class, 'index'])->name('user-management.role-management.index');
+                Route::get('/trash', [RoleManagementController::class, 'trash'])->name('user-management.role-management.trash');
+                Route::delete('/destroy/{role}', [RoleManagementController::class, 'destroy'])->name('user-management.role-management.destroy');
+                Route::put('/restore/{role}', [RoleManagementController::class, 'restore'])->name('user-management.role-management.restore');
+                Route::post('/create', [RoleManagementController::class, 'store'])->name('user-management.role-management.store');
+                Route::get('/create', [RoleManagementController::class, 'create'])->name('user-management.role-management.create');
+                Route::put('/edit/{role}', [RoleManagementController::class, 'update'])->name('user-management.role-management.update');
+            });
+
         });
 
     });

@@ -26,16 +26,19 @@
                 <td>{{ $customer->name }}</td>
                 <td>{{ $customer->contact_person_phone }}</td>
                 @if($isTrash)
-                    <x-table.action-button restore-route="{{route('receivable.customer.restore',$customer->id)}}"
+                    <x-table.action-button restore-route-name="receivable.customer.restore"
+                                           restore-route="{{route('receivable.customer.restore',$customer->id)}}"
                                            modal-view-i-d="modal_view{{$customer->id}}"/>
                 @else
                     <x-table.action-button
                         modal-view-i-d="modal_view{{$customer->id}}"
+                        soft-delete-route-name="receivable.customer.destroy"
                         soft-delete-route="{{route('receivable.customer.destroy',$customer->id)}}"
                         delete-preview="{{$customer->name ?$customer->name:'Customer'}}"/>
                 @endif
             </tr>
             <x-modal id="modal_view{{$customer->id}}"
+                     route-view-name="receivable.customer.update"
                      :route-view-data="route('receivable.customer.show',$customer->id)"
                      title="Data {{$customer->name ? $customer->name : 'Customer'}}" size="1000">
                 @include('customer.partials.customer_tabs_detail',['customer'=>$customer])

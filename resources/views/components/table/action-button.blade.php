@@ -29,37 +29,43 @@
             </div>
         @endif
         @if($restoreRoute)
-            <form action="{{ $restoreRoute }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="menu-item px-3">
-                    <a class="menu-link px-3" href="javascript:void(0);"
-                       onclick="event.preventDefault();this.closest('form').submit();"
-                       data-kt-customer-table-filter="delete_row">Restore</a>
-                </div>
-            </form>
+            @can($restoreRouteName)
+                <form action="{{ $restoreRoute }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="menu-item px-3">
+                        <a class="menu-link px-3" href="javascript:void(0);"
+                           onclick="event.preventDefault();this.closest('form').submit();"
+                           data-kt-customer-table-filter="delete_row">Restore</a>
+                    </div>
+                </form>
+            @endcan
         @endif
         @if($softDeleteRoute && $deletePreview)
-            <form action="{{ $softDeleteRoute }}" method="POST" id="soft-delete-form-{{ $id }}">
-                @csrf
-                @method('DELETE')
-                <div class="menu-item px-3">
-                    <a class="menu-link px-3" href="javascript:void(0);"
-                       onclick="confirmSoftDelete{{$id}}(event, '{{ $deletePreview }}','{{$id}}')"
-                       data-kt-customer-table-filter="delete_row">Soft Delete</a>
-                </div>
-            </form>
+            @can($softDeleteRouteName)
+                <form action="{{ $softDeleteRoute }}" method="POST" id="soft-delete-form-{{ $id }}">
+                    @csrf
+                    @method('DELETE')
+                    <div class="menu-item px-3">
+                        <a class="menu-link px-3" href="javascript:void(0);"
+                           onclick="confirmSoftDelete{{$id}}(event, '{{ $deletePreview }}','{{$id}}')"
+                           data-kt-customer-table-filter="delete_row">Soft Delete</a>
+                    </div>
+                </form>
+            @endcan
         @endif
         @if($hardDeleteRoute && $deletePreview)
-            <form action="{{ $hardDeleteRoute }}" method="POST" id="hard-delete-form-{{ $id }}">
-                @csrf
-                @method('DELETE')
-                <div class="menu-item px-3">
-                    <a class="menu-link px-3" href="javascript:void(0);"
-                       onclick="confirmHardDelete{{$id}}(event, '{{ $deletePreview }}','{{$id}}')"
-                       data-kt-customer-table-filter="delete_row">Delete</a>
-                </div>
-            </form>
+            @can($hardDeleteRoute)
+                <form action="{{ $hardDeleteRoute }}" method="POST" id="hard-delete-form-{{ $id }}">
+                    @csrf
+                    @method('DELETE')
+                    <div class="menu-item px-3">
+                        <a class="menu-link px-3" href="javascript:void(0);"
+                           onclick="confirmHardDelete{{$id}}(event, '{{ $deletePreview }}','{{$id}}')"
+                           data-kt-customer-table-filter="delete_row">Delete</a>
+                    </div>
+                </form>
+            @endcan
         @endif
         {{$slotMenutItem ?? ''}}
     </div>
