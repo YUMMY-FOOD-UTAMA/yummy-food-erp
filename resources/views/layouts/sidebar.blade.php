@@ -298,39 +298,44 @@
                 </div>
                 @endrole
 
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M3 7h18M3 7V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7m-2 10V12m-6 5v-6m-6 6v-4"/>
-                                </svg>
-                            </i>
+                @if(Auth::user()->hasPermissionStartingWith('inventory.'))
+                    <div data-kt-menu-trigger="click"
+                         class="menu-item menu-accordion {{Route::is('inventory.*') ? 'show':''}}">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
+                                         viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M3 7h18M3 7V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7m-2 10V12m-6 5v-6m-6 6v-4"/>
+                                    </svg>
+                                </i>
+                            </span>
+                            <span class="menu-title">Inventory</span>
+                            <span class="menu-arrow"></span>
                         </span>
-                        <span class="menu-title">Inventory</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link"
-                               href="../../demo1/dist/authentication/extended/multi-steps-sign-up.html">
-                                <span class="menu-icon">
-                                    <i>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M3 4h18l-2 12H5L3 4zm4 12a2 2 0 110 4 2 2 0 010-4zm10 0a2 2 0 110 4 2 2 0 010-4z"/>
-                                        </svg>
-                                    </i>
-                                </span>
-                                <span class="menu-title">List Of Product</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion">
+                            @can('inventory.product.index')
+                                <div class="menu-item">
+                                    <a class="menu-link {{Route::is('inventory.product.*') ? 'active':''}}"
+                                       href="{{route('inventory.product.index')}}">
+                                        <span class="menu-icon">
+                                            <i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M3 4h18l-2 12H5L3 4zm4 12a2 2 0 110 4 2 2 0 010-4zm10 0a2 2 0 110 4 2 2 0 010-4z"/>
+                                                </svg>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">List Of Product</span>
+                                    </a>
+                                </div>
+                            @endcan
                         </div>
                     </div>
-                </div>
-
+                @endif
                 @role('Super Admin')
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">

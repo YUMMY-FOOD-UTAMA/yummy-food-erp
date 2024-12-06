@@ -8,6 +8,7 @@ use App\Http\Controllers\CRM\SalesVisitReportController;
 use App\Http\Controllers\CRM\ScheduleVisitController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Inventory\ProductController;
 use App\Http\Controllers\ManagementSettingController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
@@ -22,8 +23,6 @@ Route::fallback(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::group(['prefix' => 'account'], function () {
         Route::get('/', [AccountController::class, 'index'])->name('account.index');
         Route::get('/setting', [AccountController::class, 'setting'])->name('account.setting');
@@ -52,6 +51,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(PermissionRole::class)->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::group(['prefix' => 'management-setting'], function () {
             Route::get('/', [ManagementSettingController::class, 'index'])->name('management_setting.index');
@@ -95,6 +95,12 @@ Route::middleware('auth')->group(function () {
                 Route::post('/create', [CustomerController::class, 'store'])->name('receivable.customer.store');
                 Route::get('/detail/{customer}', [CustomerController::class, 'show'])->name('receivable.customer.show');
                 Route::put('/update/{customer}', [CustomerController::class, 'update'])->name('receivable.customer.update');
+            });
+        });
+
+        Route::group(['prefix' => 'inventory'], function () {
+            Route::group(['prefix' => '/product'], function () {
+                Route::get('/', [ProductController::class, 'index'])->name('inventory.product.index');
             });
         });
 
