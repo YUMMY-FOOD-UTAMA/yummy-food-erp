@@ -55,7 +55,7 @@
             @endcan
         @endif
         @if($hardDeleteRoute && $deletePreview)
-            @can($hardDeleteRoute)
+            @can($hardDeleteRouteName)
                 <form action="{{ $hardDeleteRoute }}" method="POST" id="hard-delete-form-{{ $id }}">
                     @csrf
                     @method('DELETE')

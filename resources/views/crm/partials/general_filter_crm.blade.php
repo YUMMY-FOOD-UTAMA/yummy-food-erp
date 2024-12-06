@@ -1,6 +1,8 @@
 <x-table.advance-filter using-apply-button="true" class="mt-5 ms-6 me-6">
-    <x-form.select-box-employee class="col-12 col-md-3 mb-5" type="row" :only-sales="true"
-                                size-form="sm" :employee-i-d="request()->employee_id"></x-form.select-box-employee>
+    @if(!PermissionHelper::isOnlySelfAccess())
+        <x-form.select-box-employee class="col-12 col-md-3 mb-5" type="row" :only-sales="true"
+                                    size-form="sm" :employee-i-d="request()->employee_id"></x-form.select-box-employee>
+    @endif
     <x-form.select-box-customer class="col-12 col-md-3 mb-5" type="row" :only-sales="true"
                                 size-form="sm" :customer-i-d="request()->customer_id"></x-form.select-box-customer>
     <x-form.select-box name="customer_status" label="Customer Status" form-method="GET"
