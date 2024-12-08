@@ -64,6 +64,10 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token));
     }
 
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
     public function province()
     {
         return $this->belongsTo(Province::class, 'province_id', 'id')->withTrashed();

@@ -11,6 +11,7 @@ class ScheduleVisitRepository
 {
     private Request $request;
     private array $statuses = [];
+    private array $employeeIDs = [];
 
     public function setRequest(Request $request): void
     {
@@ -20,6 +21,11 @@ class ScheduleVisitRepository
     public function setStatuses(array $statuses): void
     {
         $this->statuses = $statuses;
+    }
+
+    public function setEmployeeIDs(array $employeeIDs): void
+    {
+        $this->employeeIDs = $employeeIDs;
     }
 
     public function getAll()
@@ -67,6 +73,9 @@ class ScheduleVisitRepository
         }
         if ($this->statuses) {
             $scheduleVisit = $scheduleVisit->whereIn('status', $this->statuses);
+        }
+        if ($this->employeeIDs) {
+            $scheduleVisit = $scheduleVisit->whereIn('employee_id', $this->employeeIDs);
         }
         if ($customerStatus) {
             $scheduleVisit = $scheduleVisit->whereHas('customer', function ($query) use ($customerStatus) {

@@ -8,6 +8,7 @@ use App\Http\Controllers\CRM\SalesVisitReportController;
 use App\Http\Controllers\CRM\ScheduleVisitController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Inventory\ProductController;
 use App\Http\Controllers\ManagementSettingController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
@@ -22,8 +23,6 @@ Route::fallback(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::group(['prefix' => 'account'], function () {
         Route::get('/', [AccountController::class, 'index'])->name('account.index');
         Route::get('/setting', [AccountController::class, 'setting'])->name('account.setting');
@@ -52,6 +51,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(PermissionRole::class)->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::group(['prefix' => 'management-setting'], function () {
             Route::get('/', [ManagementSettingController::class, 'index'])->name('management_setting.index');
@@ -98,6 +98,12 @@ Route::middleware('auth')->group(function () {
             });
         });
 
+        Route::group(['prefix' => 'inventory'], function () {
+            Route::group(['prefix' => '/product'], function () {
+                Route::get('/', [ProductController::class, 'index'])->name('inventory.product.index');
+            });
+        });
+
         Route::group(['prefix' => 'user-management'], function () {
             Route::get('/', [EmployeeController::class, 'index'])->name('user-management.employee.index');
             Route::get('/trash', [EmployeeController::class, 'trash'])->name('user-management.employee.trash');
@@ -111,12 +117,11 @@ Route::middleware('auth')->group(function () {
 
             Route::group(['prefix' => 'role-management'], function () {
                 Route::get('/', [RoleManagementController::class, 'index'])->name('user-management.role-management.index');
-                Route::get('/trash', [RoleManagementController::class, 'trash'])->name('user-management.role-management.trash');
                 Route::delete('/destroy/{role}', [RoleManagementController::class, 'destroy'])->name('user-management.role-management.destroy');
-                Route::put('/restore/{role}', [RoleManagementController::class, 'restore'])->name('user-management.role-management.restore');
                 Route::post('/create', [RoleManagementController::class, 'store'])->name('user-management.role-management.store');
                 Route::get('/create', [RoleManagementController::class, 'create'])->name('user-management.role-management.create');
                 Route::put('/edit/{role}', [RoleManagementController::class, 'update'])->name('user-management.role-management.update');
+                Route::get('/detail/{role}', [RoleManagementController::class, 'show'])->name('user-management.role-management.show');
             });
 
         });

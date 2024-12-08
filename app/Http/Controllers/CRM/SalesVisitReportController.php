@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CRM;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\ScheduleVisitRepository;
+use App\Utils\Helpers\PermissionHelper;
 use App\Utils\Primitives\Enum\SalesScheduleVisitStatus;
 use Illuminate\Http\Request;
 
@@ -13,6 +14,7 @@ class SalesVisitReportController extends Controller
     {
         $scheduleVisits = new ScheduleVisitRepository;
         $scheduleVisits->setRequest($request);
+        $scheduleVisits->setEmployeeIDs(PermissionHelper::onlySelfAccessEmployeeIDs());
         $scheduleVisits->setStatuses([SalesScheduleVisitStatus::VISITED]);
         $scheduleVisitData = $scheduleVisits->getAll();
         $calculateScheduleVisit = $scheduleVisits->calculateStatistic();

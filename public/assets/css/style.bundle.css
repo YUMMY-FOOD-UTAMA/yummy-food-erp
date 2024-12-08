@@ -10659,6 +10659,19 @@ textarea.form-control-lg {
   padding-top: 5rem !important;
 }
 
+.pt-21 {
+  padding-top: 5.25rem !important;
+}
+.pt-22 {
+  padding-top: 5.50rem !important;
+}
+.pt-23 {
+  padding-top: 5.75rem !important;
+}
+.pt-24 {
+  padding-top: 6rem !important;
+}
+
 .pe-0 {
   padding-right: 0 !important;
 }
@@ -17828,6 +17841,18 @@ textarea.form-control-lg {
   }
   .pt-md-20 {
     padding-top: 5rem !important;
+  }
+  .pt-md-21 {
+    padding-top: 5.25rem !important;
+  }
+  .pt-md-22 {
+    padding-top: 5.50rem !important;
+  }
+  .pt-md-23 {
+    padding-top: 5.75rem !important;
+  }
+  .pt-md-24 {
+    padding-top: 6rem !important;
   }
   .pe-md-0 {
     padding-right: 0 !important;
@@ -36508,7 +36533,7 @@ code:not([class*=language-]) {
   margin-right: 1rem;
 }
 .form-check.form-check-solid .form-check-input {
-  border: 0;
+  border: 1px solid var(--bs-gray);
 }
 .form-check.form-check-solid .form-check-input:not(:checked) {
   background-color: var(--bs-gray-200);

@@ -72,6 +72,12 @@
 
                     <x-card title="Customer Info" id="customer_info_visit">
                         <div class="row g-9 mb-8">
+                            <x-form.select2-box-tags name="department" type="row" class="col-md-6 fv-row"
+                                                     label="Select Or Add Department"
+                                                     placeholder="Select Or Add Department"
+                                                     :items="DefaultCustomerDepartment::values()" :required="true"
+                                                     drop-down-parent-i-d="#customer_info_visit"
+                                                     :default-value="$scheduleVisit->customer->department"/>
                             <x-form.input class="col-md-6 fv-row" required="true"
                                           label="Contact Person Name"
                                           :default-value="$scheduleVisit->customer->contact_person_name"

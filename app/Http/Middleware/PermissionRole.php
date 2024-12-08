@@ -43,22 +43,22 @@ class PermissionRole
             $temp_func = end($temp_module);
 
             array_pop($temp_module);
-            if ($temp_func == 'index' || $temp_func == 'show' || $temp_func == 'read' || $temp_func == 'trashed') {
-                $temp_permission = $temp_module[0] . '.read';
+            $result = implode('.', $temp_module);
+            if ($temp_func == 'index' || $temp_func == 'read' || $temp_func == 'trashed') {
+                $temp_permission = $result . '.read';
             } else if ($temp_func == 'store' || $temp_func == 'create') {
-                $temp_permission = $temp_module[0] . '.create';
-            } else if ($temp_func == 'update' || $temp_func == 'edit') {
-                $temp_permission = $temp_module[0] . '.update';
+                $temp_permission = $result . '.create';
+            } else if ($temp_func == 'update' || $temp_func == 'edit' || $temp_func == 'show') {
+                $temp_permission = $result . '.update';
             } else if ($temp_func == 'destroy' || $temp_func == 'delete' || $temp_func == 'force-delete') {
-                $temp_permission = $temp_module[0] . '.delete';
+                $temp_permission = $result . '.delete';
             } else if ($temp_func == 'restore') {
-                $temp_permission = $temp_module[0] . '.restore';
+                $temp_permission = $result . '.restore';
             } else if ($temp_func == 'copy' || $temp_func == 'generate') {
-                $temp_permission = $temp_module[0] . '.copy';
+                $temp_permission = $result . '.copy';
             }
 
             // Check permission
-//            dd($permission, $temp_permission);
             if ($authGuard->user()->can($permission) || $authGuard->user()->can($temp_permission)) {
                 return $next($request);
             }

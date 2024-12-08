@@ -8,12 +8,14 @@
         @endslot
         <div class="card">
             <div class="card-body px-5">
-                <form action="{{ route('user-management.role-management.store') }}" method="POST">
+                <form action="{{ route('user-management.role-management.update',$role->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="d-flex justify-content-between">
                         <div class="mb-5">
                             <label for="role_name" class="form-label">Role Name</label>
-                            <input type="text" class="form-control form-control-sm" id="role_name" value="{{old('role_name')}}" name="role_name"
+                            <input type="text" class="form-control form-control-sm" id="role_name"
+                                   value="{{old('role_name',$role->name)}}" name="role_name"
                                    required>
                         </div>
                         <div
@@ -33,13 +35,13 @@
                         {{-- Account Payable --}}
                         @include('role_management.partials.account_payable_group')
                     </div>
-                    @can('user-management.role-management.create')
+                    @can('user-management.role-management.update')
                         <div class="d-flex gap-3">
                             <a href="{{route('user-management.role-management.index')}}" class="btn btn-danger">
                                 Cancel
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-label">Update</span>
                             </button>
                         </div>
                     @endcan

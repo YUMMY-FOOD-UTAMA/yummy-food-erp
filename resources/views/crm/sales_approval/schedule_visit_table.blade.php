@@ -1,12 +1,18 @@
-<div class="ms-8 mb-5 mt-1">
-    <button class="btn btn-success btn-sm mx-1" onclick="processSelected('{{VisitStatus::APPROVED}}')">Approve</button>
-    <button class="btn btn-danger btn-sm mx-1" onclick="processSelected('{{VisitStatus::REJECTED}}')">Reject</button>
-</div>
+@can('receivable.crm.sales-approval.approval')
+    <div class="ms-8 mb-5 mt-1">
+        <button class="btn btn-success btn-sm mx-1" onclick="processSelected('{{VisitStatus::APPROVED}}')">Approve
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" onclick="processSelected('{{VisitStatus::REJECTED}}')">Reject
+        </button>
+    </div>
+@endcan
 <x-table.general-table :data-table="$scheduleVisits">
     @slot('slotTheadTh')
-        <th style="width: 20px; vertical-align: middle; text-align: left;">
-            <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
-        </th>
+        @can('receivable.crm.sales-approval.approval')
+            <th style="width: 20px; vertical-align: middle; text-align: left;">
+                <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+            </th>
+        @endcan
         <th style="width: 20px; vertical-align: middle; text-align: left;">No</th>
         <th style="vertical-align: middle; text-align: left;">Company</th>
         <th style="vertical-align: middle; text-align: left;">Visit Category</th>
@@ -18,11 +24,13 @@
     @slot('slotTbodyTr')
         @foreach($scheduleVisits as $scheduleVisit)
             <tr>
-                <td>
-                    <input type="checkbox"
-                           {{$scheduleVisit->status != VisitStatus::WAITING_APPROVAL ? 'disabled' : ''}} class="select-item"
-                           value="{{ $scheduleVisit->id }}">
-                </td>
+                @can('receivable.crm.sales-approval.approval')
+                    <td>
+                        <input type="checkbox"
+                               {{$scheduleVisit->status != VisitStatus::WAITING_APPROVAL ? 'disabled' : ''}} class="select-item"
+                               value="{{ $scheduleVisit->id }}">
+                    </td>
+                @endcan
                 <td>{{ $loop->iteration }}</td>
                 <td>{{$scheduleVisit->customer->company_name}}</td>
                 <td>{{$scheduleVisit->category}}</td>
@@ -32,32 +40,34 @@
                     <strong>{{ $scheduleVisit->status }}</strong>
                 </td>
                 <td>
-                    <form action="{{ route('receivable.crm.sales-approval.approval') }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="schedule_visit_ids" value="{{ $scheduleVisit->id }}">
-                        <input type="hidden" name="decision" value="">
+                    @can('receivable.crm.sales-approval.approval')
+                        <form action="{{ route('receivable.crm.sales-approval.approval') }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="schedule_visit_ids" value="{{ $scheduleVisit->id }}">
+                            <input type="hidden" name="decision" value="">
 
-                        <a href=""
-                           onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::APPROVED}}');"
-                           class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2"
-                           @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
-                               disabled
-                           style="pointer-events: none; opacity: 0.6;"
-                            @endif>
-                            Approve
-                        </a>
+                            <a href=""
+                               onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::APPROVED}}');"
+                               class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2"
+                               @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
+                                   disabled
+                               style="pointer-events: none; opacity: 0.6;"
+                                @endif>
+                                Approve
+                            </a>
 
-                        <a href=""
-                           onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::REJECTED}}');"
-                           class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2"
-                           @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
-                               disabled
-                           style="pointer-events: none; opacity: 0.6;"
-                            @endif>
-                            Reject
-                        </a>
-                    </form>
+                            <a href=""
+                               onclick="event.preventDefault(); submitForm(this, '{{VisitStatus::REJECTED}}');"
+                               class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2"
+                               @if($scheduleVisit->status !== VisitStatus::WAITING_APPROVAL)
+                                   disabled
+                               style="pointer-events: none; opacity: 0.6;"
+                                @endif>
+                                Reject
+                            </a>
+                        </form>
+                    @endcan
                     @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
                 </td>
             </tr>
