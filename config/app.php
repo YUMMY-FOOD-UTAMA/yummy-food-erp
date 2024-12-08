@@ -132,5 +132,6 @@ return [
         'VisitStatus' => \App\Utils\Primitives\Enum\SalesScheduleVisitStatus::class,
         'VisitCategory' => \App\Utils\Primitives\Enum\SalesScheduleVisitCategory::class,
         'PermissionHelper' => \App\Utils\Helpers\PermissionHelper::class,
+        'DefaultCustomerDepartment' => \App\Utils\Primitives\DefaultCustomerDepartment::class,
     ])->toArray(),
 ];

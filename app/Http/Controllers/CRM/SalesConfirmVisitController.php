@@ -37,6 +37,7 @@ class SalesConfirmVisitController extends Controller
                 "contact_person_name" => $request->get('contact_person_name'),
                 "contact_person_phone" => $request->get('contact_person_phone'),
                 "contact_person_title" => $request->get('contact_person_title'),
+                "department" => $request->get('department'),
             ]);
             $scheduleVisit->update([
                 "status" => SalesScheduleVisitStatus::VISITED,
