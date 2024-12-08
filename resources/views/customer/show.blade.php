@@ -35,6 +35,10 @@
                                   label="Alias" :default-value="$customer->alias"
                                   placeholder="Alias..."
                                   name="alias"/>
+                    <x-form.select2-box-tags name="department" type="row" class="col-md-6 fv-row"
+                                             label="Select Or Add Department" placeholder="Select Or Add Department"
+                                             :items="DefaultCustomerDepartment::values()" :required="true"
+                                             :default-value="$customer->department"/>
                     <x-form.select-box class="col-md-6 fv-row" type="row"
                                        :items="\App\Models\Customer\CustomerSegment::all()"
                                        name="customer_segment_id" :required="true"
@@ -69,27 +73,6 @@
                                               form-method="POST"
                     />
                     <x-form.input class="col-md-6 fv-row"
-                                  label="Province" :default-value="$customer->province"
-                                  placeholder="Province..."
-                                  name="province"/>
-                    <x-form.input class="col-md-6 fv-row"
-                                  label="District" :default-value="$customer->district"
-                                  placeholder="District..."
-                                  name="district"/>
-                    <x-form.input class="col-md-6 fv-row"
-                                  label="Sub District" :default-value="$customer->sub_district"
-                                  placeholder="Sub District..."
-                                  name="sub_district"/>
-                    <x-form.input class="col-md-6 fv-row"
-                                  label="Village" :default-value="$customer->village"
-                                  placeholder="Village..."
-                                  name="village"/>
-                    <x-form.input class="col-md-6 fv-row"
-                                  label="Postal Code"
-                                  type="number" :default-value="$customer->postal_code"
-                                  placeholder="Postal Code..."
-                                  name="postal_code"/>
-                    <x-form.input class="col-md-6 fv-row"
                                   label="Address" :default-value="$customer->address"
                                   placeholder="Address..."
                                   name="address"/>
@@ -100,7 +83,13 @@
                                   name="address_number"/>
                     <x-form.input-masking class="col-md-6 fv-row" type="rt_rw" :placeholder="true"
                                           name="rt_rw" :default-value="$customer->rt_rw"
-                                          label="RT RW"></x-form.input-masking>
+                                          label="RT RW"/>
+                    <x-form.select-box-geographic form-method="POST" class="col-md-6 fv-row" type="row"
+                                                  :province-i-d="$customer->province_id"
+                                                  :district-i-d="$customer->district_id"
+                                                  :sub-district-i-d="$customer->sub_district_id"
+                                                  :sub-district-village-i-d="$customer->sub_district_village_id"
+                    />
                 </div>
             </x-card>
 

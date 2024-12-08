@@ -2,6 +2,10 @@
 
 namespace App\Models\Customer;
 
+use App\Models\Geographic\District;
+use App\Models\Geographic\Province;
+use App\Models\Geographic\SubDistrict;
+use App\Models\Geographic\SubDistrictVillage;
 use App\Models\Region\Area;
 use App\Models\Region\Region;
 use App\Models\Region\SubRegion;
@@ -94,5 +98,25 @@ class Customer extends Model
     public function statusCustomerSales(): string
     {
         return $this->is_booked_by_sales ? 'booked' : 'available';
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'id')->withTrashed();
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id')->withTrashed();
+    }
+
+    public function subDistrict()
+    {
+        return $this->belongsTo(SubDistrict::class, 'sub_district_id', 'id')->withTrashed();
+    }
+
+    public function subDistrictVillage()
+    {
+        return $this->belongsTo(SubDistrictVillage::class)->withTrashed();
     }
 }

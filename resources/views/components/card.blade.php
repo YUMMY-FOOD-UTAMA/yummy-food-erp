@@ -3,9 +3,10 @@
     'title'=> null,
     'shadow'=>'lg',
     'withFooter'=>false,
+    'hide'=>null
 ])
 
-<div class="card shadow-{{$shadow}} mb-5">
+<div class="card shadow-{{$shadow}} mb-5 ">
     <div class="card-header collapsible cursor-pointer rotate" data-bs-toggle="collapse"
          data-bs-target="#{{$id}}">
         <h3 class="card-title">{{$title}}</h3>
@@ -17,7 +18,7 @@
             </svg>
         </div>
     </div>
-    <div id="{{$id}}" class="collapse show">
+    <div id="{{$id}}" class="collapse {{$hide? '':'show'}}">
         <div class="card-body">
             {{$slot}}
         </div>

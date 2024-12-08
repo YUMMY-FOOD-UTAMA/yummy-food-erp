@@ -37,14 +37,16 @@
                                   :default-value="$settings?->minimum_location_accuracy?->scalar ?? ''"/>
                 </div>
             </x-card>
-            <div class="d-flex gap-3">
-                <a href="{{route('management_setting.index')}}" class="btn btn-danger">
-                    Cancel
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    <span class="indicator-label">Update</span>
-                </button>
-            </div>
+            @can('management_setting.upsert')
+                <div class="d-flex gap-3">
+                    <a href="{{route('management_setting.index')}}" class="btn btn-danger">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="indicator-label">Update</span>
+                    </button>
+                </div>
+            @endcan
         </form>
     </x-general-section-content>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\SalesScheduleVisit;
 use App\Repositories\ScheduleVisitRepository;
+use App\Utils\Helpers\PermissionHelper;
 use App\Utils\Helpers\Transaction;
 use App\Utils\Primitives\Enum\SalesScheduleVisitStatus;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class SalesConfirmVisitController extends Controller
     public function index(Request $request)
     {
         $scheduleVisits = new ScheduleVisitRepository;
+        $scheduleVisits->setEmployeeIDs(PermissionHelper::onlySelfAccessEmployeeIDs());
         $scheduleVisits->setRequest($request);
         $scheduleVisits = $scheduleVisits->getAll();
         return view('crm.sales_confirm_visit.index', compact('scheduleVisits'));
@@ -35,6 +37,7 @@ class SalesConfirmVisitController extends Controller
                 "contact_person_name" => $request->get('contact_person_name'),
                 "contact_person_phone" => $request->get('contact_person_phone'),
                 "contact_person_title" => $request->get('contact_person_title'),
+                "department" => $request->get('department'),
             ]);
             $scheduleVisit->update([
                 "status" => SalesScheduleVisitStatus::VISITED,

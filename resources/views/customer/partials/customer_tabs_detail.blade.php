@@ -31,6 +31,10 @@
                           label="Outlet Name"
                           name="outlet_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
+                          :default-value="$customer->department"
+                          label="Department"
+                          name="department"/>
+            <x-form.input class="col-md-6 fv-row" view-only="true"
                           :default-value="$customer->alias"
                           label="Alias"
                           name="alias"/>
@@ -71,23 +75,23 @@
                           label="Area Name"
                           name="area_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->province"
+                          :default-value="$customer->province?->name"
                           label="Province"
                           name="province"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->district"
+                          :default-value="$customer->district?->name"
                           label="District"
                           name="district"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->sub_district"
+                          :default-value="$customer->subDistrict?->name"
                           label="Sub District"
                           name="sub_district"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->village"
+                          :default-value="$customer->subDistrictVillage?->name"
                           label="Village"
                           name="village"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->postal_code"
+                          :default-value="$customer->subDistrictVillage?->zip"
                           label="Postal Code"
                           name="postal_code"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"

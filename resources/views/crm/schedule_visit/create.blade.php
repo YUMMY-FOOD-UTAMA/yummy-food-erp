@@ -24,7 +24,7 @@
                 <input id="customer_ids" name="customer_ids" hidden=""
                        value="{{ old('customer_ids') }}">
                 <div class="d-flex gap-3 mb-5">
-                    <a href="{{route('receivable.customer.index')}}" class="btn btn-danger">
+                    <a href="{{route('receivable.crm.schedule-visit.index')}}" class="btn btn-danger">
                         Cancel
                     </a>
                     <button type="submit" class="btn btn-primary">

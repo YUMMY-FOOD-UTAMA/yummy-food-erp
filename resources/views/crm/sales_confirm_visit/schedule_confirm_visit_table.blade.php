@@ -22,16 +22,14 @@
                     {{ \Carbon\Carbon::parse($scheduleVisit->end_visit)->addDay()->format('d M Y') }}
                 </td>
                 <td>
-                    <div class="d-flex">
-                        @if($scheduleVisit->status === VisitStatus::APPROVED)
-                            <a href="" data-bs-toggle="modal" id="triggerMap{{$scheduleVisit->id}}"
-                               data-bs-target="#modal_visit{{$scheduleVisit->id}}"
-                               class="btn btn-primary btn-sm mx-1 edit-td-action-btn">
-                                Visit
-                            </a>
-                        @endif
-                        @include('crm.partials.crm_modal_view_detail', ['scheduleVisit' => $scheduleVisit])
-                    </div>
+                    @if($scheduleVisit->status === VisitStatus::APPROVED)
+                        <a href="" data-bs-toggle="modal" id="triggerMap{{$scheduleVisit->id}}"
+                           data-bs-target="#modal_visit{{$scheduleVisit->id}}"
+                           class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2">
+                            Visit
+                        </a>
+                    @endif
+                    @include('crm.partials.crm_modal_view_detail', ['scheduleVisit' => $scheduleVisit])
                 </td>
             </tr>
             <x-modal id="modal_visit{{$scheduleVisit->id}}"
@@ -74,6 +72,12 @@
 
                     <x-card title="Customer Info" id="customer_info_visit">
                         <div class="row g-9 mb-8">
+                            <x-form.select2-box-tags name="department" type="row" class="col-md-6 fv-row"
+                                                     label="Select Or Add Department"
+                                                     placeholder="Select Or Add Department"
+                                                     :items="DefaultCustomerDepartment::values()" :required="true"
+                                                     drop-down-parent-i-d="#customer_info_visit"
+                                                     :default-value="$scheduleVisit->customer->department"/>
                             <x-form.input class="col-md-6 fv-row" required="true"
                                           label="Contact Person Name"
                                           :default-value="$scheduleVisit->customer->contact_person_name"

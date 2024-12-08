@@ -9,11 +9,13 @@ use App\Models\GeneralSetting;
 use App\Models\SalesScheduleVisit;
 use App\Repositories\GeneralSettingRepository;
 use App\Repositories\ScheduleVisitRepository;
+use App\Utils\Helpers\PermissionHelper;
 use App\Utils\Helpers\Transaction;
 use App\Utils\Primitives\Enum\SalesScheduleVisitStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 
 class ScheduleVisitController extends Controller
 {
@@ -21,6 +23,7 @@ class ScheduleVisitController extends Controller
     {
         $scheduleVisits = new ScheduleVisitRepository;
         $scheduleVisits->setRequest($request);
+        $scheduleVisits->setEmployeeIDs(PermissionHelper::onlySelfAccessEmployeeIDs());
         $scheduleVisits = $scheduleVisits->getAll();
         return view('crm.schedule_visit.index', compact('scheduleVisits'));
     }

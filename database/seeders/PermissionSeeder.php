@@ -30,6 +30,25 @@ class PermissionSeeder extends Seeder
             ]);
         });
 
+        Permission::updateOrCreate(
+            ["name" => "receivable.crm.sales-confirm-visit.index.only-self", "guard_name" => "web"],
+            ["name" => "receivable.crm.sales-confirm-visit.index.only-self", "guard_name" => "web"]
+        );
+        Permission::updateOrCreate(
+            ["name" => "receivable.crm.sales-confirm-visit.confirm.only-self", "guard_name" => "web"],
+            ["name" => "receivable.crm.sales-confirm-visit.confirm.only-self", "guard_name" => "web"]
+        );
+
+        Permission::updateOrCreate(
+            ["name" => "receivable.crm.sales-visit-report.index.only-self", "guard_name" => "web"],
+            ["name" => "receivable.crm.sales-visit-report.index.only-self", "guard_name" => "web"]
+        );
+
+        Permission::updateOrCreate(
+            ["name" => "receivable.crm.schedule-visit.index.only-self", "guard_name" => "web"],
+            ["name" => "receivable.crm.schedule-visit.index.only-self", "guard_name" => "web"]
+        );
+
         $this->command->info('Permissions seeded successfully based on route names!');
     }
 }

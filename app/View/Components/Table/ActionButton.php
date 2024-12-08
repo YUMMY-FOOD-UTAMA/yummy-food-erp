@@ -16,10 +16,15 @@ class ActionButton extends Component
     public $restoreRoute;
     public $modalViewID;
 
+    public $restoreRouteName;
+    public $softDeleteRouteName;
+    public $hardDeleteRouteName;
+    public $editRouteName;
+
     /**
      * Create a new component instance.
      */
-    public function __construct($viewRoute = null, $softDeleteRoute = null, $deletePreview = null, $hardDeleteRoute = null, $restoreRoute = null, $modalViewID = null)
+    public function __construct($hardDeleteRouteName = null, $softDeleteRouteName = null, $restoreRouteName = null, $editRouteName = null, $viewRoute = null, $softDeleteRoute = null, $deletePreview = null, $hardDeleteRoute = null, $restoreRoute = null, $modalViewID = null)
     {
         $this->viewRoute = $viewRoute;
         $this->softDeleteRoute = $softDeleteRoute;
@@ -27,6 +32,10 @@ class ActionButton extends Component
         $this->hardDeleteRoute = $hardDeleteRoute;
         $this->restoreRoute = $restoreRoute;
         $this->modalViewID = $modalViewID;
+        $this->restoreRouteName = $restoreRouteName;
+        $this->softDeleteRouteName = $softDeleteRouteName;
+        $this->hardDeleteRouteName = $hardDeleteRouteName;
+        $this->editRouteName = $editRouteName;
     }
 
     /**
@@ -34,7 +43,7 @@ class ActionButton extends Component
      */
     public function render(): View|Closure|string
     {
-        $id = 'a'.str_replace('-', '', Uuid::uuid4()->toString());;
+        $id = 'a' . str_replace('-', '', Uuid::uuid4()->toString());;
         return view('components.table.action-button', compact('id'));
     }
 }

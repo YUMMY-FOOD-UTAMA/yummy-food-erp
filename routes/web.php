@@ -4,13 +4,16 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CRM\SalesApprovalController;
 use App\Http\Controllers\CRM\SalesConfirmVisitController;
 use App\Http\Controllers\CRM\SalesMappingController;
+use App\Http\Controllers\CRM\SalesVisitReportController;
 use App\Http\Controllers\CRM\ScheduleVisitController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Inventory\ProductController;
 use App\Http\Controllers\ManagementSettingController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterData\RegionController;
+use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\PermissionRole;
 use Illuminate\Support\Facades\Route;
@@ -20,8 +23,6 @@ Route::fallback(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::group(['prefix' => 'account'], function () {
         Route::get('/', [AccountController::class, 'index'])->name('account.index');
         Route::get('/setting', [AccountController::class, 'setting'])->name('account.setting');
@@ -50,6 +51,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(PermissionRole::class)->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::group(['prefix' => 'management-setting'], function () {
             Route::get('/', [ManagementSettingController::class, 'index'])->name('management_setting.index');
@@ -79,6 +81,10 @@ Route::middleware('auth')->group(function () {
                     Route::get('/', [SalesConfirmVisitController::class, 'index'])->name('receivable.crm.sales-confirm-visit.index');
                     Route::put('/confirm-visit/{schedule_visit}', [SalesConfirmVisitController::class, 'visitConfirmation'])->name('receivable.crm.sales-confirm-visit.confirm');
                 });
+
+                Route::group(['prefix' => 'sales-visit-report'], function () {
+                    Route::get('/', [SalesVisitReportController::class, 'index'])->name('receivable.crm.sales-visit-report.index');
+                });
             });
 
             Route::group(['prefix' => 'customer'], function () {
@@ -92,6 +98,12 @@ Route::middleware('auth')->group(function () {
             });
         });
 
+        Route::group(['prefix' => 'inventory'], function () {
+            Route::group(['prefix' => '/product'], function () {
+                Route::get('/', [ProductController::class, 'index'])->name('inventory.product.index');
+            });
+        });
+
         Route::group(['prefix' => 'user-management'], function () {
             Route::get('/', [EmployeeController::class, 'index'])->name('user-management.employee.index');
             Route::get('/trash', [EmployeeController::class, 'trash'])->name('user-management.employee.trash');
@@ -102,6 +114,16 @@ Route::middleware('auth')->group(function () {
             Route::put('/detail/{employee}', [EmployeeController::class, 'update'])->name('user-management.employee.update');
             Route::delete('/delete/{employee}', [EmployeeController::class, 'destroy'])->name('user-management.employee.destroy');
             Route::put('/restore/{employee}', [EmployeeController::class, 'restore'])->name('user-management.employee.restore');
+
+            Route::group(['prefix' => 'role-management'], function () {
+                Route::get('/', [RoleManagementController::class, 'index'])->name('user-management.role-management.index');
+                Route::delete('/destroy/{role}', [RoleManagementController::class, 'destroy'])->name('user-management.role-management.destroy');
+                Route::post('/create', [RoleManagementController::class, 'store'])->name('user-management.role-management.store');
+                Route::get('/create', [RoleManagementController::class, 'create'])->name('user-management.role-management.create');
+                Route::put('/edit/{role}', [RoleManagementController::class, 'update'])->name('user-management.role-management.update');
+                Route::get('/detail/{role}', [RoleManagementController::class, 'show'])->name('user-management.role-management.show');
+            });
+
         });
 
     });
