@@ -16,6 +16,7 @@ class CreateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'role_name' => ['required', 'string'],
             'name' => ['required', 'string', 'max:15'],
             'full_name' => ['required', 'string', 'max:50'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],

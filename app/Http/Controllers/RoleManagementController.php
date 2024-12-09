@@ -33,8 +33,14 @@ class RoleManagementController extends Controller
             'permissions' => 'required|array|min:1',
         ]);
 
+        $permissions = [];
+        foreach ($request->permissions as $permission) {
+            $permissionArr = explode(',', $permission);
+            $permissions = array_merge($permissions, $permissionArr);
+        }
+
         $role = Role::create(['name' => $request->input('role_name')]);
-        $permissions = Permission::whereIn('name', $request->input('permissions'))->get();
+        $permissions = Permission::whereIn('name', $permissions)->get();
         $role->syncPermissions($permissions);
 
         return redirect()->back()->with([

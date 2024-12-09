@@ -22,6 +22,10 @@
                                   label="Full Name" name="full_name"/>
                     <div class="row g-9 mb-8">
                         <x-form.input class="col-md-6 fv-row" view-only="true"
+                                      :default-value="$employee->user?->roleName()"
+                                      label="Role"
+                                      name="role"/>
+                        <x-form.input class="col-md-6 fv-row" view-only="true"
                                       :default-value="$employee->nik"
                                       label="Nik"
                                       name="nik"/>

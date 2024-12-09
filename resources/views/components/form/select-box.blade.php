@@ -23,6 +23,7 @@
                     </option>
                 @endforeach
             </select>
+            <x-input-error :messages="$errors->get($name)" class="mt-2"></x-input-error>
         </div>
     @elseif($type=="row")
         <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -47,5 +48,6 @@
                 </option>
             @endforeach
         </select>
+        <x-input-error :messages="$errors->get($name)" class="mt-2"></x-input-error>
     @endif
 </div>

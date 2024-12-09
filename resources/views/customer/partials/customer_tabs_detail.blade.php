@@ -31,10 +31,6 @@
                           label="Outlet Name"
                           name="outlet_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->department"
-                          label="Department"
-                          name="department"/>
-            <x-form.input class="col-md-6 fv-row" view-only="true"
                           :default-value="$customer->alias"
                           label="Alias"
                           name="alias"/>
@@ -126,6 +122,10 @@
                           :default-value="$customer->nppkp"
                           label="NPPKP"
                           name="nppkp"/>
+            <x-form.input class="col-md-6 fv-row" view-only="true"
+                          :default-value="$customer->department"
+                          label="Department"
+                          name="department"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
                           :default-value="$customer->contact_person_name"
                           label="Contact Person Name"
