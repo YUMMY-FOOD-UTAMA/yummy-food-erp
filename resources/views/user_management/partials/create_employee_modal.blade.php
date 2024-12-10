@@ -32,6 +32,10 @@
                                           placeholder="Date Of Birth..."/>
                             <x-form.select-box-timezones type="row" drop-down-parent-i-d="modal_createEmployee"
                                                          class="col-md-6 fv-row"/>
+                            <x-form.select-box name="role_name" class="col-md-6 fv-row" type="row"
+                                               placeholder="Select Role..." value-key="name"
+                                               label="Role" drop-down-parent-i-d="modal_createEmployee"
+                                               :items="\Spatie\Permission\Models\Role::all()"/>
                             <x-form.select-box name="sub_department_id" class="col-md-6 fv-row" type="row"
                                                placeholder="Select Sub Department..."
                                                label="Sub Department" drop-down-parent-i-d="modal_createEmployee"
@@ -60,8 +64,9 @@
                         </div>
                         <x-form.radio-button-gender class="flex-column mb-8"/>
                         <div class="row g-9 mb-8">
-                        <x-form.select-box-geographic type="row" class="col-md-6 fv-row" drop-down-parent-i-d="modal_createEmployee"
-                                                      form-method="POST"/>
+                            <x-form.select-box-geographic type="row" class="col-md-6 fv-row"
+                                                          drop-down-parent-i-d="modal_createEmployee"
+                                                          form-method="POST"/>
                         </div>
                         <x-form.text-area class="d-flex flex-column mb-8" auto-resize="true" row="2" label="Address"
                                           name="address"

@@ -31,15 +31,16 @@
                 <x-Form.CheckboxInput
                     name="permissions[]"
                     class="mb-3"
-                    :checked="in_array('user-management.employee.create', old('permissions', $permissions ?? []))"
-                    value="user-management.employee.create">
+                    :checked="in_array('user-management.employee.store', old('permissions', $permissions ?? []))"
+                    value="user-management.employee.store">
                     Create New Employee
                 </x-Form.CheckboxInput>
                 <x-Form.CheckboxInput
                     name="permissions[]"
                     class="mb-3"
-                    :checked="in_array('user-management.employee.update', old('permissions', $permissions ?? []))"
-                    value="user-management.employee.update">
+                    :checked="in_array('user-management.employee.update', old('permissions', $permissions ?? []))
+                               || in_array('user-management.employee.update,user-management.employee.show', old('permissions', $permissions ?? []))"
+                    value="user-management.employee.update,user-management.employee.show">
                     Edit Employee
                 </x-Form.CheckboxInput>
                 <x-Form.CheckboxInput
@@ -104,15 +105,17 @@
                 <x-Form.CheckboxInput
                     name="permissions[]"
                     class="mb-3"
-                    :checked="in_array('user-management.role-management.create', old('permissions', $permissions ?? []))"
-                    value="user-management.role-management.create">
+                    :checked="in_array('user-management.role-management.create,user-management.role-management.store', old('permissions', $permissions ?? []))
+                            || in_array('user-management.role-management.create', old('permissions', $permissions ?? []))"
+                    value="user-management.role-management.create,user-management.role-management.store">
                     Create New Role
                 </x-Form.CheckboxInput>
                 <x-Form.CheckboxInput
                     name="permissions[]"
                     class="mb-3"
-                    :checked="in_array('user-management.role-management.update', old('permissions', $permissions ?? []))"
-                    value="user-management.role-management.update">
+                    :checked="in_array('user-management.role-management.update,user-management.role-management.show', old('permissions', $permissions ?? []))
+                                || in_array('user-management.role-management.update', old('permissions', $permissions ?? []))"
+                    value="user-management.role-management.update,user-management.role-management.show">
                     Edit Role
                 </x-Form.CheckboxInput>
                 <x-Form.CheckboxInput

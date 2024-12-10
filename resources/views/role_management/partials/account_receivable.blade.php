@@ -109,8 +109,10 @@
                 <x-Form.CheckboxInput
                     name="permissions[]"
                     class="mb-3"
-                    value="receivable.crm.schedule-visit.create"
-                    :checked="in_array('receivable.crm.schedule-visit.create', old('permissions', $permissions ?? []))">
+                    value="receivable.crm.schedule-visit.create,receivable.crm.schedule-visit.store"
+                    :checked="in_array('receivable.crm.schedule-visit.create,receivable.crm.schedule-visit.store', old('permissions', $permissions ?? []))
+                            || in_array('receivable.crm.schedule-visit.create', old('permissions', $permissions ?? []))"
+                    >
                     Create Sales Schedule Visit
                 </x-Form.CheckboxInput>
                 <x-Form.CheckboxInput
@@ -238,15 +240,16 @@
             <x-Form.CheckboxInput
                 name="permissions[]"
                 class="mb-3"
-                value="receivable.customer.create"
-                :checked="in_array('receivable.customer.create', old('permissions', $permissions ?? []))">
+                value='receivable.customer.store'
+                :checked="in_array('receivable.customer.store', old('permissions', $permissions ?? []))">
                 Create New Customer
             </x-Form.CheckboxInput>
             <x-Form.CheckboxInput
                 name="permissions[]"
                 class="mb-3"
-                value="receivable.customer.update"
-                :checked="in_array('receivable.customer.update', old('permissions', $permissions ?? []))">
+                value="receivable.customer.update,receivable.customer.show"
+                :checked="in_array('receivable.customer.update,receivable.customer.show', old('permissions', $permissions ?? []))
+                    || in_array('receivable.customer.update', old('permissions', $permissions ?? []))">
                 Edit Customer
             </x-Form.CheckboxInput>
             <x-Form.CheckboxInput

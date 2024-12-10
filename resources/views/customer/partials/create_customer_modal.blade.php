@@ -17,10 +17,6 @@
                           label="Alias"
                           placeholder="Alias..."
                           name="alias"/>
-            <x-form.select2-box-tags name="department" type="row" class="col-md-6 fv-row"
-                                     label="Select Or Add Department" placeholder="Select Or Add Department"
-                                     :items="DefaultCustomerDepartment::values()" :required="true"
-                                     drop-down-parent-i-d="#createCustomerInfo"/>
             <x-form.select-box class="col-md-6 fv-row" type="row" :items="\App\Models\Customer\CustomerSegment::all()"
                                name="customer_segment_id" :required="true"
                                placeholder="Select Customer Segment..."
@@ -29,14 +25,14 @@
                                name="status" :required="true"
                                placeholder="Select Status Customer..."
                                drop-down-parent-i-d="modal_createCustomer" label="Customer Status"/>
-            <x-form.select-box class="col-md-6 fv-row" type="row" :items="\App\Models\Customer\CustomerCategory::all()"
-                               name="customer_category_id" :required="true"
-                               placeholder="Select Customer Category..."
-                               drop-down-parent-i-d="modal_createCustomer" label="Customer Category"/>
             <x-form.select-box class="col-md-6 fv-row" type="row" :items="\App\Models\Customer\CustomerGroup::all()"
                                name="customer_group_id"
                                placeholder="Select Customer Group..."
                                drop-down-parent-i-d="modal_createCustomer" label="Customer Group"/>
+            <x-form.select-box class="col-md-6 fv-row" type="row" :items="\App\Models\Customer\CustomerCategory::all()"
+                               name="customer_category_id" id="customer_category_id_create_modal"
+                               placeholder="Select Customer Category..."
+                               drop-down-parent-i-d="modal_createCustomer" label="Customer Category"/>
         </div>
     </x-card>
 
@@ -81,6 +77,10 @@
                           label="NPPKP"
                           placeholder="NPPKP..."
                           name="nppkp"/>
+            <x-form.select2-box-tags name="department" type="row" class="col-md-6 fv-row"
+                                     label="Select Or Add Department" placeholder="Select Or Add Department"
+                                     :items="DefaultCustomerDepartment::values()" :required="true"
+                                     drop-down-parent-i-d="#modal_createCustomer"/>
             <x-form.input class="col-md-6 fv-row"
                           label="Contact Person Name"
                           placeholder="Contact Person Name..."
