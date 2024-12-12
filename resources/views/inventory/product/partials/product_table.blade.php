@@ -25,6 +25,8 @@
                                            modal-view-i-d="modal_view{{$product->id}}"/>
                 @else
                     <x-table.action-button
+                        edit-route-name="inventory.product.show"
+                        :edit-route="route('inventory.product.show',$product->id)"
                         modal-view-i-d="modal_view{{$product->id}}"
                         soft-delete-route-name="inventory.product.destroy"
                         soft-delete-route="{{route('inventory.product.destroy',$product->id)}}"
