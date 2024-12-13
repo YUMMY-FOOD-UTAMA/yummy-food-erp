@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -68,6 +69,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Employee::class);
     }
+
     public function province()
     {
         return $this->belongsTo(Province::class, 'province_id', 'id')->withTrashed();
@@ -86,5 +88,10 @@ class User extends Authenticatable
     public function subDistrictVillage()
     {
         return $this->belongsTo(SubDistrictVillage::class)->withTrashed();
+    }
+
+    public function roleName()
+    {
+        return $this->getRoleNames()->join(',');
     }
 }

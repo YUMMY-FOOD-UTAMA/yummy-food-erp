@@ -20,6 +20,8 @@
                         <tr>
                             <td>{{$role->name}}</td>
                             <x-table.action-button
+                                edit-route-name="user-management.role-management.update"
+                                :edit-route="route('user-management.role-management.show',$role->id)"
                                 view-route="{{route('user-management.role-management.show',$role->id)}}"
                                 hard-delete-route-name="user-management.role-management.destroy"
                                 hard-delete-route="{{route('user-management.role-management.destroy',$role->id)}}"

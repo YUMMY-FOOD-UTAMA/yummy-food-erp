@@ -13,7 +13,6 @@ class CustomerRepository
     private bool $withTrashed = false;
     private bool $withBookedBy = false;
     private bool $withEmployeeDetail = false;
-    private bool $withCustomerDetail = false;
 
     public function setRequest(Request $request): void
     {
@@ -43,11 +42,6 @@ class CustomerRepository
     private function setWithEmployeeDetail(bool $withEmployeeDetail): void
     {
         $this->withEmployeeDetail = $withEmployeeDetail;
-    }
-
-    private function setWithCustomerDetail(bool $withCustomerDetail): void
-    {
-        $this->withCustomerDetail = $withCustomerDetail;
     }
 
 

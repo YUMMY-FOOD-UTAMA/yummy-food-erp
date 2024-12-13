@@ -139,6 +139,10 @@ class EmployeeController extends Controller
                 'level_grade_id' => $request->level_grade_id,
                 'sub_department_id' => $request->sub_department_id,
             ]);
+
+            if ($request->role_name) {
+                $user->assignRole($request->role_name);
+            }
         });
 
         if ($res) {
