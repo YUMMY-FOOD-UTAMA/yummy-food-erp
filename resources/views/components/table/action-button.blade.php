@@ -22,6 +22,14 @@
                    class="menu-link px-3">View</a>
             </div>
         @endif
+        @if($editRouteName)
+            @can($editRouteName)
+                <div class="menu-item px-3">
+                    <a href="{{$editRoute}}"
+                       class="menu-link px-3">Edit</a>
+                </div>
+            @endcan
+        @endif
         @if($modalViewID)
             <div class="menu-item px-3">
                 <a class="menu-link px-3" data-bs-toggle="modal"

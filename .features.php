@@ -7,10 +7,10 @@ use Illuminate\Contracts\Foundation\Application;
  */
 return static function (Application $app): array {
     return [
-        'register' => true,
-        'social-lite.google' => true,
-        'social-lite.facebook' => true,
-        'mail-verified' => true,
+        'register' => false,
+        'social-lite.google' => false,
+        'social-lite.facebook' => false,
+        'mail-verified' => false,
         'deactive-account' => false,
         'change-mail' => true
     ];

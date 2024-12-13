@@ -101,6 +101,12 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'inventory'], function () {
             Route::group(['prefix' => '/product'], function () {
                 Route::get('/', [ProductController::class, 'index'])->name('inventory.product.index');
+                Route::get('/trash', [ProductController::class, 'trash'])->name('inventory.product.trash');
+                Route::get('/detail/{product}', [ProductController::class, 'show'])->name('inventory.product.show');
+                Route::post('create', [ProductController::class, 'store'])->name('inventory.product.store');
+                Route::put('/update/{product}', [ProductController::class, 'update'])->name('inventory.product.update');
+                Route::delete('/destroy/{product}', [ProductController::class, 'destroy'])->name('inventory.product.destroy');
+                Route::put('/restore/{product}', [ProductController::class, 'restore'])->name('inventory.product.restore');
             });
         });
 

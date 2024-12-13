@@ -135,8 +135,12 @@ class ScheduleVisitRepository
                 $totalSalesScheduledNotVisited += $s->total;
             }
 
-            $salesTrackRecord = $totalSalesMappingVisited / ($totalSalesMappingVisited + $totalSalesScheduledNotVisited) * 100;
-            $salesTrackRecord = intval(ceil($salesTrackRecord));
+            if (($totalSalesMappingVisited + $totalSalesScheduledNotVisited) == 0) {
+                $salesTrackRecord = 0;
+            } else {
+                $salesTrackRecord = $totalSalesMappingVisited / ($totalSalesMappingVisited + $totalSalesScheduledNotVisited) * 100;
+                $salesTrackRecord = intval(ceil($salesTrackRecord));
+            }
 
         }
         return [

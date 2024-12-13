@@ -31,6 +31,8 @@
                                            modal-view-i-d="modal_view{{$customer->id}}"/>
                 @else
                     <x-table.action-button
+                        edit-route-name="receivable.customer.show"
+                        :edit-route="route('receivable.customer.show',$customer->id)"
                         modal-view-i-d="modal_view{{$customer->id}}"
                         soft-delete-route-name="receivable.customer.destroy"
                         soft-delete-route="{{route('receivable.customer.destroy',$customer->id)}}"
@@ -38,7 +40,7 @@
                 @endif
             </tr>
             <x-modal id="modal_view{{$customer->id}}"
-                     route-view-name="receivable.customer.update"
+                     route-view-name="receivable.customer.show"
                      :route-view-data="route('receivable.customer.show',$customer->id)"
                      title="Data {{$customer->name ? $customer->name : 'Customer'}}" size="1000">
                 @include('customer.partials.customer_tabs_detail',['customer'=>$customer])

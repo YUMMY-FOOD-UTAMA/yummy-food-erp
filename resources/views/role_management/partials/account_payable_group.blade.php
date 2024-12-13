@@ -17,29 +17,37 @@
             <x-Form.CheckboxInput
                 name="permissions[]"
                 class="mb-3"
-                value="inventory.product.view"
-                :checked="in_array('inventory.product.view', old('permissions', $permissions ?? []))">
+                value="inventory.product.index"
+                :checked="in_array('inventory.product.index', old('permissions', $permissions ?? []))">
                 View Product
             </x-Form.CheckboxInput>
             <x-Form.CheckboxInput
                 name="permissions[]"
                 class="mb-3"
-                value="inventory.product.create"
-                :checked="in_array('inventory.product.create', old('permissions', $permissions ?? []))">
+                value="inventory.product.trash"
+                :checked="in_array('inventory.product.trash', old('permissions', $permissions ?? []))">
+                View Trash
+            </x-Form.CheckboxInput>
+            <x-Form.CheckboxInput
+                name="permissions[]"
+                class="mb-3"
+                value="inventory.product.store"
+                :checked="in_array('inventory.product.store', old('permissions', $permissions ?? []))">
                 Create New Product
             </x-Form.CheckboxInput>
             <x-Form.CheckboxInput
                 name="permissions[]"
                 class="mb-3"
-                value="inventory.product.edit"
-                :checked="in_array('inventory.product.edit', old('permissions', $permissions ?? []))">
+                value="inventory.product.show,inventory.product.update"
+                :checked="in_array('inventory.product.show,inventory.product.update', old('permissions', $permissions ?? []))
+                || in_array('inventory.product.show', old('permissions', $permissions ?? []))">
                 Edit Product
             </x-Form.CheckboxInput>
             <x-Form.CheckboxInput
                 name="permissions[]"
                 class="mb-3"
-                value="inventory.product.delete"
-                :checked="in_array('inventory.product.delete', old('permissions', $permissions ?? []))">
+                value="inventory.product.destroy"
+                :checked="in_array('inventory.product.destroy', old('permissions', $permissions ?? []))">
                 Delete Product
             </x-Form.CheckboxInput>
         </div>

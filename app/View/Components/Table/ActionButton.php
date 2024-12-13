@@ -15,6 +15,7 @@ class ActionButton extends Component
     public $deletePreview;
     public $restoreRoute;
     public $modalViewID;
+    public $editRoute;
 
     public $restoreRouteName;
     public $softDeleteRouteName;
@@ -24,7 +25,7 @@ class ActionButton extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($hardDeleteRouteName = null, $softDeleteRouteName = null, $restoreRouteName = null, $editRouteName = null, $viewRoute = null, $softDeleteRoute = null, $deletePreview = null, $hardDeleteRoute = null, $restoreRoute = null, $modalViewID = null)
+    public function __construct($editRoute = null, $hardDeleteRouteName = null, $softDeleteRouteName = null, $restoreRouteName = null, $editRouteName = null, $viewRoute = null, $softDeleteRoute = null, $deletePreview = null, $hardDeleteRoute = null, $restoreRoute = null, $modalViewID = null)
     {
         $this->viewRoute = $viewRoute;
         $this->softDeleteRoute = $softDeleteRoute;
@@ -36,6 +37,7 @@ class ActionButton extends Component
         $this->softDeleteRouteName = $softDeleteRouteName;
         $this->hardDeleteRouteName = $hardDeleteRouteName;
         $this->editRouteName = $editRouteName;
+        $this->editRoute = $editRoute;
     }
 
     /**
