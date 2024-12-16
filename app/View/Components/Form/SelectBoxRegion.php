@@ -13,7 +13,6 @@ use Ramsey\Uuid\Uuid;
 class SelectBoxRegion extends Component
 {
     public $regionID;
-    public $subRegionID;
     public $areaID;
     public string $type;
     public $formMethod;
@@ -23,10 +22,9 @@ class SelectBoxRegion extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($type, $regionID = null, $subRegionID = null, $areaID = null, $formMethod = "GET", $dropDownParentID = null, $sizeForm = 'lg')
+    public function __construct($type, $regionID = null, $areaID = null, $formMethod = "GET", $dropDownParentID = null, $sizeForm = 'lg')
     {
         $this->regionID = $regionID;
-        $this->subRegionID = $subRegionID;
         $this->areaID = $areaID;
         $this->formMethod = $formMethod;
         if ($dropDownParentID) {
@@ -42,18 +40,13 @@ class SelectBoxRegion extends Component
     public function render(): View|Closure|string
     {
         $regions = Region::all();
-        $subRegions = null;
         $areas = null;
         if ($this->regionID) {
-            $subRegions = SubRegion::where('region_id', $this->regionID)->get();
-        }
-        if ($this->subRegionID) {
-            $areas = Area::where('sub_region_id', $this->subRegionID)->get();
+            $areas = Area::where('region_id', $this->regionID)->get();
         }
         $id = 'a' . str_replace('-', '', Uuid::uuid4()->toString());;
         return view('components.form.select-box-region', compact(
             'regions',
-            'subRegions',
             'areas',
             'id'
         ));

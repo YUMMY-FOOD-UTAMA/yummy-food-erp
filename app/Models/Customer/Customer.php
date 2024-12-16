@@ -50,6 +50,13 @@ class Customer extends Model
         return $code . str_pad($newID, 4, '0', STR_PAD_LEFT);
     }
 
+    public function nameCode()
+    {
+        $prefix = "";
+        $formattedNumber = str_pad($this->id, 3, '0', STR_PAD_LEFT);
+        return $prefix.$formattedNumber;
+    }
+
     public function customerCategory()
     {
         return $this->belongsTo(CustomerCategory::class);
