@@ -93,4 +93,26 @@ enum SalesScheduleVisitStatus
                 return 'black';
         }
     }
+
+    public static function getSpanClass(string $status): string
+    {
+        $isConfirmVisit = strpos($_SERVER['REQUEST_URI'], 'confirm-visit') !== false;
+        if ($status === self::APPROVED && $isConfirmVisit) {
+            return 'badge py-3 px-4 fs-7 badge-light-warning';
+        }
+
+        switch ($status) {
+            case self::APPROVED:
+            case self::VISITED:
+                return 'badge py-2 px-3 fs-7 badge-light-success';
+            case self::CANCELLED:
+            case self::EXPIRED:
+            case self::REJECTED:
+                return 'badge py-2 px-3 fs-7 badge-light-danger';
+            case self::WAITING_APPROVAL:
+                return 'badge py-2 px-3 fs-7 badge-light-warning';
+            default:
+                return 'badge py-2 px-3 fs-7 badge-light-dark';
+        }
+    }
 }

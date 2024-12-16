@@ -165,4 +165,101 @@ class ScheduleVisitRepository
             'sales_track_record' => $salesTrackRecord,
         ];
     }
+
+    public function calculateStatisticV2()
+    {
+        $startDate = $this->request->query("start_date", Carbon::now()->format('Y-m-d'));
+        $endDate = $this->request->query("end_date", Carbon::now()->format('Y-m-d'));
+        $customerID = $this->request->query("customer_id");
+        $employeeID = $this->request->query("employee_id");
+
+        $salesMappingStatisticVisited = SalesScheduleVisit::selectRaw('DATE(start_visit) as visit_date, COUNT(*) as total')
+            ->where('status', SalesScheduleVisitStatus::VISITED)
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                return $query->whereBetween('start_visit', [$startDate, $endDate]);
+            })
+            ->groupBy('visit_date')
+            ->orderBy('visit_date');
+
+        $salesMappingStatisticScheduledNotVisited = SalesScheduleVisit::selectRaw('DATE(start_visit) as visit_date, COUNT(*) as total')
+            ->where('status', SalesScheduleVisitStatus::APPROVED)
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                return $query->whereBetween('start_visit', [$startDate, $endDate]);
+            })
+            ->groupBy('visit_date')
+            ->orderBy('visit_date');
+        if ($customerID) {
+            $salesMappingStatisticScheduledNotVisited = $salesMappingStatisticScheduledNotVisited->where('customer_id', $customerID);
+            $salesMappingStatisticVisited = $salesMappingStatisticVisited->where('customer_id', $customerID);
+        }
+        if ($employeeID) {
+            $salesMappingStatisticScheduledNotVisited = $salesMappingStatisticScheduledNotVisited->where('employee_id', $employeeID);
+            $salesMappingStatisticVisited = $salesMappingStatisticVisited->where('employee_id', $employeeID);
+        }
+        $salesMappingStatisticVisited = $salesMappingStatisticVisited->get();
+        $salesMappingStatisticScheduledNotVisited = $salesMappingStatisticScheduledNotVisited->get();
+        $dates = [];
+        $totalSalesMappingVisited = 0;
+        $totalSalesScheduledNotVisited = 0;
+
+        foreach ($salesMappingStatisticVisited as $s) {
+            if (!in_array($s->visit_date, $dates)) {
+                $dates[] = $s->visit_date;
+            }
+            $totalSalesMappingVisited += $s->total;
+        }
+
+        foreach ($salesMappingStatisticScheduledNotVisited as $s) {
+            if (!in_array($s->visit_date, $dates)) {
+                $dates[] = $s->visit_date;
+            }
+            $totalSalesScheduledNotVisited += $s->total;
+        }
+
+        if (($totalSalesMappingVisited + $totalSalesScheduledNotVisited) == 0) {
+            $salesTrackRecord = 0;
+        } else {
+            $salesTrackRecord = $totalSalesMappingVisited / ($totalSalesMappingVisited + $totalSalesScheduledNotVisited) * 100;
+            $salesTrackRecord = intval(ceil($salesTrackRecord));
+        }
+
+        $minValue = 0;
+        $maxValue = 0;
+        $finalDates = [];
+        $finalVisitData = [];
+        $finalNotVisitData = [];
+        $salesMappingStatisticVisited = $salesMappingStatisticVisited->toArray();
+        $salesMappingStatisticScheduledNotVisited = $salesMappingStatisticScheduledNotVisited->toArray();
+        foreach ($dates as $i => $date) {
+            $finalDates[] = Carbon::parse($date)->format('d/m/y');
+            $visitIndex = array_search($date, array_column($salesMappingStatisticVisited, 'visit_date'));
+            $visitTotal = ($visitIndex !== false) ? $salesMappingStatisticVisited[$visitIndex]['total'] : 0;
+            if ($maxValue < $visitTotal) {
+                $maxValue = $visitTotal;
+            }
+            if ($minValue > $visitTotal) {
+                $minValue = $visitTotal;
+            }
+            $finalVisitData[] = $visitTotal;
+
+            $notVisitIndex = array_search($date, array_column($salesMappingStatisticScheduledNotVisited, 'visit_date'));
+            $notVisitTotal = ($notVisitIndex !== false) ? $salesMappingStatisticScheduledNotVisited[$notVisitIndex]['total'] : 0;
+            $finalNotVisitData[] = $notVisitTotal;
+            if ($maxValue < $notVisitTotal) {
+                $maxValue = $notVisitTotal;
+            }
+            if ($minValue > $notVisitTotal) {
+                $minValue = $notVisitTotal;
+            }
+        }
+
+        return [
+            'sales_track_record' => $salesTrackRecord,
+            'dates' => $finalDates,
+            'visitData' => $finalVisitData,
+            'notVisitData' => $finalNotVisitData,
+            'minValue' => $minValue,
+            'maxValue' => $maxValue,
+        ];
+    }
 }

@@ -15,8 +15,9 @@
                 <td>{{$scheduleVisit->customer->name}}</td>
                 <td>{{$scheduleVisit->customer->status}}</td>
                 <td>{{$scheduleVisit->rangeDate()}}</td>
-                <td style="color: {{ VisitStatus::getStatusColor($scheduleVisit->status) }};">
-                    <strong>{{ $scheduleVisit->status === VisitStatus::APPROVED ? "Pending": $scheduleVisit->status }}</strong>
+                <td>
+                    <span
+                        class="{{VisitStatus::getSpanClass($scheduleVisit->status) }}">{{ $scheduleVisit->status === VisitStatus::APPROVED ? "Pending": $scheduleVisit->status }}</span>
                 </td>
                 <td>
                     {{ \Carbon\Carbon::parse($scheduleVisit->end_visit)->addDay()->format('d M Y') }}
