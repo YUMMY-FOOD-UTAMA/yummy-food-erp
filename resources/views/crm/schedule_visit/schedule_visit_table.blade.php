@@ -25,8 +25,8 @@
                 <td>{{$scheduleVisit->customer->name}}</td>
                 <td>{{$scheduleVisit->customer->status}}</td>
                 <td>{{$scheduleVisit->rangeDate()}}</td>
-                <td style="color: {{ VisitStatus::getStatusColor($scheduleVisit->status) }};">
-                    <strong>{{ $scheduleVisit->status }}</strong>
+                <td>
+                    <span class="{{VisitStatus::getSpanClass($scheduleVisit->status) }}">{{ $scheduleVisit->status }}</span>
                 </td>
                 <td>{{$scheduleVisit->expiredAtTheDay()}}</td>
                 <td>
