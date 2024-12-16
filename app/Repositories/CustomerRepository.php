@@ -81,9 +81,9 @@ class CustomerRepository
                 $query->select('id', 'name');
             },
             'area' => function ($query) {
-                $query->select('id', 'region_id', 'name', 'code', 'description')->with([
+                $query->select('id', 'region_id', 'name', 'description')->with([
                     'region' => function ($query) {
-                        $query->select('id', 'name', 'code');
+                        $query->select('id', 'name');
                     }
                 ]);
             }
