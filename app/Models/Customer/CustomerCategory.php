@@ -15,7 +15,10 @@ class CustomerCategory extends Model
 
     protected $guarded = ['id'];
 
-    protected $fillable = [
-        'name', 'code',
-    ];
+    public function code()
+    {
+        $prefix = "CC";
+        $formattedNumber = str_pad($this->id, 2, '0', STR_PAD_LEFT);
+        return $prefix.$formattedNumber;
+    }
 }

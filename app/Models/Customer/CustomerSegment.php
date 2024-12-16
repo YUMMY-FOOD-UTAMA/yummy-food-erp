@@ -14,4 +14,11 @@ class CustomerSegment extends Model
     protected $table = 'customer_segments';
 
     protected $guarded = ['id'];
+
+    public function code()
+    {
+        $prefix = "CS";
+        $formattedNumber = str_pad($this->id, 2, '0', STR_PAD_LEFT);
+        return $prefix.$formattedNumber;
+    }
 }

@@ -40,13 +40,16 @@ class ScheduleVisitRepository
         $search = $this->request->query("search");
 
         $scheduleVisit = SalesScheduleVisit::with([
-            'customer',
+            'customer' => function ($query) {
+                $query->with([
+                    'area.region',
+                    'customerCategory',
+                    'customerSegment',
+                ]);
+            },
             'employee.user',
             'employee.subDepartment.department.division',
             'employee.levelGrade.levelName',
-            'customer.area.subRegion.region',
-            'customer.customerCategory',
-            'customer.customerSegment',
         ]);
         if ($startDate && $endDate) {
             $scheduleVisit = $scheduleVisit->where('start_visit', '>=', $startDate)
@@ -82,7 +85,20 @@ class ScheduleVisitRepository
                 $query->where('status', $customerStatus);
             });
         }
-        $scheduleVisit = $scheduleVisit->orderByDesc("created_at")->paginate($pageSize)->appends(request()->query());;
+        $scheduleVisit = $scheduleVisit->orderByDesc("created_at")->paginate($pageSize)->appends(request()->query())
+            ->through(function ($visit) {
+                $customer = $visit->customer;
+
+                $areaCode = $customer?->area?->code() ?? '';
+                $regionCode = $customer?->area?->region?->code() ?? '';
+                $segmentCode = $customer?->customerSegment?->code() ?? '';
+                $categoryCode = $customer?->customerCategory?->code() ?? '';
+
+                $customerCode = $regionCode . $areaCode . $segmentCode . $categoryCode . ($customer?->nameCode() ?? '');
+                $visit->customer->code = $customerCode;
+
+                return $visit;
+            });
 
         return $scheduleVisit;
     }

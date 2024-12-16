@@ -43,6 +43,7 @@
                                       drop-down-parent-i-d="modal_createCustomer"/>
             <x-form.input class="col-md-6 fv-row"
                           label="Address"
+                          :required="true"
                           placeholder="Address..."
                           name="address"/>
             <x-form.input class="col-md-6 fv-row"
@@ -78,7 +79,8 @@
                           placeholder="NPPKP..."
                           name="nppkp"/>
             <x-form.select2-box-tags name="department" type="row" class="col-md-6 fv-row"
-                                     label="Select Or Add Department" placeholder="Select Or Add Department"
+                                     label="Select Or Add Depsssartment" placeholder="Select Or Add Department"
+                                     tooltip="can be create new department"
                                      :items="DefaultCustomerDepartment::values()" :required="true"
                                      drop-down-parent-i-d="#modal_createCustomer"/>
             <x-form.input class="col-md-6 fv-row"

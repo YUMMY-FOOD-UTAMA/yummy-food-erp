@@ -129,7 +129,7 @@
                     }
                 },
                 {
-                    data: 'area.sub_region.region.name',
+                    data: 'area.region.name',
                 },
                 {
                     data: 'area.name',

@@ -41,8 +41,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'region'], function () {
-        Route::get('/sub-region', [RegionController::class, 'getSubRegions'])->name('region.sub-region.index');
-        Route::get('/sub-region/area', [RegionController::class, 'getAreas'])->name('region.sub-region.area.index');
+        Route::get('/area', [RegionController::class, 'getAreas'])->name('region.area.index');
     });
 
     Route::group(['prefix' => 'api'], function () {

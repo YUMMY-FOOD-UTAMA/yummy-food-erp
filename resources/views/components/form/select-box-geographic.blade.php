@@ -14,6 +14,7 @@
                     </option>
                 @endforeach
             </select>
+            <x-input-error :messages="$errors->get('province_id')" class="mt-2"></x-input-error>
         </div>
     </div>
 
@@ -34,6 +35,7 @@
                     @endforeach
                 @endif
             </select>
+            <x-input-error :messages="$errors->get('district_id')" class="mt-2"></x-input-error>
         </div>
     </div>
 
@@ -54,6 +56,7 @@
                     @endforeach
                 @endif
             </select>
+            <x-input-error :messages="$errors->get('sub_district_id')" class="mt-2"></x-input-error>
         </div>
     </div>
 
@@ -74,6 +77,7 @@
                     @endforeach
                 @endif
             </select>
+            <x-input-error :messages="$errors->get(('sub_district_village_id'))" class="mt-2"></x-input-error>
         </div>
     </div>
 @elseif($type=='row')
@@ -91,6 +95,7 @@
                 </option>
             @endforeach
         </select>
+        <x-input-error :messages="$errors->get('province_id')" class="mt-2"></x-input-error>
     </div>
 
     <div {{$attributes->merge(['class' => ''])}} id="districtRow{{$id}}"
@@ -110,6 +115,7 @@
                 @endforeach
             @endif
         </select>
+        <x-input-error :messages="$errors->get('district_id')" class="mt-2"></x-input-error>
     </div>
     <div {{$attributes->merge(['class' => ''])}} id="subDistrictRow{{$id}}"
          style="{{ $sub_district_id ? '' : 'display: none;' }}">
@@ -128,6 +134,7 @@
                 @endforeach
             @endif
         </select>
+        <x-input-error :messages="$errors->get('sub_district_id')" class="mt-2"></x-input-error>
     </div>
 
     <div {{$attributes->merge(['class' => ''])}} id="villageRow{{$id}}"
@@ -147,6 +154,7 @@
                 @endforeach
             @endif
         </select>
+        <x-input-error :messages="$errors->get('sub_district_village_id')" class="mt-2"></x-input-error>
     </div>
 @else
     <div class="row mb-6">
@@ -164,6 +172,7 @@
                     </option>
                 @endforeach
             </select>
+            <x-input-error :messages="$errors->get('province_id')" class="mt-2"></x-input-error>
         </div>
     </div>
 
@@ -184,6 +193,7 @@
                     @endforeach
                 @endif
             </select>
+            <x-input-error :messages="$errors->get('district_id')" class="mt-2"></x-input-error>
         </div>
     </div>
 
@@ -204,6 +214,7 @@
                     @endforeach
                 @endif
             </select>
+            <x-input-error :messages="$errors->get('sub_district_id')" class="mt-2"></x-input-error>
         </div>
     </div>
 
@@ -224,6 +235,7 @@
                     @endforeach
                 @endif
             </select>
+            <x-input-error :messages="$errors->get('sub_district_village_id')" class="mt-2"></x-input-error>
         </div>
     </div>
 @endif

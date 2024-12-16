@@ -19,7 +19,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{$scheduleVisit->createdAt()}}</td>
                 <td>{{ $scheduleVisit->employee->user->name }}</td>
-                <td>{{$scheduleVisit->customer->area->subRegion->region->name}}</td>
+                <td>{{$scheduleVisit->customer->area->region->name}}</td>
                 <td>{{$scheduleVisit->customer->area->name}}</td>
                 <td>{{$scheduleVisit->customer->customerCategory->name}}</td>
                 <td>{{$scheduleVisit->customer->name}}</td>

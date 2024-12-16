@@ -1,30 +1,32 @@
 <x-table.general-table :data-table="$customers">
     @slot('slotTheadTh')
         <th style="width: 20px; vertical-align: middle; text-align: left;">No</th>
+        <th style="vertical-align: middle; text-align: left;">Region Code</th>
         <th style="vertical-align: middle; text-align: left;">Region Name</th>
-        <th style="vertical-align: middle; text-align: left;">Region Covered</th>
-        <th style="vertical-align: middle; text-align: left;">Sub Region Name</th>
         <th style="vertical-align: middle; text-align: left;">Area Name</th>
+        <th style="vertical-align: middle; text-align: left;">Area Code</th>
+        <th style="vertical-align: middle; text-align: left;">Customer Segment Code</th>
         <th style="vertical-align: middle; text-align: left;">Customer Segment</th>
+        <th style="vertical-align: middle; text-align: left;">Customer Category Code</th>
         <th style="vertical-align: middle; text-align: left;">Customer Category</th>
-        <th style="vertical-align: middle; text-align: left;">Customer Code</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
-        <th style="vertical-align: middle; text-align: left;">Contact Person</th>
+        <th style="vertical-align: middle; text-align: left;">Customer Code</th>
         <th class="text-end min-w-70px">Actions</th>
     @endslot
     @slot('slotTbodyTr')
         @foreach($customers as $customer)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $customer->area?->subRegion?->region?->name }}</td>
-                <td>{{ $customer->area?->subRegion?->region?->covered }}</td>
-                <td>{{ $customer->area->subRegion->name }}</td>
+                <td>{{ $customer->area?->region?->code() }}</td>
+                <td>{{ $customer->area?->region?->name }}</td>
+                <td>{{ $customer->area->code() }}</td>
                 <td>{{ $customer->area->name }}</td>
                 <td>{{ $customer->customerSegment->name }}</td>
+                <td>{{ $customer->customerSegment->code() }}</td>
                 <td>{{ $customer->customerCategory->name }}</td>
-                <td>{{ $customer->code }}</td>
+                <td>{{ $customer->customerCategory->code() }}</td>
                 <td>{{ $customer->name }}</td>
-                <td>{{ $customer->contact_person_phone }}</td>
+                <td>{{ $customer->code }}</td>
                 @if($isTrash)
                     <x-table.action-button restore-route-name="receivable.customer.restore"
                                            restore-route="{{route('receivable.customer.restore',$customer->id)}}"

@@ -45,6 +45,21 @@ class CustomerRepository
     }
 
 
+    public function findOne($id)
+    {
+        $customer = Customer::with(['area.region', 'customerSegment', 'customerCategory'])
+            ->findOrFail($id);
+
+        $areaCode = $customer->area?->code() ?? '';
+        $regionCode = $customer->area?->region?->code() ?? '';
+        $segmentCode = $customer->customerSegment?->code() ?? '';
+        $categoryCode = $customer->customerCategory?->code() ?? '';
+        $customer->code = $regionCode . $areaCode . $segmentCode . $categoryCode . $customer->nameCode();
+
+        return $customer;
+    }
+
+
     public function getAll()
     {
         $pageSize = $this->request->query('page_size', 10);
@@ -66,13 +81,9 @@ class CustomerRepository
                 $query->select('id', 'name');
             },
             'area' => function ($query) {
-                $query->select('id', 'sub_region_id', 'name', 'code')->with([
-                    'subRegion' => function ($query) {
-                        $query->select('id', 'region_id', 'name', 'code')->with([
-                            'region' => function ($query) {
-                                $query->select('id', 'name', 'code', 'covered');
-                            }
-                        ]);
+                $query->select('id', 'region_id', 'name', 'code', 'description')->with([
+                    'region' => function ($query) {
+                        $query->select('id', 'name', 'code');
                     }
                 ]);
             }
@@ -122,7 +133,15 @@ class CustomerRepository
                     ->orWhere('company_name', 'like', '%' . $searchKeyword . '%');
             });
         }
-        $customers = $customers->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
+        $customers = $customers->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query())
+            ->through(function ($customer) {
+                $areaCode = $customer->area ? $customer->area->code() : "";
+                $regionCode = $customer->area?->region ? $customer->area->region->code() : "";
+                $segmentCode = $customer->customerSegment ? $customer->customerSegment->code() : "";
+                $categoryCode = $customer->customerCategory ? $customer->customerCategory->code() : "";
+                $customer->code = $regionCode.$areaCode.$segmentCode.$categoryCode.$customer->nameCode();
+                return $customer;
+            });
 
         return $customers;
     }
