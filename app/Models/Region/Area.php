@@ -9,14 +9,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Area extends Model
 {
-    use HasFactory, AuditTrait,SoftDeletes;
+    use HasFactory, AuditTrait, SoftDeletes;
 
     protected $table = 'areas';
 
     protected $guarded = ['id'];
 
-    public function subRegion()
+    public function code()
     {
-        return $this->belongsTo(SubRegion::class, 'sub_region_id', 'id');
+        $prefix = "A";
+        $formattedNumber = str_pad($this->id, 3, '0', STR_PAD_LEFT);
+        return $prefix.$formattedNumber;
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 }

@@ -66,8 +66,7 @@
             <x-card title="Region & Location Information" id="createCustomerRegionAndLocationInfo">
                 <div class="row g-9 mb-8">
                     <x-form.select-box-region class="col-md-6 fv-row"
-                                              :region-i-d="old('region_id',$customer->area->subRegion->region->id)"
-                                              :sub-region-i-d="$customer->area->subRegion->id"
+                                              :region-i-d="old('region_id',$customer->area->region->id)"
                                               :area-i-d="$customer->area_id"
                                               type="row"
                                               form-method="POST"
@@ -75,6 +74,7 @@
                     <x-form.input class="col-md-6 fv-row"
                                   label="Address" :default-value="$customer->address"
                                   placeholder="Address..."
+                                  :required="true"
                                   name="address"/>
                     <x-form.input class="col-md-6 fv-row"
                                   label="Address Number" :default-value="$customer->address_number"

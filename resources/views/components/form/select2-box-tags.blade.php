@@ -9,6 +9,7 @@
     'name'=>null,
     'dropDownParentID'=>'',
     'defaultValue'=>null,
+    'tooltip'=>null
 ])
 @php
     $defaultValueExists = false;
@@ -24,7 +25,13 @@
 
 <div {{$attributes->merge(['class' => ''])}}>
     @if($type == "inline")
-        <label class="col-lg-4 col-form-label {{$required ? 'required':''}} fw-semibold fs-6">{{$label}}</label>
+        <label class="col-lg-4 col-form-label fw-semibold fs-6">
+            <span class="{{$required ? 'required' : ''}}">{{$label}}</span>
+            @if($tooltip)
+                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                   title="{{$tooltip}}"></i>
+            @endif
+        </label>
         <div class="col-lg-8 fv-row">
             <select name="{{$name}}" aria-label="Select a {{$label}}" id="{{$id}}"
                     data-dropdown-parent="{{$dropDownParentID}}"
@@ -38,9 +45,16 @@
                     </option>
                 @endforeach
             </select>
+            <x-input-error :messages="$errors->get($name)" class="mt-2"></x-input-error>
         </div>
     @elseif($type=="row")
-        <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">{{$label}}</label>
+        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+            <span class="{{$required ? 'required' : ''}}">{{$label}}</span>
+            @if($tooltip)
+                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                   title="{{$tooltip}}"></i>
+            @endif
+        </label>
         <select name="{{$name}}" aria-label="Select a {{$label}}" id="{{$id}}"
                 data-dropdown-parent="{{$dropDownParentID}}"
                 class="form-select form-select-solid form-select-{{$sizeForm}}">
@@ -53,6 +67,7 @@
                 </option>
             @endforeach
         </select>
+        <x-input-error :messages="$errors->get($name)" class="mt-2"></x-input-error>
     @endif
 </div>
 

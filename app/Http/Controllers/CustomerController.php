@@ -44,8 +44,6 @@ class CustomerController extends Controller
 
     public function store(CreateCustomerRequest $request)
     {
-        $code = Customer::generateCustomerCode($request->region_id, $request->sub_region_id, $request->area_id, $request->customer_segment_id, $request->customer_category_id);
-        $request->merge(['code' => $code]);
         Customer::create($request->all());
         return redirect()->route('receivable.customer.index')->with([
             'status' => 'success',
@@ -55,7 +53,8 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $customer = Customer::find($id);
+        $customers = new CustomerRepository;
+        $customer = $customers->findOne($id);
         return view('customer.show', compact('customer'));
     }
 

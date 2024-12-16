@@ -23,6 +23,10 @@
                           label="Customer Name"
                           name="customer_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
+                          :default-value="$customer->nameCode()"
+                          label="Customer Name Code"
+                          name="customer_name_code"/>
+            <x-form.input class="col-md-6 fv-row" view-only="true"
                           :default-value="$customer->company_name"
                           label="Company Name"
                           name="company_name"/>
@@ -55,19 +59,19 @@
     @slot('slot1')
         <div class="row g-9 mb-8">
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->area->subRegion->region->name"
+                          :default-value="$customer->area?->region?->name"
                           label="Region Name"
                           name="region_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->area->subRegion->region->covered"
-                          label="Region Covered"
-                          name="region_covered"/>
-            <x-form.input class="col-md-6 fv-row" view-only="true"
-                          :default-value="$customer->area->subRegion->name"
-                          label="Sub Region Name"
-                          name="name"/>
+                          :default-value="$customer->area?->region?->code()"
+                          label="Region Name"
+                          name="region_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
                           :default-value="$customer->area->name"
+                          label="Area Name"
+                          name="area_name"/>
+            <x-form.input class="col-md-6 fv-row" view-only="true"
+                          :default-value="$customer->area->code()"
                           label="Area Name"
                           name="area_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
