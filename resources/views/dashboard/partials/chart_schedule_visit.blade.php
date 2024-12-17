@@ -56,7 +56,7 @@
         var lightprimaryColor = KTUtil.getCssVariableValue('--bs-primary');
         var basesuccessColor = KTUtil.getCssVariableValue('--bs-success');
         var lightsuccessColor = KTUtil.getCssVariableValue('--bs-success');
-        console.log({!! json_encode($scheduleVisit['dates']) !!})
+
         var options = {
             series: [{
                 name: 'Target Visit',
@@ -103,15 +103,14 @@
                 axisTicks: {
                     show: false
                 },
-                tickAmount: 2,
-                tickPlacement: 'between',
+                tickAmount: 8,
                 position: 'bottom',
                 labels: {
-                    rotate: 0,
+                    rotate: -45,
                     rotateAlways: true,
                     style: {
                         colors: labelColor,
-                        fontSize: '12px',
+                        fontSize: '11px',
                     }
                 },
                 crosshairs: {
@@ -127,7 +126,7 @@
                     formatter: undefined,
                     offsetY: 0,
                     style: {
-                        fontSize: '13px'
+                        fontSize: '12px'
                     }
                 }
             },
@@ -138,7 +137,7 @@
                 labels: {
                     style: {
                         colors: labelColor,
-                        fontSize: '12px',
+                        fontSize: '11px',
                     }
                 }
             },
