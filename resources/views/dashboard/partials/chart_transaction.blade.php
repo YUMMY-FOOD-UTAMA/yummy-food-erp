@@ -3,7 +3,7 @@
     <div class="card-header pt-5">
         <!--begin::Title-->
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold text-dark">Penjualan</span>
+            <span class="card-label fw-bold text-dark">Sales Target vs Sales Real</span>
             {{--            <span class="text-gray-400 mt-1 fw-semibold fs-6">1,046 Inbound Calls today</span>--}}
         </h3>
         <!--end::Title-->
@@ -32,6 +32,9 @@
 															</span>
                 <!--end::Svg Icon-->
             </div>
+            <button type="reset" class="ms-4 btn btn-primary btn-active-light-primary me-2">
+                View
+            </button>
             <!--end::Daterangepicker-->
         </div>
         <!--end::Toolbar-->
@@ -40,7 +43,7 @@
     <!--begin::Card body-->
     <div class="card-body d-flex align-items-end p-0">
         <!--begin::Chart-->
-        <div id="penjualan_chart_dashboard" class="min-h-auto w-100 ps-4 pe-6" style="height: 300px"></div>
+        <div id="penjualan_chart_dashboard" class="min-h-auto w-100 ps-4 pe-6" style="height: 370px"></div>
         <!--end::Chart-->
     </div>
     <!--end::Card body-->
@@ -62,28 +65,31 @@
         ];
 
         var options = {
-            series: [{
-                name: 'Realisasi Penjualan',
-                data: [
-                    6080000, 4723000, 5503000, 5936000, 5166000, 6038000, 4348000
-                ]
-            }, {
-                name: 'Target Penjualan',
-                data: [
-                    5853000, 4653000, 5042000, 5689000, 5079000, 5931000, 4552000
-                ]
-            }],
+            series: [
+                {
+                    name: 'Sales Target',
+                    data: [
+                        5853000, 4653000, 5042000, 5689000, 5079000, 5931000, 4552000
+                    ]
+                },
+                {
+                    name: 'Sales Real',
+                    data: [
+                        6080000, 4723000, 5503000, 5936000, 5166000, 6038000, 4348000
+                    ]
+                },
+            ],
             chart: {
                 fontFamily: 'inherit',
                 type: 'area',
-                height: height,
+                height: 350,
                 toolbar: {
                     show: false
                 }
             },
             plotOptions: {},
             legend: {
-                show: false
+                show: true
             },
             dataLabels: {
                 enabled: false
@@ -101,7 +107,7 @@
                 curve: 'smooth',
                 show: true,
                 width: 3,
-                colors: [baseprimaryColor, basesuccessColor]
+                colors: [baseprimaryColor,basesuccessColor]
             },
             xaxis: {
                 categories: categories,
@@ -188,10 +194,6 @@
                     }
                 }
             },
-            markers: {
-                strokeColor: [baseprimaryColor, basesuccessColor],
-                strokeWidth: 3
-            }
         };
 
         chart = new ApexCharts(element, options);
