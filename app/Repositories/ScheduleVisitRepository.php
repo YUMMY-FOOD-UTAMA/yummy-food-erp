@@ -168,8 +168,8 @@ class ScheduleVisitRepository
 
     public function calculateStatisticV2()
     {
-        $startDate = $this->request->query("start_date", Carbon::now()->format('Y-m-d'));
-        $endDate = $this->request->query("end_date", Carbon::now()->format('Y-m-d'));
+        $startDate = $this->request->query("start_date", "2024-01-01");
+        $endDate = $this->request->query("end_date", "2026-01-01");
         $customerID = $this->request->query("customer_id");
         $employeeID = $this->request->query("employee_id");
 

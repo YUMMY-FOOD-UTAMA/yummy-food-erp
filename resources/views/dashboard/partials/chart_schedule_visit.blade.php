@@ -103,7 +103,7 @@
                 axisTicks: {
                     show: false
                 },
-                tickAmount: 8,
+                tickAmount: 2,
                 tickPlacement: 'between',
                 position: 'bottom',
                 labels: {

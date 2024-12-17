@@ -167,10 +167,10 @@
                     show: false,
                 },
                 axisTicks: {
-                    show: false
+                    show: true
                 },
-                tickAmount: 8,
-                tickPlacement: 'between',
+                tickAmount: 2,
+                // tickPlacement: 'between',
                 labels: {
                     rotate: 0,
                     rotateAlways: true,
