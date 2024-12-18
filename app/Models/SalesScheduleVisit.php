@@ -19,7 +19,7 @@ class SalesScheduleVisit extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id','id')->withTrashed();
+        return $this->belongsTo(Customer::class, 'customer_id', 'id')->withTrashed();
     }
 
     public function employee()
@@ -45,12 +45,15 @@ class SalesScheduleVisit extends Model
 
     public function rangeDate()
     {
-        return Carbon::parse($this->start_visit)
-                ->setTimezone('Asia/Jakarta')
-                ->format('Y-m-d')
-            . ' - ' .
-            Carbon::parse($this->end_visit)
-                ->setTimezone('Asia/Jakarta')
-                ->format('Y-m-d');
+        $startDate = Carbon::parse($this->start_visit)
+            ->setTimezone(\Auth::user()->timezone);
+        $endDate = Carbon::parse($this->end_visit)
+            ->setTimezone(\Auth::user()->timezone);
+        if ($startDate->month != $endDate->month) {
+            return $startDate->translatedFormat('d M \'y')
+                . ' - ' . $endDate->translatedFormat('d M \'y');
+        }
+        return $startDate->translatedFormat('d') . ' - ' . $endDate->translatedFormat('d M \'y');
     }
+
 }

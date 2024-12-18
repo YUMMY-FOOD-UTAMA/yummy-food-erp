@@ -9,13 +9,15 @@ use Illuminate\View\Component;
 class GeneralTable extends Component
 {
     public $dataTable;
+    public $type;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($dataTable)
+    public function __construct($dataTable, $type = null)
     {
         $this->dataTable = $dataTable;
+        $this->type = $type;
     }
 
     /**

@@ -4,7 +4,7 @@
         <!--begin::Title-->
         <h3 class="card-title align-items-start flex-column">
             <span class="card-label fw-bold text-dark">Planning Visit vs Real Visit</span>
-            <span class="text-gray-400 mt-1 fw-semibold fs-6">{{$scheduleVisit['sales_track_record']}}% Sales Track Record</span>
+            <span class="text-gray-400 mt-1 fw-semibold fs-6">{{$scheduleVisitStatistic['sales_track_record']}}% Sales Track Record</span>
         </h3>
         <!--end::Title-->
         <!--begin::Toolbar-->
@@ -64,11 +64,11 @@
             series: [
                 {
                     name: 'Planning Visit',
-                    data: {!! json_encode($scheduleVisit['notVisitData']) !!}
+                    data: {!! json_encode($scheduleVisitStatistic['notVisitData']) !!}
                 },
                 {
                     name: 'Real Visit',
-                    data: {!! json_encode($scheduleVisit['visitData']) !!}
+                    data: {!! json_encode($scheduleVisitStatistic['visitData']) !!}
                 },
             ],
             chart: {
@@ -102,7 +102,7 @@
                 colors: [baseprimaryColor,basesuccessColor]
             },
             xaxis: {
-                categories: {!! json_encode($scheduleVisit['dates']) !!},
+                categories: {!! json_encode($scheduleVisitStatistic['dates']) !!},
                 axisBorder: {
                     show: false,
                 },
@@ -137,8 +137,8 @@
                 }
             },
             yaxis: {
-                max: {!! json_encode($scheduleVisit['maxValue']) !!},
-                min: {!! json_encode($scheduleVisit['minValue']) !!},
+                max: {!! json_encode($scheduleVisitStatistic['maxValue']) !!},
+                min: {!! json_encode($scheduleVisitStatistic['minValue']) !!},
                 tickAmount: 6,
                 labels: {
                     style: {
