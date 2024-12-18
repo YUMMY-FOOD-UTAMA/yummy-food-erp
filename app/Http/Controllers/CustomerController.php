@@ -44,6 +44,11 @@ class CustomerController extends Controller
 
     public function store(CreateCustomerRequest $request)
     {
+        $request->merge(['name_code' => Customer::generateNameCode(
+            $request->area_id,
+            $request->customer_segment_id,
+            $request->customer_category_id,
+        )]);
         Customer::create($request->all());
         return redirect()->route('receivable.customer.index')->with([
             'status' => 'success',

@@ -53,8 +53,23 @@ class Customer extends Model
     public function nameCode()
     {
         $prefix = "";
-        $formattedNumber = str_pad($this->id, 3, '0', STR_PAD_LEFT);
-        return $prefix.$formattedNumber;
+        $formattedNumber = str_pad($this->name_code, 3, '0', STR_PAD_LEFT);
+        return $prefix . $formattedNumber;
+    }
+
+    public static function codeFormater($regionCode,$areaCode, $segmentCode, $categoryCode,$nameCode)
+    {
+        return $regionCode.$areaCode.$segmentCode.$categoryCode.$nameCode;
+    }
+
+    public static function generateNameCode($areaID, $customerSegmentID, $customerCategoryID)
+    {
+        $count = self::where('area_id', $areaID)
+            ->where('customer_segment_id', $customerSegmentID)
+            ->where('customer_category_id', $customerCategoryID)
+            ->count();
+
+        return $count + 1;
     }
 
     public function customerCategory()

@@ -54,7 +54,7 @@ class CustomerRepository
         $regionCode = $customer->area?->region?->code() ?? '';
         $segmentCode = $customer->customerSegment?->code() ?? '';
         $categoryCode = $customer->customerCategory?->code() ?? '';
-        $customer->code = $regionCode . $areaCode . $segmentCode . $categoryCode . $customer->nameCode();
+        $customer->code = Customer::codeFormater($regionCode,$areaCode,$segmentCode,$categoryCode,$customer->nameCode());
 
         return $customer;
     }
@@ -139,7 +139,7 @@ class CustomerRepository
                 $regionCode = $customer->area?->region ? $customer->area->region->code() : "";
                 $segmentCode = $customer->customerSegment ? $customer->customerSegment->code() : "";
                 $categoryCode = $customer->customerCategory ? $customer->customerCategory->code() : "";
-                $customer->code = $regionCode.$areaCode.$segmentCode.$categoryCode.$customer->nameCode();
+                $customer->code = Customer::codeFormater($regionCode,$areaCode,$segmentCode,$categoryCode,$customer->nameCode());
                 return $customer;
             });
 
