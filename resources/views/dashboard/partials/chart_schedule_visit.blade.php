@@ -1,21 +1,13 @@
 <div class="card card-flush overflow-hidden h-lg-100">
-    <!--begin::Header-->
     <div class="card-header pt-5">
-        <!--begin::Title-->
         <h3 class="card-title align-items-start flex-column">
             <span class="card-label fw-bold text-dark">Planning Visit vs Real Visit</span>
             <span class="text-gray-400 mt-1 fw-semibold fs-6">{{$scheduleVisitStatistic['sales_track_record']}}% Sales Track Record</span>
         </h3>
-        <!--end::Title-->
-        <!--begin::Toolbar-->
         <div class="card-toolbar">
-            <!--begin::Daterangepicker(defined in src/js/layout/app.js)-->
             <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left"
                  data-kt-daterangepicker-range="today" class="btn btn-sm btn-light d-flex align-items-center px-4">
-                <!--begin::Display range-->
                 <div class="text-gray-600 fw-bold">Loading date range...</div>
-                <!--end::Display range-->
-                <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
                 <span class="svg-icon svg-icon-1 ms-2 me-0">
                     <svg width="24" height="24" viewBox="0 0 24 24"
                          fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,23 +22,54 @@
                             fill="currentColor"/>
                     </svg>
                 </span>
-                <!--end::Svg Icon-->
             </div>
-            <button type="reset" class="ms-4 btn btn-primary btn-active-light-primary me-2">
+            <button data-bs-toggle="modal"
+                    data-bs-target="#viewTableChartScheduleVisit"
+                    class="ms-4 btn btn-primary btn-active-light-primary me-2">
                 View
             </button>
-            <!--end::Daterangepicker-->
         </div>
-        <!--end::Toolbar-->
+        <x-modal id="viewTableChartScheduleVisit"
+                 title="Data Planning Visit vs Real Visit" size="1000">
+            <table class="table data-table align-middle table-row-dashed fs-6 gy-3">
+                <thead>
+                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                    <th class="min-w-100px">Date</th>
+                    <th class="min-w-100px">Planning Visit</th>
+                    <th class="min-w-125px">Real Visit</th>
+                    <th class="min-w-100px">Selisih</th>
+                </tr>
+                </thead>
+
+                <tbody class="fw-bold text-gray-600">
+                @for ($i = 0; $i < count($scheduleVisitStatistic['dates']); $i++)
+                    @php
+                        $selisih = $scheduleVisitStatistic['visitData'][$i] - $scheduleVisitStatistic['notVisitData'][$i];
+                    @endphp
+                    <tr>
+                        <td>
+                            {{ $scheduleVisitStatistic['dates'][$i] }}
+                        </td>
+                        <td>
+                            {{ $scheduleVisitStatistic['notVisitData'][$i] }}
+                        </td>
+                        <td>
+                            {{ $scheduleVisitStatistic['visitData'][$i] }}
+                        </td>
+                        <td>
+                            <span class="{{ $selisih < 0 ? 'text-danger' : 'text-success' }}">
+                                {{ $selisih }}
+                            </span>
+                        </td>
+                    </tr>
+                @endfor
+                </tbody>
+            </table>
+        </x-modal>
     </div>
-    <!--end::Header-->
-    <!--begin::Card body-->
     <div class="card-body d-flex align-items-end p-0">
-        <!--begin::Chart-->
         <div id="schedule_visit_chart" class="min-h-auto w-100 ps-4 pe-6" style="height: 370px"></div>
-        <!--end::Chart-->
     </div>
-    <!--end::Card body-->
 </div>
 @push('script')
     <script>
@@ -99,7 +122,7 @@
                 curve: 'smooth',
                 show: true,
                 width: 3,
-                colors: [baseprimaryColor,basesuccessColor]
+                colors: [baseprimaryColor, basesuccessColor]
             },
             xaxis: {
                 categories: {!! json_encode($scheduleVisitStatistic['dates']) !!},
