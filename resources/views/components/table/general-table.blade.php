@@ -1,6 +1,10 @@
 <div class="card-body pt-0">
     <div class="table-responsive">
+        @if($type == 'not-bordered')
+        <table class="table align-middle table-row-dashed fs-6 gy-3">
+        @else
         <table class="table table-rounded table-bordered gy-7 gs-7">
+        @endif
             <thead>
             <tr style="height: 45px;padding: 10px 0;">
                 {{$slotTheadTh ?? ''}}

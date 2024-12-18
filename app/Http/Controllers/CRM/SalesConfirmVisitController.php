@@ -19,6 +19,7 @@ class SalesConfirmVisitController extends Controller
         $scheduleVisits = new ScheduleVisitRepository;
         $scheduleVisits->setEmployeeIDs(PermissionHelper::onlySelfAccessEmployeeIDs());
         $scheduleVisits->setRequest($request);
+        $scheduleVisits->setStatuses([SalesScheduleVisitStatus::APPROVED]);
         $scheduleVisits = $scheduleVisits->getAll();
         return view('crm.sales_confirm_visit.index', compact('scheduleVisits'));
     }

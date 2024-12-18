@@ -1,6 +1,6 @@
 <a data-bs-toggle="modal"
    data-bs-target="#modal_view{{$scheduleVisit->id}}"
-   class="btn btn-info btn-sm mx-1 edit-td-action-btn">
+   class="btn btn-info btn-sm mx-1 mb-2 edit-td-action-btn">
     View
 </a>
 <x-modal id="modal_view{{$scheduleVisit->id}}"

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\SalesScheduleVisit;
 use App\Utils\Primitives\Enum\SalesScheduleVisitStatus;
+use App\Utils\Primitives\ListPageSize;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class ScheduleVisitRepository
         $employeeID = $this->request->query("employee_id");
         $visitStatus = $this->request->query("visit_status");
         $customerStatus = $this->request->query("customer_status");
-        $pageSize = $this->request->query("page_size");
+        $pageSize = $this->request->query("page_size",ListPageSize::defaultPageSize());
         $search = $this->request->query("search");
 
         $scheduleVisit = SalesScheduleVisit::with([
@@ -85,7 +86,7 @@ class ScheduleVisitRepository
                 $query->where('status', $customerStatus);
             });
         }
-        $scheduleVisit = $scheduleVisit->orderByDesc("created_at")->paginate($pageSize)->appends(request()->query())
+        $scheduleVisit = $scheduleVisit->orderBy("start_visit")->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query())
             ->through(function ($visit) {
                 $customer = $visit->customer;
 

@@ -10,7 +10,7 @@
         <div class="card">
             @include('crm.partials.general_filter_crm')
             <x-table.basic-filter-and-export name="Schedule Visit"/>
-            @include('crm.sales_confirm_visit.schedule_confirm_visit_table')
+            @include('crm.sales_confirm_visit.schedule_confirm_visit_table',['isDashboard' => false])
         </div>
         <div class="d-flex p-5 justify-content-end">
             {!! $scheduleVisits->links() !!}

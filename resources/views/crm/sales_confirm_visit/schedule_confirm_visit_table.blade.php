@@ -1,11 +1,15 @@
-<x-table.general-table :data-table="$scheduleVisits">
+<x-table.general-table :data-table="$scheduleVisits" :type="$isDashboard?'not-bordered':null">
     @slot('slotTheadTh')
         <th style="width: 20px; vertical-align: middle; text-align: left;">No</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
-        <th style="vertical-align: middle; text-align: left;">Customer Address</th>
+        @if(!$isDashboard)
+            <th style="vertical-align: middle; text-align: left;">Customer Address</th>
+        @endif
         <th style="vertical-align: middle; text-align: left;">Visit Range Date</th>
-        <th style="vertical-align: middle; text-align: left;">Visit Status</th>
-        <th style="vertical-align: middle; text-align: left;">Expired</th>
+        @if(!$isDashboard)
+            <th style="vertical-align: middle; text-align: left;">Visit Status</th>
+            <th style="vertical-align: middle; text-align: left;">Expired</th>
+        @endif
         <th style="vertical-align: middle; text-align: left;">Actions</th>
     @endslot
     @slot('slotTbodyTr')
@@ -13,17 +17,24 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{$scheduleVisit->customer->name}}</td>
-                <td>{{$scheduleVisit->customer->status}}</td>
+                @if(!$isDashboard)
+                    <td>{{$scheduleVisit->customer->address}}</td>
+                @endif
                 <td>{{$scheduleVisit->rangeDate()}}</td>
-                <td>
+                @if(!$isDashboard)
+                    <td>
                     <span
                         class="{{VisitStatus::getSpanClass($scheduleVisit->status) }}">{{ $scheduleVisit->status === VisitStatus::APPROVED ? "Pending": $scheduleVisit->status }}</span>
-                </td>
+                    </td>
+                    <td>
+                        {{ \Carbon\Carbon::parse($scheduleVisit->end_visit)->addDay()->format('d M Y') }}
+                    </td>
+                @endif
                 <td>
-                    {{ \Carbon\Carbon::parse($scheduleVisit->end_visit)->addDay()->format('d M Y') }}
-                </td>
-                <td>
-                    @if($scheduleVisit->status === VisitStatus::APPROVED)
+                    @if($scheduleVisit->status === VisitStatus::APPROVED && \Carbon\Carbon::now()->between(
+                        \Carbon\Carbon::parse($scheduleVisit->start_visit),
+                        \Carbon\Carbon::parse($scheduleVisit->end_visit)
+                    ))
                         <a href="" data-bs-toggle="modal" id="triggerMap{{$scheduleVisit->id}}"
                            data-bs-target="#modal_visit{{$scheduleVisit->id}}"
                            class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2">

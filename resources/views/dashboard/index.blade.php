@@ -42,6 +42,26 @@
                     </div>
                     <!--end::Col-->
                 </div>
+                <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+                    <div class="col-xxl-6">
+                        <div class="card card-flush overflow-hidden h-lg-100">
+                            <div class="card-header border-0">
+                                <h3 class="card-title align-items-start flex-column">
+                                    <span class="card-label fw-bold text-dark">Sales Confirmation Visit</span>
+                                </h3>
+                                <div class="card-toolbar">
+                                    <a href="{{route('receivable.crm.sales-confirm-visit.index')}}" class="ms-4 btn btn-primary btn-active-light-primary me-2">
+                                        Detail
+                                    </a>
+                                </div>
+                            </div>
+                            @include('crm.sales_confirm_visit.schedule_confirm_visit_table',['isDashboard' => true])
+                            <div class="d-flex p-5 justify-content-end">
+                                {!! $scheduleVisits->links() !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--begin::Row-->
             </div>
             <!--end::Content container-->
