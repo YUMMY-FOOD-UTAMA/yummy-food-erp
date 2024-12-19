@@ -5,7 +5,6 @@
         @slot('slotToolbar')
             <x-toolbar name="Customer"
                        heading-name="Edit Data {{$customer->name != null ? $customer->name :'Customer'}}"
-                       route-create-name="receivable.customer.store" using-create-modal="true"
                        route-trash-name="receivable.customer.trash" route-list-name="receivable.customer.index">
                 @include('customer.partials.create_customer_modal')
             </x-toolbar>
@@ -24,7 +23,7 @@
                                   placeholder="Customer Name..." :default-value="$customer->name"
                                   name="name"/>
                     <x-form.input class="col-md-6 fv-row"
-                                  label="Company Name" :required="true"
+                                  label="Company Name" :must-upper-case="true" :required="true"
                                   placeholder="Company Name..."
                                   name="company_name" :default-value="$customer->company_name"/>
                     <x-form.input class="col-md-6 fv-row"
@@ -32,8 +31,8 @@
                                   placeholder="Outlet Name..." :default-value="$customer->outlet_name"
                                   name="outlet_name"/>
                     <x-form.input class="col-md-6 fv-row"
-                                  label="Alias" :default-value="$customer->alias"
-                                  placeholder="Alias..."
+                                  label="Customer Alias" :default-value="$customer->alias"
+                                  placeholder="Customer Alias..."
                                   name="alias"/>
                     <x-form.select2-box-tags name="department" type="row" class="col-md-6 fv-row"
                                              label="Select Or Add Department" placeholder="Select Or Add Department"
@@ -55,11 +54,11 @@
                                        :default-value="$customer->customer_category_id"
                                        placeholder="Select Customer Category..."
                                        label="Customer Category"/>
-                    <x-form.select-box class="col-md-6 fv-row" type="row"
-                                       :items="\App\Models\Customer\CustomerGroup::all()"
-                                       name="customer_group_id" :default-value="$customer->customer_group_id"
-                                       placeholder="Select Customer Group..."
-                                       label="Customer Group"/>
+                    <x-form.select2-box-tags name="customer_group_id" type="row" class="col-md-6 fv-row"
+                                             label="Select Or Add Customer Group" placeholder="Select Customer Group..."
+                                             tooltip="can be create new Customer Group"
+                                             :default-value="$customer->customer_group_id"
+                                             :items="\App\Models\Customer\CustomerGroup::all()" :required="true"/>
                 </div>
             </x-card>
 
@@ -96,12 +95,12 @@
             <x-card title="Tax Information & Contact Information" id="createCustomerTaxInfoAndContactInfo">
                 <div class="row g-9 mb-8">
                     <x-form.input class="col-md-6 fv-row"
-                                  label="NPWP"
+                                  label="NPWP" type="number"
                                   placeholder="NPWP..." :default-value="$customer->npwp"
                                   name="npwp"/>
                     <x-form.input class="col-md-6 fv-row"
                                   label="NPWP Name" :default-value="$customer->npwp_name"
-                                  placeholder="NPWP Name..."
+                                  placeholder="NPWP Name..." :must-upper-case="true"
                                   name="npwp_name"/>
                     <x-form.input class="col-md-6 fv-row"
                                   label="NPWP Address" :default-value="$customer->npwp_address"

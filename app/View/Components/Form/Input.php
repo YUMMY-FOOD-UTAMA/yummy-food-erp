@@ -20,11 +20,12 @@ class Input extends Component
     public bool $required;
     public bool $viewOnly;
     public $sizeForm;
+    public $mustUpperCase;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $label, $sizeForm = 'lg', $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
+    public function __construct($name, $label,$mustUpperCase=false, $sizeForm = 'lg', $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
     {
         $this->sizeForm = $sizeForm;
         $this->name = $name;
@@ -43,6 +44,7 @@ class Input extends Component
         if ($id) {
             $this->id = $id;
         }
+        $this->mustUpperCase = $mustUpperCase;
     }
 
     /**

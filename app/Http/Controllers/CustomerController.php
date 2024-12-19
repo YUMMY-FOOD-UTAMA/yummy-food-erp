@@ -6,6 +6,7 @@ use App\Http\Requests\Customer\CreateCustomerRequest;
 use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerCategory;
+use App\Models\Customer\CustomerGroup;
 use App\Repositories\CustomerRepository;
 use App\Trait\ApiResponseTrait;
 use Illuminate\Http\Request;
@@ -44,6 +45,13 @@ class CustomerController extends Controller
 
     public function store(CreateCustomerRequest $request)
     {
+        $customerGroup = CustomerGroup::where('id', $request->customer_group_id)->first();
+        if (!$customerGroup) {
+            $customerGroup = CustomerGroup::create([
+                'name' => $request->customer_group_id,
+            ]);
+        }
+        $request->merge(['customer_group_id' => $customerGroup->id]);
         $request->merge(['name_code' => Customer::generateNameCode(
             $request->area_id,
             $request->customer_segment_id,
@@ -65,6 +73,13 @@ class CustomerController extends Controller
 
     public function update(UpdateCustomerRequest $request, $id)
     {
+        $customerGroup = CustomerGroup::where('id', $request->customer_group_id)->first();
+        if (!$customerGroup) {
+            $customerGroup = CustomerGroup::create([
+                'name' => $request->customer_group_id,
+            ]);
+        }
+        $request->merge(['customer_group_id' => $customerGroup->id]);
         $customer = Customer::find($id);
         $customer->update($request->all());
 

@@ -36,7 +36,7 @@
                           name="outlet_name"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
                           :default-value="$customer->alias"
-                          label="Alias"
+                          label="Customer Alias"
                           name="alias"/>
             <x-form.input class="col-md-6 fv-row" view-only="true"
                           :default-value="$customer->status"
