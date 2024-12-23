@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
@@ -16,10 +15,10 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
                     <div class="col-xxl-6">
-                        @include('dashboard.partials.chart_schedule_visit')
+                        @include('dashboard.partials.chart_transaction')
                     </div>
                     <div class="col-xxl-6">
-                        @include('dashboard.partials.chart_transaction')
+                        @include('dashboard.partials.chart_schedule_visit')
                     </div>
                 </div>
                 <div class="row g-5 g-xl-10 mb-5 mb-xl-10">

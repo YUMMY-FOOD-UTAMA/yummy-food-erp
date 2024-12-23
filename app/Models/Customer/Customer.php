@@ -57,9 +57,9 @@ class Customer extends Model
         return $prefix . $formattedNumber;
     }
 
-    public static function codeFormater($regionCode,$areaCode, $segmentCode, $categoryCode,$nameCode)
+    public static function codeFormater($regionCode, $areaCode, $segmentCode, $categoryCode, $nameCode)
     {
-        return $regionCode.$areaCode.$segmentCode.$categoryCode.$nameCode;
+        return $regionCode . $areaCode . $segmentCode . $categoryCode . $nameCode;
     }
 
     public static function generateNameCode($areaID, $customerSegmentID, $customerCategoryID)
@@ -67,9 +67,16 @@ class Customer extends Model
         $count = self::where('area_id', $areaID)
             ->where('customer_segment_id', $customerSegmentID)
             ->where('customer_category_id', $customerCategoryID)
+            ->withTrashed()
             ->count();
-
-        return $count + 1;
+        $code = $count + 1;
+        do {
+            $isCodeExists = self::where("name_code", $code)->withTrashed()->exists();
+            if ($isCodeExists) {
+                $code++;
+            }
+        } while ($isCodeExists);
+        return $code;
     }
 
     public function customerCategory()

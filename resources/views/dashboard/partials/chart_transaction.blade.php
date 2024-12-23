@@ -5,7 +5,7 @@
         </h3>
         <div class="card-toolbar">
             <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left"
-                 data-kt-daterangepicker-range="today" class="btn btn-sm btn-light d-flex align-items-center px-4">
+                 data-kt-daterangepicker-range="Last 7 Days" class="btn btn-sm btn-light d-flex align-items-center px-4">
                 <div class="text-gray-600 fw-bold">Loading date range...</div>
                 <span class="svg-icon svg-icon-1 ms-2 me-0">
                     <svg width="24" height="24" viewBox="0 0 24 24"
@@ -25,7 +25,7 @@
             <button data-bs-toggle="modal"
                     data-bs-target="#viewTableChartTransaction"
                     class="ms-4 btn btn-primary btn-active-light-primary me-2">
-                View
+                View List
             </button>
         </div>
         <x-modal id="viewTableChartTransaction"
@@ -184,7 +184,7 @@
                 curve: 'smooth',
                 show: true,
                 width: 3,
-                colors: [baseprimaryColor, basesuccessColor]
+                colors: [basesuccessColor,baseprimaryColor]
             },
             xaxis: {
                 categories: categories,
@@ -207,7 +207,7 @@
                 crosshairs: {
                     position: 'front',
                     stroke: {
-                        color: [baseprimaryColor, basesuccessColor],
+                        color: [basesuccessColor,baseprimaryColor],
                         width: 10,
                         dashArray: 3
                     }
@@ -261,7 +261,7 @@
                     fontSize: '12px'
                 }
             },
-            colors: [lightprimaryColor, lightsuccessColor],
+            colors: [lightsuccessColor,lightprimaryColor],
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
