@@ -42,10 +42,10 @@
             <table class="table data-table align-middle table-row-dashed fs-6 gy-3">
                 <thead>
                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                    <th class="min-w-100px">Date</th>
-                    <th class="min-w-100px">Sales Target</th>
-                    <th class="min-w-125px">Sales Real</th>
-                    <th class="min-w-100px">Selisih</th>
+                    <th class="min-w-50px">Date</th>
+                    <th class="min-w-70px">Sales Target</th>
+                    <th class="min-w-60px">Sales Real</th>
+                    <th class="min-w-50px">Selisih</th>
                 </tr>
                 </thead>
 

@@ -117,7 +117,7 @@ class AccountController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'password' => ['required'],
-            'new_password' => ['required', 'min:8'],
+            'new_password' => ['required', 'min:4'],
         ]);
 
         if ($validator->fails()) {
