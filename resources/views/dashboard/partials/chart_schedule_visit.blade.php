@@ -1,8 +1,10 @@
 <div class="card card-flush overflow-hidden h-lg-100">
     <div class="card-header pt-5">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold text-dark">Planning Visit vs Real Visit</span>
-            <span class="text-gray-400 mt-1 fw-semibold fs-6">{{$scheduleVisitStatistic['sales_track_record']}}% Sales Track Record</span>
+            <span class="card-label fw-bold text-dark mb-5">Planning Visit vs Real Visit</span>
+            <span class="badge py-3 px-4 fs-7 badge-light-success mb-5">Monthly Target : {{$scheduleVisitStatistic['totalTarget']}}</span>
+            <span class="badge py-3 px-4 fs-7 badge-light-primary mb-5">Current Visit : {{$scheduleVisitStatistic['totalSalesMappingVisited']}}</span>
+            <span class="badge py-3 px-4 fs-7 badge-light-warning mb-5">Variance : {{$scheduleVisitStatistic['varianceFormatted']}}</span>
         </h3>
         <div class="card-toolbar">
             <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left"

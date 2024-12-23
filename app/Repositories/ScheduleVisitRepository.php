@@ -37,7 +37,7 @@ class ScheduleVisitRepository
         $employeeID = $this->request->query("employee_id");
         $visitStatus = $this->request->query("visit_status");
         $customerStatus = $this->request->query("customer_status");
-        $pageSize = $this->request->query("page_size",ListPageSize::defaultPageSize());
+        $pageSize = $this->request->query("page_size", ListPageSize::defaultPageSize());
         $search = $this->request->query("search");
 
         $scheduleVisit = SalesScheduleVisit::with([
@@ -254,6 +254,13 @@ class ScheduleVisitRepository
             }
         }
 
+        if ($totalSalesScheduledNotVisited != 0) {
+            $variance = (($totalSalesMappingVisited - $totalSalesScheduledNotVisited) / $totalSalesScheduledNotVisited) * 100;
+            $varianceFormatted = ($variance >= 0 ? '+' : '') . number_format($variance, 2) . '%';
+        } else {
+            $varianceFormatted = "0%";
+        }
+
         return [
             'sales_track_record' => $salesTrackRecord,
             'dates' => $finalDates,
@@ -261,6 +268,10 @@ class ScheduleVisitRepository
             'notVisitData' => $finalNotVisitData,
             'minValue' => $minValue,
             'maxValue' => $maxValue,
+            'totalTarget' => $totalSalesMappingVisited + $totalSalesScheduledNotVisited,
+            'totalSalesMappingVisited' => $totalSalesMappingVisited,
+            'totalSalesScheduledNotVisited' => $totalSalesScheduledNotVisited,
+            'varianceFormatted' => $varianceFormatted,
         ];
     }
 }

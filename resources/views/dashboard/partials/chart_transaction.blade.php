@@ -1,11 +1,20 @@
+@push('css')
+    <style>
+    </style>
+@endpush
 <div class="card card-flush overflow-hidden h-lg-100">
     <div class="card-header pt-5">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bold text-dark">Sales Target vs Sales Real</span>
+            <span class="card-label fw-bold text-dark mb-5">Sales Target vs Sales Real</span>
+            <span class="badge py-3 px-4 fs-7 badge-light-success mb-5">Monthly Target : Rp. 36.799.000</span>
+            <span class="badge py-3 px-4 fs-7 badge-light-primary mb-5">Current Sales : Rp. 37.794.000</span>
+            <span class="badge py-3 px-4 fs-7 badge-light-warning mb-5">Variance : Rp. 995.000 (+2.70%)</span>
         </h3>
+
         <div class="card-toolbar">
             <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left"
-                 data-kt-daterangepicker-range="Last 7 Days" class="btn btn-sm btn-light d-flex align-items-center px-4">
+                 data-kt-daterangepicker-range="Last 7 Days"
+                 class="btn btn-sm btn-light d-flex align-items-center px-4">
                 <div class="text-gray-600 fw-bold">Loading date range...</div>
                 <span class="svg-icon svg-icon-1 ms-2 me-0">
                     <svg width="24" height="24" viewBox="0 0 24 24"
@@ -120,8 +129,9 @@
                 </tbody>
             </table>
         </x-modal>
+
     </div>
-    <div class="card-body d-flex align-items-end p-0">
+    <div class="card-body align-items-end p-0">
         <div id="penjualan_chart_dashboard" class="min-h-auto w-100 ps-4 pe-6" style="height: 370px"></div>
     </div>
 </div>
@@ -184,7 +194,7 @@
                 curve: 'smooth',
                 show: true,
                 width: 3,
-                colors: [basesuccessColor,baseprimaryColor]
+                colors: [basesuccessColor, baseprimaryColor]
             },
             xaxis: {
                 categories: categories,
@@ -207,7 +217,7 @@
                 crosshairs: {
                     position: 'front',
                     stroke: {
-                        color: [basesuccessColor,baseprimaryColor],
+                        color: [basesuccessColor, baseprimaryColor],
                         width: 10,
                         dashArray: 3
                     }
@@ -261,7 +271,7 @@
                     fontSize: '12px'
                 }
             },
-            colors: [lightsuccessColor,lightprimaryColor],
+            colors: [lightsuccessColor, lightprimaryColor],
             grid: {
                 borderColor: borderColor,
                 strokeDashArray: 4,
