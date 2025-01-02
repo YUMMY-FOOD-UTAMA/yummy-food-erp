@@ -29,8 +29,14 @@
     @if($type=='phone_number')
         <script>
             new Inputmask({
-                "mask": "(+62) 999-9999-9999",
-                "placeholder": "(+62) 888-8888-8888",
+                mask: "(+62) 8[9]{0,20}",
+                placeholder: "(+62) 8xxxxxxx",
+                definitions: {
+                    '9': {
+                        validator: "[0-9]",
+                    }
+                },
+                greedy: false
             }).mask("#{{$id.$uuid}}");
         </script>
     @elseif($type=='rt_rw')

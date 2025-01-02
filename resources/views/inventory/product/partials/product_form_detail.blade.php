@@ -27,29 +27,12 @@
             :view-only="true"
         />
 
-        <x-form.input
-            label="Item Type"
-            name="item_type"
-            type="row"
-            :default-value="$product->type->value"
-            class="col-md-6 fv-row"
-            :view-only="true"
-        />
 
         <x-form.input
-            label="Item Manufacture"
-            name="item_manufacture"
+            label="Item Division"
+            name="division_id"
             type="row"
-            :default-value="$product->manufacture->value"
-            class="col-md-6 fv-row"
-            :view-only="true"
-        />
-
-        <x-form.input
-            label="Item Manufacture"
-            name="item_manufacture"
-            type="row"
-            :default-value="$product->manufacture->value"
+            :default-value="$product->division->value"
             class="col-md-6 fv-row"
             :view-only="true"
         />
@@ -64,37 +47,19 @@
         />
 
         <x-form.input
-            label="Item Group"
-            name="group_id"
+            label="Item Type"
+            name="item_type"
             type="row"
-            :default-value="$product->group->value"
+            :default-value="$product->type->value"
             class="col-md-6 fv-row"
             :view-only="true"
         />
 
         <x-form.input
-            label="Item Division"
-            name="division_id"
+            label="Item Packing Size"
+            name="packing_size_id"
             type="row"
-            :default-value="$product->division->value"
-            class="col-md-6 fv-row"
-            :view-only="true"
-        />
-
-        <x-form.input
-            label="Item Small Unit"
-            name="small_unit_id"
-            type="row"
-            :default-value="$product->smallUnit?->value"
-            class="col-md-6 fv-row"
-            :view-only="true"
-        />
-
-        <x-form.input
-            label="Item Big Unit"
-            name="big_unit_id"
-            type="row"
-            :default-value="$product->bigUnit?->value"
+            :default-value="$product->packingSize?->value"
             class="col-md-6 fv-row"
             :view-only="true"
         />
@@ -138,28 +103,15 @@
         />
 
         <x-form.select-box
-            label="Item Type"
-            placeholder="Select Item Type"
-            name="type_id"
-            id="update_product_type_id"
+            label="Item Division"
+            placeholder="Select Item Division"
+            name="division_id"
+            id="update_product_division_id"
             type="row"
-            :default-value="$product->type_id"
             class="col-md-6 fv-row"
             required="true"
-            :items="$masterDataTypes"
-            custom-name-key="'('.$t->code.') '.$t->value"
-        />
-
-        <x-form.select-box
-            label="Item Manufacture"
-            placeholder="Select Item Manufacture"
-            name="manufacture_id"
-            id="update_product_manufacture_id"
-            type="row"
-            :default-value="$product->manufacture_id"
-            class="col-md-6 fv-row"
-            required="true"
-            :items="$masterDataManufacture"
+            :default-value="$product->division_id"
+            :items="$masterDataDivisions"
             custom-name-key="'('.$t->code.') '.$t->value"
         />
 
@@ -177,54 +129,67 @@
         />
 
         <x-form.select-box
-            label="Item Group"
-            placeholder="Select Item Group"
-            name="group_id"
-            id="update_product_group_id"
+            label="Item Type"
+            placeholder="Select Item Type"
+            name="type_id"
+            id="update_product_type_id"
             type="row"
-            class="col-md-6 fv-row"
-            :default-value="$product->group_id"
-            required="true"
-            :items="$masterDataGroups"
-            custom-name-key="'('.$t->code.') '.$t->value"
-        />
-
-        <x-form.select-box
-            label="Item Division"
-            placeholder="Select Item Division"
-            name="division_id"
-            id="update_product_division_id"
-            type="row"
+            :default-value="$product->type_id"
             class="col-md-6 fv-row"
             required="true"
-            :default-value="$product->division_id"
-            :items="$masterDataDivisions"
+            :items="$masterDataTypes"
             custom-name-key="'('.$t->code.') '.$t->value"
         />
 
         <x-form.select-box
-            label="Item Small Unit"
-            placeholder="Select Item Small Unit"
-            name="small_unit_id"
-            id="update_product_small_unit_id"
+            label="Item Packing Size"
+            placeholder="Select Item Packing Size"
+            name="packing_size_id"
+            id="update_product_packing_size_id"
             type="row"
             class="col-md-6 fv-row"
-            :default-value="$product->small_unit_id"
-            :items="$masterDataSmallUnits"
-            custom-name-key="'('.$t->code.') '.$t->value"
-        />
-
-        <x-form.select-box
-            label="Item Big Unit"
-            placeholder="Select Item Big Unit"
-            name="big_unit_id"
-            id="update_product_big_unit_id"
-            type="row"
-            class="col-md-6 fv-row"
-            :default-value="$product->big_unit_id"
-            :items="$masterDataBigUnits"
+            :default-value="$product->packing_size_id"
+            :items="$masterDataPackingSize"
             custom-name-key="'('.$t->code.') '.$t->value"
         />
     </div>
+    @push('script')
+        <script>
+            function checkAllInputs() {
+                const brandId = document.getElementById('update_product_brand_id').value;
+                const divisionId = document.getElementById('update_product_division_id').value;
+                const categoryId = document.getElementById('update_product_category_id').value;
+                const typeId = document.getElementById('update_product_type_id').value;
+                const packingSizeId = document.getElementById('update_product_packing_size_id').value;
 
+                if (brandId && divisionId && categoryId && typeId && packingSizeId) {
+                    fetch('/api/product/generate-name-code', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                        body: JSON.stringify({
+                            brandId: brandId,
+                            divisionId: divisionId,
+                            categoryId: categoryId,
+                            typeId: typeId,
+                            packingSizeId: packingSizeId
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('update_product_code').value = data.result.productCode;
+                            document.getElementById('update_product_name').value = data.result.productName;
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            }
+
+            $('#update_product_division_id, #update_product_brand_id, #update_product_category_id, #update_product_type_id, #update_product_packing_size_id').change(function () {
+                checkAllInputs();
+            });
+
+        </script>
+    @endpush
 @endif

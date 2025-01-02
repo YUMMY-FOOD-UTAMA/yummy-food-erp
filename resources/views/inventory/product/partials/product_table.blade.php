@@ -4,9 +4,8 @@
         <th style="vertical-align: middle; text-align: left;">Item Code</th>
         <th style="vertical-align: middle; text-align: left;">Item Name</th>
         <th style="vertical-align: middle; text-align: left;">Item Category</th>
-        <th style="vertical-align: middle; text-align: left;">Item Group</th>
+        <th style="vertical-align: middle; text-align: left;">Item Packing Size</th>
         <th style="vertical-align: middle; text-align: left;">Item Type</th>
-        <th style="vertical-align: middle; text-align: left;">Item Manufacture</th>
         <th class="text-end min-w-70px">Actions</th>
     @endslot
     @slot('slotTbodyTr')
@@ -16,9 +15,8 @@
                 <td>{{$product->code}}</td>
                 <td>{{$product->name}}</td>
                 <td>{{$product->category->value}}</td>
-                <td>{{$product->group->value}}</td>
+                <td>{{$product->packingSize?->value}}</td>
                 <td>{{$product->type->value}}</td>
-                <td>{{$product->manufacture->value}}</td>
                 @if($isTrash)
                     <x-table.action-button restore-route-name="inventory.product.restore"
                                            restore-route="{{route('inventory.product.restore',$product->id)}}"

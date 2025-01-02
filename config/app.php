@@ -133,5 +133,6 @@ return [
         'VisitCategory' => \App\Utils\Primitives\Enum\SalesScheduleVisitCategory::class,
         'PermissionHelper' => \App\Utils\Helpers\PermissionHelper::class,
         'DefaultCustomerDepartment' => \App\Utils\Primitives\DefaultCustomerDepartment::class,
+        'ProductRepository' => \App\Repositories\ProductRepository::class,
     ])->toArray(),
 ];

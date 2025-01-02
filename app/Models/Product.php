@@ -30,28 +30,14 @@ class Product extends Model
         return $this->belongsTo(MasterDataCodeValue::class, 'category_id', 'id')->withTrashed();
     }
 
-    public function group()
-    {
-        return $this->belongsTo(MasterDataCodeValue::class, 'group_id', 'id')->withTrashed();
-    }
-
     public function type()
     {
         return $this->belongsTo(MasterDataCodeValue::class, 'type_id', 'id')->withTrashed();
     }
 
-    public function manufacture()
+    public function packingSize()
     {
-        return $this->belongsTo(MasterDataCodeValue::class, 'manufacture_id', 'id')->withTrashed();
+        return $this->belongsTo(MasterDataCodeValue::class, 'packing_size_id', 'id')->withTrashed();
     }
 
-    public function smallUnit()
-    {
-        return $this->belongsTo(MasterDataCodeValue::class, 'small_unit_id', 'id')->withTrashed();
-    }
-
-    public function bigUnit()
-    {
-        return $this->belongsTo(MasterDataCodeValue::class, 'big_unit_id', 'id')->withTrashed();
-    }
 }

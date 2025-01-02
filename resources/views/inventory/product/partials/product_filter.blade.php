@@ -37,20 +37,7 @@
         custom-name-key="'('.$t->code.') '.$t->value"
         :default-value="request()->category_id"
     />
-
-    <x-form.select-box
-        label="Item Group"
-        placeholder="Select Item Group"
-        name="group_id"
-        id="filter_group_id"
-        type="row"
-        class="col-12 col-md-3 mb-5"
-        size-form="sm"
-        :items="$masterDataGroups"
-        custom-name-key="'('.$t->code.') '.$t->value"
-        :default-value="request()->group_id"
-    />
-
+    
     <x-form.select-box
         label="Item Division"
         placeholder="Select Item Division"

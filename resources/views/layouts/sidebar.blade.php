@@ -3,10 +3,9 @@
      data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo" style="background-color: #C3252B !important;">
         <a href="{{ route('dashboard') }}" class="mt-5 d-flex align-items-end">
-            <img alt="Logo" src="{{ asset('assets/images/logo.png') }}" class="h-45px app-sidebar-logo-default"/>
-            <img alt="Logo" src="{{ asset('assets/images/logo.png') }}"
+            <img alt="Logo" src="{{ asset('assets/images/YRP-Logo.png') }}" class="h-45px app-sidebar-logo-default"/>
+            <img alt="Logo" src="{{ asset('assets/images/YRP-Logo.png') }}"
                  class="h-20px app-sidebar-logo-minimize"/>
-            <span class="fw-bold fs-2 text-white text-logo">RP</span>
         </a>
 
         <div id="kt_app_sidebar_toggle"

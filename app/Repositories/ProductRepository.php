@@ -27,6 +27,29 @@ class ProductRepository
         $this->withTrashed = $withTrashed;
     }
 
+    public static function generateCodeAndName($brandId, $divisionId, $categoryId, $typeId, $packingSizeId)
+    {
+        if (!$brandId && !$divisionId && !$categoryId && !$typeId && !$packingSizeId) {
+            return null;
+        }
+        $masterDataRepository = new MasterDataCodeValuesRepository;
+
+        $brand = $masterDataRepository->getMasterDataById($brandId);
+        $division = $masterDataRepository->getMasterDataById($divisionId);
+        $category = $masterDataRepository->getMasterDataById($categoryId);
+        $type = $masterDataRepository->getMasterDataById($typeId);
+        $packingSize = $masterDataRepository->getMasterDataById($packingSizeId);
+
+        $productCode = trim("{$brand->code}{$division->code}{$category->code}{$type->code}{$packingSize->code}");
+        $productName = trim("{$brand->value} {$type->value} {$packingSize->value}");
+
+        $productNameCode = new \stdClass();
+        $productNameCode->productCode = $productCode;
+        $productNameCode->productName = $productName;
+
+        return $productNameCode;
+    }
+
     public function all()
     {
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
@@ -41,11 +64,8 @@ class ProductRepository
             'category',
             'brand',
             'division',
-            'group',
             'type',
-            'manufacture',
-            'smallUnit',
-            'bigUnit',
+            'packingSize'
         ]);
         if ($this->onlyTrashed) {
             $products->onlyTrashed();

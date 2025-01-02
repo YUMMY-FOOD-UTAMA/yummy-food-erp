@@ -9,11 +9,14 @@ use App\Models\MasterDataCodeValue;
 use App\Models\Product;
 use App\Repositories\MasterDataCodeValuesRepository;
 use App\Repositories\ProductRepository;
+use App\Trait\ApiResponseTrait;
 use App\Utils\Primitives\Enum\MasterDataCodeValues;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use ApiResponseTrait;
+
     public function index(Request $request)
     {
         $products = new ProductRepository;
@@ -24,12 +27,9 @@ class ProductController extends Controller
             'products' => $products,
             'masterDataBrands' => $masterDataRepository->getMasterDataBrand(),
             'masterDataTypes' => $masterDataRepository->getMasterDataType(),
-            'masterDataManufacture' => $masterDataRepository->getMasterDataManufacture(),
             'masterDataCategories' => $masterDataRepository->getMasterDataCategory(),
-            'masterDataGroups' => $masterDataRepository->getMasterDataGroup(),
             'masterDataDivisions' => $masterDataRepository->getMasterDataDivision(),
-            'masterDataSmallUnits' => $masterDataRepository->getMasterDataSmallUnit(),
-            'masterDataBigUnits' => $masterDataRepository->getMasterDataBigUnit(),
+            'masterDataPackingSize' => $masterDataRepository->getMasterDataPackingSize(),
         ]);
     }
 
@@ -44,47 +44,30 @@ class ProductController extends Controller
             'products' => $products,
             'masterDataBrands' => $masterDataRepository->getMasterDataBrand(),
             'masterDataTypes' => $masterDataRepository->getMasterDataType(),
-            'masterDataManufacture' => $masterDataRepository->getMasterDataManufacture(),
             'masterDataCategories' => $masterDataRepository->getMasterDataCategory(),
-            'masterDataGroups' => $masterDataRepository->getMasterDataGroup(),
             'masterDataDivisions' => $masterDataRepository->getMasterDataDivision(),
-            'masterDataSmallUnits' => $masterDataRepository->getMasterDataSmallUnit(),
-            'masterDataBigUnits' => $masterDataRepository->getMasterDataBigUnit(),
+            'masterDataPackingSize' => $masterDataRepository->getMasterDataPackingSize(),
         ]);
     }
 
     public function store(CreateProductRequest $request)
     {
-        $masterDataRepository = new MasterDataCodeValuesRepository;
-
         $brandId = $request->input('brand_id');
         $divisionId = $request->input('division_id');
         $categoryId = $request->input('category_id');
-        $groupId = $request->input('group_id');
         $typeId = $request->input('type_id');
-        $manufactureId = $request->input('manufacture_id');
+        $packingSizeId = $request->input('packing_size_id');
 
-        $brand = $masterDataRepository->getMasterDataById($brandId);
-        $division = $masterDataRepository->getMasterDataById($divisionId);
-        $category = $masterDataRepository->getMasterDataById($categoryId);
-        $group = $masterDataRepository->getMasterDataById($groupId);
-        $type = $masterDataRepository->getMasterDataById($typeId);
-        $manufacture = $masterDataRepository->getMasterDataById($manufactureId);
-
-        $productID = trim("{$brand->code}{$division->code}{$category->code}{$group->code}{$type->code}{$manufacture->code}");
-        $productName = trim("{$brand->value} {$division->value} {$category->value} {$group->value} {$manufacture->value}");
+        $productCodeAndName = ProductRepository::generateCodeAndName($brandId, $divisionId, $categoryId, $typeId, $packingSizeId);
 
         Product::create([
-            'code' => $productID,
-            'name' => $productName,
+            'code' => $productCodeAndName->productCode,
+            'name' => $productCodeAndName->productName,
             'brand_id' => $brandId,
             'division_id' => $divisionId,
             'category_id' => $categoryId,
-            'group_id' => $groupId,
             'type_id' => $typeId,
-            'manufacture_id' => $manufactureId,
-            'small_unit_id' => $request->small_unit_id,
-            'big_unit_id' => $request->big_unit_id,
+            'packing_size_id' => $request->packing_size_id,
         ]);
 
         return redirect()->back()->with([
@@ -101,46 +84,30 @@ class ProductController extends Controller
             'product' => $product,
             'masterDataBrands' => $masterDataRepository->getMasterDataBrand(),
             'masterDataTypes' => $masterDataRepository->getMasterDataType(),
-            'masterDataManufacture' => $masterDataRepository->getMasterDataManufacture(),
             'masterDataCategories' => $masterDataRepository->getMasterDataCategory(),
-            'masterDataGroups' => $masterDataRepository->getMasterDataGroup(),
             'masterDataDivisions' => $masterDataRepository->getMasterDataDivision(),
-            'masterDataSmallUnits' => $masterDataRepository->getMasterDataSmallUnit(),
-            'masterDataBigUnits' => $masterDataRepository->getMasterDataBigUnit(),
+            'masterDataPackingSize' => $masterDataRepository->getMasterDataPackingSize(),
         ]);
     }
 
     public function update(UpdateProductRequest $request, $id)
     {
-        $masterDataRepository = new MasterDataCodeValuesRepository;
         $brandId = $request->input('brand_id');
         $divisionId = $request->input('division_id');
         $categoryId = $request->input('category_id');
-        $groupId = $request->input('group_id');
         $typeId = $request->input('type_id');
-        $manufactureId = $request->input('manufacture_id');
+        $packingSizeId = $request->input('packing_size_id');
 
-        $brand = $masterDataRepository->getMasterDataById($brandId);
-        $division = $masterDataRepository->getMasterDataById($divisionId);
-        $category = $masterDataRepository->getMasterDataById($categoryId);
-        $group = $masterDataRepository->getMasterDataById($groupId);
-        $type = $masterDataRepository->getMasterDataById($typeId);
-        $manufacture = $masterDataRepository->getMasterDataById($manufactureId);
-
-        $productID = trim("{$brand->code}{$division->code}{$category->code}{$group->code}{$type->code}{$manufacture->code}");
-        $productName = trim("{$brand->value} {$division->value} {$category->value} {$group->value} {$manufacture->value}");
+        $productCodeAndName = ProductRepository::generateCodeAndName($brandId, $divisionId, $categoryId, $typeId, $packingSizeId);
 
         Product::where('id', $id)->update([
-            'code' => $productID,
-            'name' => $productName,
+            'code' => $productCodeAndName->productCode,
+            'name' => $productCodeAndName->productName,
             'brand_id' => $brandId,
             'division_id' => $divisionId,
             'category_id' => $categoryId,
-            'group_id' => $groupId,
             'type_id' => $typeId,
-            'manufacture_id' => $manufactureId,
-            'small_unit_id' => $request->small_unit_id,
-            'big_unit_id' => $request->big_unit_id,
+            'packing_size_id' => $request->packing_size_id,
         ]);
         return redirect()->back()->with([
             'status' => 'success',
@@ -163,6 +130,22 @@ class ProductController extends Controller
         return redirect()->back()->with([
             'status' => 'success',
             'message' => 'Product has been restored'
+        ]);
+    }
+
+    public function generateNameCode(Request $request)
+    {
+        $brandId = $request->brandId;
+        $divisionId = $request->divisionId;
+        $categoryId = $request->categoryId;
+        $typeId = $request->typeId;
+        $packingSizeId = $request->packingSizeId;
+
+        $result = ProductRepository::generateCodeAndName($brandId, $divisionId, $categoryId, $typeId, $packingSizeId);
+
+        return $this->successResponse([
+            'productCode' => $result->productCode,
+            'productName' => $result->productName,
         ]);
     }
 }

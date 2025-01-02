@@ -16,12 +16,9 @@ class CreateProductRequest extends FormRequest
         return [
             'brand_id' => ['required', 'integer', 'exists:master_data_code_values,id'],
             'type_id' => ['required', 'integer', 'exists:master_data_code_values,id'],
-            'manufacture_id' => ['required', 'integer', 'exists:master_data_code_values,id'],
             'category_id' => ['required', 'integer', 'exists:master_data_code_values,id'],
-            'group_id' => ['required', 'integer', 'exists:master_data_code_values,id'],
             'division_id' => ['required', 'integer', 'exists:master_data_code_values,id'],
-            'small_unit_id' => ['nullable','integer', 'exists:master_data_code_values,id'],
-            'big_unit_id' => ['nullable','integer', 'exists:master_data_code_values,id'],
+            'packing_size_id' => ['nullable','integer', 'exists:master_data_code_values,id'],
         ];
     }
 }

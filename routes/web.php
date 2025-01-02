@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'api'], function () {
         Route::get('/employees', [EmployeeController::class, 'apiGet'])->name('api.get.employees');
         Route::get('/customers', [CustomerController::class, 'apiGet'])->name('api.get.customers');
+        Route::post('/product/generate-name-code', [ProductController::class, 'generateNameCode'])->name('api.generate.name.code');
     });
 
     Route::middleware(PermissionRole::class)->group(function () {

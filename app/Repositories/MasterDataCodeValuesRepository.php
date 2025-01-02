@@ -37,28 +37,13 @@ class MasterDataCodeValuesRepository
         return self::getMasterData(MasterDataCodeValues::PRODUCT_CATEGORY);
     }
 
-    public function getMasterDataGroup()
-    {
-        return self::getMasterData(MasterDataCodeValues::PRODUCT_ITEM_GROUP);
-    }
-
-    public function getMasterDataManufacture()
-    {
-        return self::getMasterData(MasterDataCodeValues::PRODUCT_ITEM_MANUFACTURE);
-    }
-
     public function getMasterDataDivision()
     {
         return self::getMasterData(MasterDataCodeValues::PRODUCT_ITEM_DIVISION);
     }
 
-    public function getMasterDataSmallUnit()
+    public function getMasterDataPackingSize()
     {
-        return self::getMasterData(MasterDataCodeValues::PRODUCT_UNIT_SMALL);
-    }
-
-    public function getMasterDataBigUnit()
-    {
-        return self::getMasterData(MasterDataCodeValues::PRODUCT_UNIT_BIG);
+        return self::getMasterData(MasterDataCodeValues::PRODUCT_ITEM_PACKING_SIZE);
     }
 }
