@@ -3,6 +3,6 @@
                        :default-value="request()->status" placeholder="Select Employee Status..."
                        class="col-12 col-md-3 mb-5"
                        type="row" size-form="sm"/>
-    <x-form.select-box-geographic :province-i-d="request()->province_id" form-method="GET" size-form="sm"
+    <x-data-driven.select2.geographic :province-i-d="request()->province_id" form-method="GET" size-form="sm"
                                   class="col-12 col-md-3 mb-5" type="row"/>
 </x-table.advance-filter>

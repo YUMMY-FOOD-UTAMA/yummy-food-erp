@@ -1,14 +1,13 @@
 <?php
 
-namespace App\View\Components\Form;
+namespace App\View\Components\DataDriven\Select2;
 
-use App\Utils\Primitives\Timezone;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Ramsey\Uuid\Uuid;
 
-class SelectBoxTimezones extends Component
+class Timezone extends Component
 {
     public string $timezone;
     public string $type;
@@ -21,7 +20,7 @@ class SelectBoxTimezones extends Component
         $this->timezone = $timezone;
         $this->type = $type;
         $this->dropDownParentID = $dropDownParentID;
-        $this->uuid = "a".Uuid::uuid4()->toString();
+        $this->uuid = "a" . Uuid::uuid4()->toString();
         if ($uuid) {
             $this->uuid = $uuid;
         }
@@ -36,9 +35,7 @@ class SelectBoxTimezones extends Component
      */
     public function render(): View|Closure|string
     {
-        $timezones = Timezone::getTimezones();
-        return view('components.form.select-box-timezones', compact(
-            'timezones'
-        ));
+        $timezones = \App\Utils\Primitives\Timezone::getTimezones();
+        return view('components.data-driven.select2.timezone', compact('timezones'));
     }
 }

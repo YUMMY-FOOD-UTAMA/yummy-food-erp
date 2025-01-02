@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Form;
+namespace App\View\Components\DataDriven\Select2;
 
 use App\Models\Geographic\District;
 use App\Models\Geographic\Province;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Ramsey\Uuid\Uuid;
 
-class SelectBoxGeographic extends Component
+class Geographic extends Component
 {
     public $province_id;
     public $district_id;
@@ -58,8 +58,8 @@ class SelectBoxGeographic extends Component
         if ($this->sub_district_village_id) {
             $subDistrictVillage = SubDistrictVillage::where('sub_district_id', $this->sub_district_id)->get();
         }
-        $id = 'a'.str_replace('-', '', Uuid::uuid4()->toString());;
-        return view('components.form.select-box-geographic', compact(
+        $id = 'a' . str_replace('-', '', Uuid::uuid4()->toString());;
+        return view('components.data-driven.select2.geographic', compact(
             'province',
             'district',
             'subDistrict',

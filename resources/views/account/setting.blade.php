@@ -174,9 +174,8 @@
                                         <x-input-error :messages="$errors->get('gender')" class="mt-2"/>
                                     </div>
                                 </div>
-                                <x-form.select-box-timezones class="row mb-6" type="inline"
-                                                             :timezone="Auth::user()->timezone">
-                                </x-form.select-box-timezones>
+                                <x-data-driven.select2.timezone class="row mb-6" type="inline"
+                                                             :timezone="Auth::user()->timezone" />
                                 <div class="row mb-6">
                                     <label class="col-lg-4 col-form-label fw-semibold fs-6">
                                         <span class="required">Address</span>
@@ -189,12 +188,12 @@
                                         <x-input-error :messages="$errors->get('address')" class="mt-2"/>
                                     </div>
                                 </div>
-                                <x-form.select-box-geographic
+                                <x-data-driven.select2.geographic
                                     form-method="POST"
                                     :province-i-d="Auth::user()->province_id"
                                     :district-i-d="Auth::user()->district_id"
                                     :sub-district-i-d="Auth::user()->sub_district_id"
-                                    :sub-district-village-i-d="Auth::user()->sub_district_village_id"></x-form.select-box-geographic>
+                                    :sub-district-village-i-d="Auth::user()->sub_district_village_id"/>
                             </div>
                             <div class="card-footer d-flex justify-content-end py-6 px-9">
                                 <button type="submit" class="btn btn-primary"

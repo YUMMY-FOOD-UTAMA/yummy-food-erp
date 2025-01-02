@@ -11,7 +11,7 @@
             @csrf
             <x-card title="Scheduling Visit" id="scheduling_visit">
                 <div class="row g-9 mb-8">
-                    <x-form.select-box-employee class="col-12 col-md-4 mb-5" type="row" :only-sales="true"
+                    <x-data-driven.select2.employee class="col-12 col-md-4 mb-5" type="row" :only-sales="true"
                                                 label="Sales Name" :employee-i-d="old('employee_id')"/>
                     <x-form.select-box name="visit_category" label="Visit Category" class="col-12 col-md-4 mb-5"
                                        type="row"
@@ -42,7 +42,7 @@
                                        :items="\App\Models\Customer\CustomerCategory::all()"
                                        name="customer_category_id" size-form="sm" label="Customer Category"
                                        placeholder="Select Customer Category"/>
-                    <x-form.select-box-region type="row" size-form="sm" class="col-12 col-md-3 mb-5"/>
+                    <x-data-driven.select2.region type="row" size-form="sm" class="col-12 col-md-3 mb-5"/>
                     <div class="col-12 col-md-3 mb-5 row">
                         <div class="d-flex flex-column">
                             <div class="form-check form-check-custom form-check-solid mb-3">

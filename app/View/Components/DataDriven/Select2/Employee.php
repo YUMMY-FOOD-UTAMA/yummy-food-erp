@@ -1,14 +1,13 @@
 <?php
 
-namespace App\View\Components\Form;
+namespace App\View\Components\DataDriven\Select2;
 
-use App\Models\Employee;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Ramsey\Uuid\Uuid;
 
-class SelectBoxEmployee extends Component
+class Employee extends Component
 {
     public $employeeID;
     public string $type;
@@ -49,7 +48,7 @@ class SelectBoxEmployee extends Component
      */
     public function render(): View|Closure|string
     {
-        $employee = Employee::where('id', $this->employeeID)->first();
-        return view('components.form.select-box-employee', compact('employee'));
+        $employee = \App\Models\Employee::where('id', $this->employeeID)->first();
+        return view('components.data-driven.select2.employee', compact('employee'));
     }
 }

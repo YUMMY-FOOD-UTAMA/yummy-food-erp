@@ -64,7 +64,7 @@
 
             <x-card title="Region & Location Information" id="createCustomerRegionAndLocationInfo">
                 <div class="row g-9 mb-8">
-                    <x-form.select-box-region class="col-md-6 fv-row"
+                    <x-data-driven.select2.region class="col-md-6 fv-row"
                                               :region-i-d="old('region_id',$customer->area->region->id)"
                                               :area-i-d="$customer->area_id"
                                               type="row"
@@ -83,7 +83,7 @@
                     <x-form.input-masking class="col-md-6 fv-row" type="rt_rw" :placeholder="true"
                                           name="rt_rw" :default-value="$customer->rt_rw"
                                           label="RT RW"/>
-                    <x-form.select-box-geographic form-method="POST" class="col-md-6 fv-row" type="row"
+                    <x-data-driven.select2.geographic form-method="POST" class="col-md-6 fv-row" type="row"
                                                   :province-i-d="$customer->province_id"
                                                   :district-i-d="$customer->district_id"
                                                   :sub-district-i-d="$customer->sub_district_id"
