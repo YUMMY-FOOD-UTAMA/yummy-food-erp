@@ -54,6 +54,7 @@ class EmployeeRepository
                 ]);
             },
             'user',
+            'user.roles',
             'user.district',
             'user.subDistrict',
             'user.subDistrictVillage',
