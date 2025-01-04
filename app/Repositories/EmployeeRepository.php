@@ -12,6 +12,7 @@ class EmployeeRepository
     private bool $onlyTrashed = false;
     private bool $onlySales = false;
     private bool $withTrashed = false;
+
     public function setRequest(Request $request): void
     {
         $this->request = $request;
@@ -103,7 +104,11 @@ class EmployeeRepository
             });
         }
 
-        $employees = $employees->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
+        $employees = $employees->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query())
+            ->through(function ($employee) {
+                $employee->phone_numbers = $employee->phone_numbers ? explode(',', $employee->phone_numbers) : [];
+                return $employee;
+            });
 
         return $employees;
     }
