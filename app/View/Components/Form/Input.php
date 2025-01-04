@@ -21,11 +21,12 @@ class Input extends Component
     public bool $viewOnly;
     public $sizeForm;
     public $mustUpperCase;
+    public $withClipboard;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $label,$mustUpperCase=false, $sizeForm = 'lg', $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
+    public function __construct($name, $label, $withClipboard = false, $mustUpperCase = false, $sizeForm = 'lg', $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
     {
         $this->sizeForm = $sizeForm;
         $this->name = $name;
@@ -36,7 +37,7 @@ class Input extends Component
         $this->tooltip = $tooltip;
         $this->id = $name;
         $this->required = $required;
-        $this->uuid = 'a'.Uuid::uuid4()->toString();
+        $this->uuid = 'a' . Uuid::uuid4()->toString();
         $this->viewOnly = $viewOnly;
         if ($uuid) {
             $this->uuid = $uuid;
@@ -45,6 +46,7 @@ class Input extends Component
             $this->id = $id;
         }
         $this->mustUpperCase = $mustUpperCase;
+        $this->withClipboard = $withClipboard;
     }
 
     /**

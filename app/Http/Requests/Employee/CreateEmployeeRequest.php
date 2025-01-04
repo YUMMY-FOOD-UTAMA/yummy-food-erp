@@ -44,6 +44,7 @@ class CreateEmployeeRequest extends FormRequest
             'date_of_exchange_status' => ['nullable', 'date', 'date_format:Y-m-d'],
             'status' => ['required', 'string'],
             'position' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string'],
         ];
     }
 }
