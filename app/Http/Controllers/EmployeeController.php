@@ -61,47 +61,6 @@ class EmployeeController extends Controller
         ));
     }
 
-    public function indexSales(Request $request)
-    {
-        $employees = new EmployeeRepository;
-        $employees->setRequest($request);
-        $employees->setOnlySales(true);
-        $employees = $employees->getAll();
-
-        $subDepartments = SubDepartment::all();
-        $levelGrades = LevelGrade::all();
-        $pageSizes = ListPageSize::pageSizes();
-        $title = 'user management';
-        return view('user_management.sales.index', compact(
-            'title',
-            'employees',
-            'levelGrades',
-            'subDepartments',
-            'pageSizes',
-        ));
-    }
-
-    public function trashSales(Request $request)
-    {
-        $employees = new EmployeeRepository;
-        $employees->setRequest($request);
-        $employees->setOnlyTrashed(true);
-        $employees->setOnlySales(true);
-        $employees = $employees->getAll();
-
-        $subDepartments = SubDepartment::all();
-        $levelGrades = LevelGrade::all();
-        $pageSizes = ListPageSize::pageSizes();
-        $title = 'user management';
-        return view('user_management.sales.trash', compact(
-            'title',
-            'employees',
-            'pageSizes',
-            'subDepartments',
-            'levelGrades',
-        ));
-    }
-
     public function store(CreateEmployeeRequest $request)
     {
         $image = null;

@@ -79,16 +79,7 @@
                                     <a class="menu-link {{ Route::is('user-management.employee.*') && !Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
                                        href="{{ route('user-management.employee.index') }}">
                                         <i class="bi bi-person-circle menu-icon"></i>
-                                        <span class="menu-title">All Department</span>
-                                    </a>
-                                </div>
-                            @endcan
-                            @can('user-management.employee.sales.index')
-                                <div class="menu-item">
-                                    <a class="menu-link {{ Route::is('user-management.employee.sales.*') ? 'active' : '' }}"
-                                       href="{{ route('user-management.employee.sales.index') }}">
-                                        <i class="bi bi-person-circle menu-icon"></i>
-                                        <span class="menu-title">Sales Department</span>
+                                        <span class="menu-title">Employee Department</span>
                                     </a>
                                 </div>
                             @endcan
