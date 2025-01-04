@@ -92,6 +92,6 @@ class User extends Authenticatable
 
     public function roleName()
     {
-        return $this->getRoleNames()->join(',');
+        return $this->getRoleNames()->join(',') == '' ? '-' : $this->getRoleNames()->join(',');
     }
 }
