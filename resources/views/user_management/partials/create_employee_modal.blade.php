@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <div class="d-flex flex-column me-n7 pe-7">
                         <div class="row g-9 mb-8">
-                            <x-form.input class="col-md-6 fv-row" type="text" label="Full Name" name="full_name"
+                            <x-form.input type="text" class="col-md-6 fv-row" label="Full Name" name="full_name"
                                           :required="true"
                                           placeholder="Full Name..."/>
                             <x-form.input class="col-md-6 fv-row" type="text" label="Name" name="name"
@@ -26,6 +26,7 @@
                             <x-form.input class="col-md-6 fv-row" type="text" label="NIK" name="nik" :required="true"
                                           placeholder="NIK..."/>
                             <x-form.input class="col-md-6 fv-row" type="text" label="Email" name="email"
+                                          id="email_create"
                                           :required="true"
                                           placeholder="Email..."/>
                             <x-form.input class="col-md-6 fv-row" type="date" label="Date Of Birth" name="date_of_birth"
@@ -71,6 +72,10 @@
                         <x-form.text-area class="d-flex flex-column mb-8" auto-resize="true" row="2" label="Address"
                                           name="address"
                                           placeholder="Address..."/>
+
+                        <x-form.input type="text" class="d-flex flex-column mb-8" label="Password" name="password"
+                                      :required="true" with-clipboard="true" id="password_create"
+                                      placeholder="Password..."/>
 
                         <!--begin::Repeater-->
                         <div class="row g-9 mb-8">
@@ -178,6 +183,14 @@
 
         $repeater.setList(list);
         @endif
+
+
+        $('[id^="email_create"]').change(function () {
+            var email = this.value;
+            var password = email.split('@')[0] ? email.split('@')[0] : '';
+            $('[id^="password_create"]').val(password);
+        });
+
 
     </script>
 @endpush
