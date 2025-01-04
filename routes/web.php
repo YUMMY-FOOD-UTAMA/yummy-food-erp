@@ -113,8 +113,6 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'user-management'], function () {
             Route::get('/', [EmployeeController::class, 'index'])->name('user-management.employee.index');
             Route::get('/trash', [EmployeeController::class, 'trash'])->name('user-management.employee.trash');
-            Route::get('/sales', [EmployeeController::class, 'indexSales'])->name('user-management.employee.sales.index');
-            Route::get('/sales/trash', [EmployeeController::class, 'trashSales'])->name('user-management.employee.sales.trash');
             Route::post('/create', [EmployeeController::class, 'store'])->name('user-management.employee.store');
             Route::get('/detail/{employee}', [EmployeeController::class, 'show'])->name('user-management.employee.show');
             Route::put('/detail/{employee}', [EmployeeController::class, 'update'])->name('user-management.employee.update');
