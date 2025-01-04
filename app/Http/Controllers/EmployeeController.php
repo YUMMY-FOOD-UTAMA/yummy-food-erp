@@ -80,7 +80,7 @@ class EmployeeController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => bcrypt(Str::before($request->email, '@')),
+                'password' => bcrypt($request->password),
                 'date_of_birth' => $request->date_of_birth,
                 'gender' => $request->gender,
                 'sub_district_village_id' => $request->sub_district_village_id,

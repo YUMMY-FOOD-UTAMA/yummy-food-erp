@@ -18,17 +18,28 @@
                    title="{{$tooltip}}"></i>
             @endif
         </label>
-        <input type="{{$type == "date"? "text": $type}}"
-               {{$required ? 'required' : ''}}
-               class="form-control form-control-solid form-control-{{$sizeForm}}"
-               placeholder="{{$placeholder}}"
-               name="{{$name}}"
-               value="{{old($name,$defaultValue)}}"
-               id="{{$id.$uuid}}"
-               style="{{$mustUpperCase ? 'text-transform: uppercase;' : ''}}"
-               oninput="{{$mustUpperCase ? 'this.value = this.value.toUpperCase();' : ''}}"/>
+
+        <div class="d-flex w-100 align-items-center">
+            <input type="{{$type == "date" ? "text" : $type}}"
+                   {{$required ? 'required' : ''}}
+                   class="form-control form-control-solid form-control-{{$sizeForm}}"
+                   placeholder="{{$placeholder}}"
+                   name="{{$name}}"
+                   value="{{old($name,$defaultValue)}}"
+                   id="{{$id.$uuid}}"
+                   style="{{$mustUpperCase ? 'text-transform: uppercase;' : ''}}"
+                   oninput="{{$mustUpperCase ? 'this.value = this.value.toUpperCase();' : ''}}"/>
+
+            @if($withClipboard)
+                <a class="btn btn-light-primary ms-2" data-clipboard-target="#{{$id.$uuid}}">
+                    Copy
+                </a>
+            @endif
+        </div>
+
         <x-input-error :messages="$errors->get($name)" class="mt-2"></x-input-error>
     </div>
+
     @push('script')
         @if($type == "date")
             <script>
@@ -43,6 +54,31 @@
                     }, function (start, end, label) {
                     }
                 );
+            </script>
+        @endif
+
+        @if($withClipboard)
+            <script>
+                const target = document.getElementById('{{$id.$uuid}}');
+                const button = target.nextElementSibling;
+
+                var clipboard = new ClipboardJS(button, {
+                    target: target,
+                });
+
+                clipboard.on('success', function (e) {
+                    const currentLabel = button.innerHTML;
+
+                    if (button.innerHTML === 'Copied!') {
+                        return;
+                    }
+
+                    button.innerHTML = 'Copied!';
+
+                    setTimeout(function () {
+                        button.innerHTML = currentLabel;
+                    }, 3000)
+                });
             </script>
         @endif
     @endpush
