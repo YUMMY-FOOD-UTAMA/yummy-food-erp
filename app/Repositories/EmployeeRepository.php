@@ -105,11 +105,7 @@ class EmployeeRepository
             });
         }
 
-        $employees = $employees->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query())
-            ->through(function ($employee) {
-                $employee->phone_numbers = $employee->phone_numbers ? explode(',', $employee->phone_numbers) : [];
-                return $employee;
-            });
+        $employees = $employees->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
 
         return $employees;
     }
