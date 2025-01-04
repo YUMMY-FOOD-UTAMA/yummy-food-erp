@@ -1,5 +1,5 @@
 <td class="text-end">
-    <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
+    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" style="height: 24px; display: inline-flex; align-items: center;"
        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
         <span class="svg-icon svg-icon-5 m-0">
             <svg width="24"
