@@ -65,10 +65,12 @@
                         <x-form.input class="col-md-6 fv-row" view-only="true" label="Email"
                                       :default-value="$employee->user->email"
                                       name="email"/>
+                        @foreach($employee->phone_numbers as $i => $phoneNumber)
+                            <x-form.input class="col-md-6 fv-row" view-only="true" label="Phone Number {{$i+1}}"
+                                          :default-value="$phoneNumber"
+                                          :name="$phoneNumber"/>
+                        @endforeach
                     </div>
-                    <x-form.input class="fv-row mb-10" view-only="true" label="Bio"
-                                  :default-value="$employee->user->bio"
-                                  name="bio"/>
 
                     <div class="row g-9 mb-8">
                         <x-form.input class="col-md-6 fv-row" view-only="true" label="Gender"

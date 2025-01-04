@@ -14,6 +14,7 @@ use App\Utils\Helpers\Transaction;
 use App\Utils\Primitives\ListPageSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
@@ -108,11 +109,19 @@ class EmployeeController extends Controller
             $image = FileHelper::optimizeAndUploadPicture($request->file('avatar'), $this->avatarPath);
         }
 
-        $res = Transaction::doTx(function () use ($request, $image) {
+        $phoneNumbers = [];
+        foreach ($request->phone_numbers as $phoneNumber) {
+            if (!empty($phoneNumber['phone_number'])) {
+                $phoneNumbers[] = $phoneNumber['phone_number'];
+            }
+        }
+        $phoneNumbersString = implode(',', $phoneNumbers);
+
+        $res = Transaction::doTx(function () use ($request, $image, $phoneNumbersString) {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => bcrypt($request->date_of_birth),
+                'password' => bcrypt(Str::before($request->email, '@')),
                 'date_of_birth' => $request->date_of_birth,
                 'gender' => $request->gender,
                 'sub_district_village_id' => $request->sub_district_village_id,
@@ -125,7 +134,6 @@ class EmployeeController extends Controller
                 'avatar' => $image,
                 'address' => $request->address,
                 'bio' => $request->bio,
-                'phone_number' => $request->phone_number,
                 'is_active' => true,
             ]);
 
@@ -138,6 +146,7 @@ class EmployeeController extends Controller
                 'date_of_exchange_status' => $request->date_of_exchange_status,
                 'level_grade_id' => $request->level_grade_id,
                 'sub_department_id' => $request->sub_department_id,
+                'phone_numbers' => $phoneNumbersString,
             ]);
 
             if ($request->role_name) {
