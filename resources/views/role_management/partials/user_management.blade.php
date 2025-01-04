@@ -66,31 +66,6 @@
                 </x-Form.CheckboxInput>
             </div>
         </div>
-        {{-- Sales Department --}}
-        <div class="mb-5">
-            <h6>Sales Department
-                <i class="fas fa-exclamation-circle ms-2 fs-7"
-                   data-bs-toggle="tooltip"
-                   title="The sales employee page is the same as all departments, so there is no create sales or edit or delete">
-                </i>
-            </h6>
-            <div class="ms-3">
-                <x-Form.CheckboxInput
-                    name="permissions[]"
-                    class="mb-3"
-                    :checked="in_array('user-management.employee.sales.index', old('permissions', $permissions ?? []))"
-                    value="user-management.employee.sales.index">
-                    View Sales Employee
-                </x-Form.CheckboxInput>
-                <x-Form.CheckboxInput
-                    name="permissions[]"
-                    class="mb-3"
-                    :checked="in_array('user-management.employee.sales.trash', old('permissions', $permissions ?? []))"
-                    value="user-management.employee.sales.trash">
-                    View Trash Sales Employee
-                </x-Form.CheckboxInput>
-            </div>
-        </div>
         {{-- Role Management --}}
         <div class="mb-5">
             <h6>Role Management</h6>
