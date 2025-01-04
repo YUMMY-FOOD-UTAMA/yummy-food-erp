@@ -31,4 +31,9 @@ class Employee extends Model
     {
         return $this->belongsTo(LevelGrade::class);
     }
+
+    public function phoneNumbers()
+    {
+        return $this->phone_numbers = $this->phone_numbers ? explode(',', $this->phone_numbers) : [];
+    }
 }

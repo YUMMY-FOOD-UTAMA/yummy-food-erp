@@ -65,7 +65,7 @@
                         <x-form.input class="col-md-6 fv-row" view-only="true" label="Email"
                                       :default-value="$employee->user->email"
                                       name="email"/>
-                        @foreach($employee->phone_numbers as $i => $phoneNumber)
+                        @foreach($employee->phoneNumbers() as $i => $phoneNumber)
                             <x-form.input class="col-md-6 fv-row" view-only="true" label="Phone Number {{$i+1}}"
                                           :default-value="$phoneNumber"
                                           :name="$phoneNumber"/>
