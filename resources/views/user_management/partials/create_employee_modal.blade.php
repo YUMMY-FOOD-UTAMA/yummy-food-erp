@@ -84,25 +84,17 @@
                                 <div class="form-group">
                                     <div data-repeater-list="phone_numbers">
                                         <div data-repeater-item>
-                                            <div class="form-group row mt-3">
-                                                <div class="col-md-8">
-                                                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                                        <span class="required">Phone Number</span>
-                                                    </label>
-                                                    <input type="text" data-kt-repeater="phone_number_masking"
-                                                           name="phone_number"
-                                                           class="form-control form-control-solid form-control-lg"/>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <a href="javascript:;" data-repeater-delete
-                                                       class="btn btn-lg btn-light-danger mt-md-8">
-                                                        <i class="ki-duotone ki-trash fs-5"><span
-                                                                class="path1"></span><span class="path2"></span><span
-                                                                class="path3"></span><span class="path4"></span><span
-                                                                class="path5"></span></i>
-                                                        Delete
-                                                    </a>
-                                                </div>
+                                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                                                <span class="">Phone Number</span>
+                                            </label>
+                                            <div class="d-flex w-100 align-items-center">
+                                                <input type="text" data-kt-repeater="phone_number_masking"
+                                                       name="phone_number"
+                                                       class="form-control form-control-solid form-control-lg"/>
+                                                <a href="javascript:;" data-repeater-delete
+                                                   class="btn btn-light-danger ms-2">
+                                                    Delete
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
