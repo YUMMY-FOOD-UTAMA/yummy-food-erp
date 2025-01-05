@@ -8,6 +8,11 @@
                 @include('user_management.partials.create_employee_modal')
             </x-toolbar>
         @endslot
+        @slot('bottomSlot')
+            <x-toolbar name="Employee" :with-out-heading="true" route-create-name="user-management.employee.store"
+                       using-create-modal="true"
+                       route-trash-name="user-management.employee.trash"/>
+        @endslot
         <div class="card">
             @include('user_management.partials.filter-employee')
             <x-table.basic-filter-and-export name="Employee"/>
