@@ -4,7 +4,13 @@
     <x-general-section-content>
         @slot('slotToolbar')
             <x-toolbar heading-name="Confirm Visit" route-create-name="receivable.crm.schedule-visit.create"
-                       name="Confirm Visit">
+                       name="Schedule Visit">
+            </x-toolbar>
+        @endslot
+        @slot('bottomSlot')
+            <x-toolbar heading-name="Confirm Visit" with-out-heading="true"
+                       route-create-name="receivable.crm.schedule-visit.create"
+                       name="Schedule Visit">
             </x-toolbar>
         @endslot
         <div class="card">
