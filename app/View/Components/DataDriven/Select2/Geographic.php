@@ -21,11 +21,12 @@ class Geographic extends Component
     public $formMethod;
     public $dropDownParentID;
     public $sizeForm;
+    public $required;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($sizeForm = 'lg', $provinceID = null, $districtID = null, $subDistrictID = null, $subDistrictVillageID = null, $type = "inline", $formMethod = null, $dropDownParentID = "")
+    public function __construct($required = false, $sizeForm = 'lg', $provinceID = null, $districtID = null, $subDistrictID = null, $subDistrictVillageID = null, $type = "inline", $formMethod = null, $dropDownParentID = "")
     {
         $this->province_id = $provinceID;
         $this->district_id = $districtID;
@@ -38,6 +39,7 @@ class Geographic extends Component
             $this->dropDownParentID = "#" . $this->dropDownParentID;
         }
         $this->sizeForm = $sizeForm;
+        $this->required = $required;
     }
 
     /**

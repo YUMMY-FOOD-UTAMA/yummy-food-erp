@@ -1,8 +1,9 @@
 @if($type=='vertical')
     <div class="mb-10">
-        <label class="form-label fw-semibold">Province:</label>
+        <label class="form-label {{$required?'required':''}} fw-semibold">Province:</label>
         <div>
-            <select name="province_id" aria-label="Select a Province" data-allow-clear="true"
+            <select name="province_id" aria-label="Select a Province"
+                    {{$required? 'required':''}} data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a province.."
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectProvince{{$id}}">
@@ -19,9 +20,10 @@
     </div>
 
     <div class="mb-10" id="districtRow{{$id}}" style="{{ $district_id ? '' : 'display: none;' }}">
-        <label class="form-label fw-semibold">District</label>
+        <label class="form-label {{$required?'required':''}} fw-semibold">District</label>
         <div>
-            <select name="district_id" aria-label="Select a District" data-allow-clear="true"
+            <select name="district_id" aria-label="Select a District"
+                    {{$required? 'required':''}} data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a district.."
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectDistrict{{$id}}">
@@ -40,9 +42,10 @@
     </div>
 
     <div class="mb-10" id="subDistrictRow{{$id}}" style="{{ $sub_district_id ? '' : 'display: none;' }}">
-        <label class="form-label fw-semibold">Sub District</label>
+        <label class="form-label {{$required?'required':''}} fw-semibold">Sub District</label>
         <div>
-            <select name="sub_district_id" aria-label="Select a Sub-District" data-allow-clear="true"
+            <select name="sub_district_id" aria-label="Select a Sub-District"
+                    {{$required? 'required':''}} data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a sub-district.."
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubDistrict{{$id}}">
@@ -61,10 +64,10 @@
     </div>
 
     <div class="mb-10" id="villageRow{{$id}}" style="{{ $sub_district_village_id ? '' : 'display: none;' }}">
-        <label class="form-label fw-semibold">Village</label>
+        <label class="form-label {{$required?'required':''}} fw-semibold">Village</label>
         <div>
-            <select name="sub_district_village_id" aria-label="Select a Village"
-                    data-control="select2" data-placeholder="Select a village.." data-allow-clear="true"
+            <select name="sub_district_village_id" aria-label="Select a Village" {{$required? 'required':''}}
+            data-control="select2" data-placeholder="Select a village.." data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectVillage{{$id}}">
                 <option value="">Select a Village..</option>
@@ -82,8 +85,8 @@
     </div>
 @elseif($type=='row')
     <div {{$attributes->merge(['class' => ''])}}>
-        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">Province</label>
-        <select name="province_id" aria-label="Select a Province" data-allow-clear="true"
+        <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">Province</label>
+        <select name="province_id" aria-label="Select a Province" {{$required? 'required':''}} data-allow-clear="true"
                 data-dropdown-parent="{{$dropDownParentID}}"
                 data-control="select2" data-placeholder="Select a province.."
                 class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectProvince{{$id}}">
@@ -100,8 +103,8 @@
 
     <div {{$attributes->merge(['class' => ''])}} id="districtRow{{$id}}"
          style="{{ $district_id ? '' : 'display: none;' }}">
-        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">District</label>
-        <select name="district_id" aria-label="Select a District" data-allow-clear="true"
+        <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">District</label>
+        <select name="district_id" aria-label="Select a District" {{$required? 'required':''}} data-allow-clear="true"
                 data-dropdown-parent="{{$dropDownParentID}}"
                 data-control="select2" data-placeholder="Select a district.."
                 class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectDistrict{{$id}}">
@@ -119,8 +122,9 @@
     </div>
     <div {{$attributes->merge(['class' => ''])}} id="subDistrictRow{{$id}}"
          style="{{ $sub_district_id ? '' : 'display: none;' }}">
-        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">Sub District</label>
-        <select name="sub_district_id" aria-label="Select a Sub-District" data-allow-clear="true"
+        <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">Sub District</label>
+        <select name="sub_district_id" aria-label="Select a Sub-District"
+                {{$required? 'required':''}} data-allow-clear="true"
                 data-dropdown-parent="{{$dropDownParentID}}"
                 data-control="select2" data-placeholder="Select a sub-district.."
                 class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubDistrict{{$id}}">
@@ -139,8 +143,9 @@
 
     <div {{$attributes->merge(['class' => ''])}} id="villageRow{{$id}}"
          style="{{ $sub_district_village_id ? '' : 'display: none;' }}">
-        <label class="d-flex align-items-center fs-6 required fw-semibold mb-2">Village</label>
-        <select name="sub_district_village_id" aria-label="Select a Village" data-allow-clear="true"
+        <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">Village</label>
+        <select name="sub_district_village_id" aria-label="Select a Village"
+                {{$required? 'required':''}} data-allow-clear="true"
                 data-dropdown-parent="{{$dropDownParentID}}"
                 data-control="select2" data-placeholder="Select a village.."
                 class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectVillage{{$id}}">
@@ -160,7 +165,8 @@
     <div class="row mb-6">
         <label class="col-lg-4 col-form-label fw-semibold fs-6">Province</label>
         <div class="col-lg-8 fv-row">
-            <select name="province_id" aria-label="Select a Province" data-allow-clear="true"
+            <select name="province_id" aria-label="Select a Province"
+                    {{$required? 'required':''}} data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a province.."
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectProvince{{$id}}">
@@ -179,7 +185,8 @@
     <div class="row mb-6" id="districtRow{{$id}}" style="{{ $district_id ? '' : 'display: none;' }}">
         <label class="col-lg-4 col-form-label fw-semibold fs-6">District</label>
         <div class="col-lg-8 fv-row">
-            <select name="district_id" aria-label="Select a District" data-allow-clear="true"
+            <select name="district_id" aria-label="Select a District"
+                    {{$required? 'required':''}} data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a district.."
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectDistrict{{$id}}">
@@ -200,7 +207,8 @@
     <div class="row mb-6" id="subDistrictRow{{$id}}" style="{{ $sub_district_id ? '' : 'display: none;' }}">
         <label class="col-lg-4 col-form-label fw-semibold fs-6">Sub District</label>
         <div class="col-lg-8 fv-row">
-            <select name="sub_district_id" aria-label="Select a Sub-District" data-allow-clear="true"
+            <select name="sub_district_id" aria-label="Select a Sub-District"
+                    {{$required? 'required':''}} data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a sub-district.."
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectSubDistrict{{$id}}">
@@ -221,7 +229,8 @@
     <div class="row mb-6" id="villageRow{{$id}}" style="{{ $sub_district_village_id ? '' : 'display: none;' }}">
         <label class="col-lg-4 col-form-label fw-semibold fs-6">Village</label>
         <div class="col-lg-8 fv-row">
-            <select name="sub_district_village_id" aria-label="Select a Village" data-allow-clear="true"
+            <select name="sub_district_village_id" aria-label="Select a Village"
+                    {{$required? 'required':''}} data-allow-clear="true"
                     data-dropdown-parent="{{$dropDownParentID}}"
                     data-control="select2" data-placeholder="Select a village.."
                     class="form-select form-select-solid form-select-{{$sizeForm}}" id="selectVillage{{$id}}">
