@@ -3,6 +3,7 @@
 namespace App\Trait;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 trait AuditTrait
 {
@@ -48,11 +49,21 @@ trait AuditTrait
 
     public function createdAt()
     {
-        return $this->created_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s');
+        return $this->created_at->setTimezone(Auth::user()->timezone)->format('Y-m-d H:i:s');
+    }
+
+    public function createdAtOnlyDate()
+    {
+        return $this->created_at->setTimezone(Auth::user()->timezone)->format('Y-m-d');
     }
 
     public function updatedAt()
     {
-        return $this->created_at->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s');
+        return $this->created_at->setTimezone(Auth::user()->timezone)->format('Y-m-d H:i:s');
+    }
+
+    public function updatedAtOnlyDate()
+    {
+        return $this->created_at->setTimezone(Auth::user()->timezone)->format('Y-m-d');
     }
 }
