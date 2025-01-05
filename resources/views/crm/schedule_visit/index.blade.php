@@ -7,6 +7,11 @@
                        name="Schedule Visit">
             </x-toolbar>
         @endslot
+        @slot('bottomSlot')
+            <x-toolbar heading-name="Schedule Visit" with-out-heading="true"
+                       route-create-name="receivable.crm.schedule-visit.create"
+                       name="Schedule Visit"/>
+        @endslot
         <div class="card">
             @include('crm.partials.general_filter_crm')
             <x-table.basic-filter-and-export name="Schedule Visit"/>

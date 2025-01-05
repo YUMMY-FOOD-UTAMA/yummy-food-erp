@@ -15,11 +15,12 @@ class Toolbar extends Component
     public $routeListName;
     public $usingCreateModal;
     public string $modalSize;
+    public $withOutHeading;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($modalSize = "1000", $name = 'data', $routeCreateName = null, $routeTrashName = null, $routeListName = null, $headingName = null, $usingCreateModal = false)
+    public function __construct($withOutHeading = false,$modalSize = "1000", $name = 'data', $routeCreateName = null, $routeTrashName = null, $routeListName = null, $headingName = null, $usingCreateModal = false)
     {
         $this->name = $name;
         $this->routeCreateName = $routeCreateName;
@@ -28,6 +29,7 @@ class Toolbar extends Component
         $this->headingName = $headingName;
         $this->usingCreateModal = $usingCreateModal;
         $this->modalSize = $modalSize;
+        $this->withOutHeading = $withOutHeading;
     }
 
     /**

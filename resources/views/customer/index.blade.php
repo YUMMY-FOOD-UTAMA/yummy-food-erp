@@ -8,6 +8,11 @@
                 @include('customer.partials.create_customer_modal')
             </x-toolbar>
         @endslot
+        @slot('bottomSlot')
+            <x-toolbar name="Customer" route-create-name="receivable.customer.store" using-create-modal="true"
+                       route-trash-name="receivable.customer.trash" with-out-heading="true">
+            </x-toolbar>
+        @endslot
         <div class="card">
             @include('customer.partials.filter_customer')
             <x-table.basic-filter-and-export name="Customer"/>
