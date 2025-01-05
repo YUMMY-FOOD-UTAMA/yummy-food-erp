@@ -33,7 +33,7 @@
         @if($scheduleVisit->status === VisitStatus::VISITED)
             <x-form.input class="fv-row mb-10" view-only="true"
                           :default-value="$scheduleVisit->visit_location"
-                          label="Visit Location"
+                          label="Location Detection"
                           name="visit_location"/>
             <x-form.text-area class="fv-row mb-10" view-only="true"
                               :default-value="$scheduleVisit->customer_feedback"
