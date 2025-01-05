@@ -15,6 +15,7 @@ use App\Utils\Primitives\ListPageSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
@@ -30,6 +31,7 @@ class EmployeeController extends Controller
 
         $subDepartments = SubDepartment::all();
         $levelGrades = LevelGrade::all();
+        $roles = Role::all();
         $pageSizes = ListPageSize::pageSizes();
         $title = 'user management';
         return view('user_management.index', compact(
@@ -38,6 +40,7 @@ class EmployeeController extends Controller
             'levelGrades',
             'subDepartments',
             'pageSizes',
+            'roles'
         ));
     }
 
@@ -51,6 +54,7 @@ class EmployeeController extends Controller
         $subDepartments = SubDepartment::all();
         $levelGrades = LevelGrade::all();
         $pageSizes = ListPageSize::pageSizes();
+        $roles = Role::all();
         $title = 'user management';
         return view('user_management.trash', compact(
             'title',
@@ -58,6 +62,7 @@ class EmployeeController extends Controller
             'pageSizes',
             'subDepartments',
             'levelGrades',
+            'roles'
         ));
     }
 

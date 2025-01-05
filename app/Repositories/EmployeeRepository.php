@@ -38,6 +38,9 @@ class EmployeeRepository
         $status = $this->request->query('status');
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
         $searchKeyword = $this->request->query('search');
+        $subDepartmentID = $this->request->query('sub_department_id');
+        $levelGradeID = $this->request->query('level_grade_id');
+        $roleID = $this->request->query('role_id');
         $provinceID = $this->request->query('province_id');
         $districtID = $this->request->query('district_id');
         $subDistrictID = $this->request->query('sub_district_id');
@@ -83,6 +86,17 @@ class EmployeeRepository
         }
         if ($status) {
             $employees->where('status', $status);
+        }
+        if ($subDepartmentID) {
+            $employees->where('sub_department_id', $subDepartmentID);
+        }
+        if ($levelGradeID) {
+            $employees->where('level_grade_id', $levelGradeID);
+        }
+        if ($roleID) {
+            $employees->whereHas('user.roles', function ($query) use ($roleID) {
+                $query->where('id', $roleID);
+            });
         }
         if ($provinceID) {
             $employees->whereHas('user', function ($query) use ($provinceID) {

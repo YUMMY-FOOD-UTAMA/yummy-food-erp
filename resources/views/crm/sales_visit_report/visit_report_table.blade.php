@@ -3,7 +3,7 @@
         <th style="width: 20px; vertical-align: middle; text-align: left;">No</th>
         <th style="vertical-align: middle; text-align: left;">Employee Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
-        <th style="vertical-align: middle; text-align: left;">Customer Address</th>
+        <th style="vertical-align: middle; text-align: left;">Location Detection</th>
         <th style="vertical-align: middle; text-align: left;">Visit Date</th>
         <th style="vertical-align: middle; text-align: left;">Visit Status</th>
         <th style="vertical-align: middle; text-align: left;">Expired</th>
