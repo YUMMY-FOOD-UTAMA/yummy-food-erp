@@ -37,7 +37,7 @@
                     ))
                         <a href="" data-bs-toggle="modal" id="triggerMap{{$scheduleVisit->id}}"
                            data-bs-target="#modal_visit{{$scheduleVisit->id}}"
-                           class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2">
+                           class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2">
                             Visit
                         </a>
                     @endif

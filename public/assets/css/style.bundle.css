@@ -37070,7 +37070,8 @@ code:not([class*=language-]) {
 }
 
 .table.gs-7 th:first-child, .table.gs-7 td:first-child {
-  padding-left: 1.75rem;
+    padding-left: 9px;
+    padding-right: 9px;
 }
 .table.gs-7 th:last-child, .table.gs-7 td:last-child {
   padding-right: 1.75rem;
