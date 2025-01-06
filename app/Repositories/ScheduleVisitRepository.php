@@ -86,7 +86,7 @@ class ScheduleVisitRepository
                 $query->where('status', $customerStatus);
             });
         }
-        $scheduleVisit = $scheduleVisit->orderBy("start_visit")->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query())
+        $scheduleVisit = $scheduleVisit->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query())
             ->through(function ($visit) {
                 $customer = $visit->customer;
 
