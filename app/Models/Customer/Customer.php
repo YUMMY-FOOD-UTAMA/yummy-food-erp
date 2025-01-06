@@ -71,7 +71,10 @@ class Customer extends Model
             ->count();
         $code = $count + 1;
         do {
-            $isCodeExists = self::where("name_code", $code)->withTrashed()->exists();
+            $isCodeExists = self::where('area_id', $areaID)
+                ->where('customer_segment_id', $customerSegmentID)
+                ->where('customer_category_id', $customerCategoryID)
+                ->where("name_code", $code)->withTrashed()->exists();
             if ($isCodeExists) {
                 $code++;
             }

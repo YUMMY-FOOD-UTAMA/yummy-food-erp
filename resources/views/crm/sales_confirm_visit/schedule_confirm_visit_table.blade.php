@@ -31,10 +31,7 @@
                     </td>
                 @endif
                 <td>
-                    @if($scheduleVisit->status === VisitStatus::APPROVED && \Carbon\Carbon::now()->between(
-                        \Carbon\Carbon::parse($scheduleVisit->start_visit),
-                        \Carbon\Carbon::parse($scheduleVisit->end_visit)
-                    ))
+                    @if($scheduleVisit->status === VisitStatus::APPROVED)
                         <a href="" data-bs-toggle="modal" id="triggerMap{{$scheduleVisit->id}}"
                            data-bs-target="#modal_visit{{$scheduleVisit->id}}"
                            class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2">
