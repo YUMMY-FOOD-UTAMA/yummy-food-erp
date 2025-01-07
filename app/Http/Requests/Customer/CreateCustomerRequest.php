@@ -28,7 +28,7 @@ class CreateCustomerRequest extends FormRequest
             'npwp_address' => '|nullable|string',
             'nppkp' => '|nullable|string',
             'outlet_name' => 'string',
-            'alias' => 'string',
+            'alias' => 'nullable|string',
             'address' => 'string|required',
             'address_number' => 'nullable|string',
             'rt_rw' => 'nullable|string',

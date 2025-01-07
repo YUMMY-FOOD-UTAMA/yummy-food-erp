@@ -6,7 +6,6 @@
         <th style="vertical-align: middle; text-align: left;">Location Detection</th>
         <th style="vertical-align: middle; text-align: left;">Visit Date</th>
         <th style="vertical-align: middle; text-align: left;">Visit Status</th>
-        <th style="vertical-align: middle; text-align: left;">Expired</th>
         <th style="vertical-align: middle; text-align: left;">Duration</th>
         <th style="vertical-align: middle; text-align: left;">Actions</th>
     @endslot
@@ -22,7 +21,6 @@
                     <span
                         class="{{VisitStatus::getSpanClass($scheduleVisit->status) }}">{{ $scheduleVisit->status }}</span>
                 </td>
-                <td>{{$scheduleVisit->expiredAtTheDay()}}</td>
                 <td>......%</td>
                 <td>
                     @include('crm.partials.crm_modal_view_detail',['scheduleVisit'=>$scheduleVisit])
