@@ -112,6 +112,67 @@
                             </div>
                         </div>
                         <!--end::Repeater-->
+
+                        <div class="row g-9 mb-8">
+                            <x-table.general-table :with-out-card-body="true">
+                                @slot('slotTheadTh')
+                                    <th style="width: 20px; vertical-align: middle; text-align: left;">Feature</th>
+                                    <th style="vertical-align: middle; text-align: left;">Approval Type</th>
+                                    <th style="vertical-align: middle; text-align: left;">Approved By</th>
+{{--                                    <th style="vertical-align: middle; text-align: left;"></th>--}}
+                                @endslot
+                                @slot('slotTbodyTr')
+                                    @foreach(\App\Utils\Primitives\Enum\EmployeeConfigs::tableValues() as $employeeConfig)
+                                        <tr>
+                                            <td>{{$employeeConfig->feature}}</td>
+                                            <td>{{$employeeConfig->name}}</td>
+                                            <td>
+                                                @if($employeeConfig->id == \App\Utils\Primitives\Enum\EmployeeConfigs::CRM_APPROVAL_SALES_MAPPING ||
+                                                $employeeConfig->id == \App\Utils\Primitives\Enum\EmployeeConfigs::CRM_APPROVAL_SCHEDULE_VISIT) @endif
+                                                <div class="row g-9 mb-8">
+                                                    <div id="{{$employeeConfig->id}}">
+                                                        <!--begin::Form group-->
+                                                        <div class="form-group">
+                                                            <div data-repeater-list="{{$employeeConfig->id}}">
+                                                                <div data-repeater-item>
+                                                                    <div class="d-flex mt-2 w-100 align-items-center">
+                                                                        <select name="employee_id"
+                                                                                data-kt-repeater="approved_by{{$employeeConfig->id}}"
+                                                                                class="form-control form-control-solid form-control-sm">
+                                                                        </select>
+                                                                        <a href="javascript:;" data-repeater-delete
+                                                                           class="btn btn-light-danger btn-sm ms-2">
+                                                                            Delete
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Form group-->
+
+                                                        <!--begin::Form group-->
+                                                        <div class="form-group mt-5">
+                                                            <a href="javascript:;" data-repeater-create
+                                                               style="font-style: italic; font-size: 16px;">
+                                                                + Add More
+                                                            </a>
+
+                                                        </div>
+                                                        <!--end::Form group-->
+                                                    </div>
+                                                </div>
+                                            </td>
+{{--                                            <td>--}}
+{{--                                                <a href=""--}}
+{{--                                                   class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2">--}}
+{{--                                                    Delete--}}
+{{--                                                </a>--}}
+{{--                                            </td>--}}
+                                        </tr>
+                                    @endforeach
+                                @endslot
+                            </x-table.general-table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -184,5 +245,174 @@
         });
 
 
+    </script>
+
+    {{-- APPROVAL_SALES_MAPPING   --}}
+    <script>
+        var $repeater = $('#APPROVAL_SALES_MAPPING').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'Default Outer',
+            },
+
+            show: function () {
+                $(this).slideDown()
+                $('[data-kt-repeater="approved_byAPPROVAL_SALES_MAPPING"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            },
+
+            ready: function () {
+                $('[data-kt-repeater="approved_byAPPROVAL_SALES_MAPPING"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            }
+        });
+    </script>
+
+    {{--  APPROVAL_SCHEDULE_VISIT  --}}
+    <script>
+        var $repeater = $('#APPROVAL_SCHEDULE_VISIT').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'Default Outer',
+            },
+
+            show: function () {
+                $(this).slideDown();
+
+                $('[data-kt-repeater="approved_byAPPROVAL_SCHEDULE_VISIT"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            },
+
+            ready: function () {
+                $('[data-kt-repeater="approved_byAPPROVAL_SCHEDULE_VISIT"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            }
+        });
     </script>
 @endpush

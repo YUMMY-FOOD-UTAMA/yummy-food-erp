@@ -10,14 +10,16 @@ class GeneralTable extends Component
 {
     public $dataTable;
     public $type;
+    public $withOutCardBody;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($dataTable, $type = null)
+    public function __construct($withOutCardBody = false, $dataTable = null, $type = null)
     {
         $this->dataTable = $dataTable;
         $this->type = $type;
+        $this->withOutCardBody = $withOutCardBody;
     }
 
     /**
