@@ -119,7 +119,6 @@
                                     <th style="width: 20px; vertical-align: middle; text-align: left;">Feature</th>
                                     <th style="vertical-align: middle; text-align: left;">Approval Type</th>
                                     <th style="vertical-align: middle; text-align: left;">Approved By</th>
-{{--                                    <th style="vertical-align: middle; text-align: left;"></th>--}}
                                 @endslot
                                 @slot('slotTbodyTr')
                                     @foreach(\App\Utils\Primitives\Enum\EmployeeConfigs::tableValues() as $employeeConfig)
@@ -137,6 +136,7 @@
                                                                 <div data-repeater-item>
                                                                     <div class="d-flex mt-2 w-100 align-items-center">
                                                                         <select name="employee_id"
+                                                                                data-dropdown-parent="#modal_createEmployee"
                                                                                 data-kt-repeater="approved_by{{$employeeConfig->id}}"
                                                                                 class="form-control form-control-solid form-control-sm">
                                                                         </select>
@@ -162,12 +162,6 @@
                                                     </div>
                                                 </div>
                                             </td>
-{{--                                            <td>--}}
-{{--                                                <a href=""--}}
-{{--                                                   class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2">--}}
-{{--                                                    Delete--}}
-{{--                                                </a>--}}
-{{--                                            </td>--}}
                                         </tr>
                                     @endforeach
                                 @endslot
