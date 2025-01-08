@@ -62,6 +62,7 @@ class EmployeeRepository
             'user.subDistrict',
             'user.subDistrictVillage',
             'user.province',
+            'employeeConfigs'
         ]);
         if ($this->onlyTrashed) {
             $employees = $employees->onlyTrashed();

@@ -40,11 +40,13 @@
                             <x-form.select-box name="sub_department_id" class="col-md-6 fv-row" type="row"
                                                placeholder="Select Sub Department..." :required="true"
                                                label="Sub Department" drop-down-parent-i-d="modal_createEmployee"
+                                               id="sub_department_id_create"
                                                :items="$subDepartments"/>
 
                             <x-form.select-box name="level_grade_id" class="col-md-6 fv-row" type="row"
                                                placeholder="Select Level Name..." :required="true"
                                                label="Level Name" drop-down-parent-i-d="modal_createEmployee"
+                                               id="level_grade_id_create"
                                                custom-name-key="$t->levelName->name.' ('.$t->name.')'"
                                                :items="$levelGrades"/>
 
@@ -104,7 +106,6 @@
                                 <!--begin::Form group-->
                                 <div class="form-group mt-5">
                                     <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
-                                        <i class="ki-duotone ki-plus fs-3"></i>
                                         Add
                                     </a>
                                 </div>
@@ -112,6 +113,60 @@
                             </div>
                         </div>
                         <!--end::Repeater-->
+
+                        <div class="row g-9 mb-8">
+                            <x-table.general-table :with-out-card-body="true">
+                                @slot('slotTheadTh')
+                                    <th style="width: 20px; vertical-align: middle; text-align: left;">Feature</th>
+                                    <th style="vertical-align: middle; text-align: left;">Approval Type</th>
+                                    <th style="vertical-align: middle; text-align: left;">Approved By</th>
+                                @endslot
+                                @slot('slotTbodyTr')
+                                    @foreach(\App\Utils\Primitives\Enum\EmployeeConfigs::tableValues() as $employeeConfig)
+                                        <tr>
+                                            <td>{{$employeeConfig->feature}}</td>
+                                            <td>{{$employeeConfig->name}}</td>
+                                            <td>
+                                                @if($employeeConfig->id == \App\Utils\Primitives\Enum\EmployeeConfigs::CRM_APPROVAL_SALES_MAPPING ||
+                                                $employeeConfig->id == \App\Utils\Primitives\Enum\EmployeeConfigs::CRM_APPROVAL_SCHEDULE_VISIT) @endif
+                                                <div class="row g-9 mb-8">
+                                                    <div id="{{$employeeConfig->id}}">
+                                                        <!--begin::Form group-->
+                                                        <div class="form-group">
+                                                            <div data-repeater-list="{{$employeeConfig->id}}">
+                                                                <div data-repeater-item>
+                                                                    <div class="d-flex mt-2 w-100 align-items-center">
+                                                                        <select name="employee_id"
+                                                                                data-dropdown-parent="#modal_createEmployee"
+                                                                                data-kt-repeater="approved_by{{$employeeConfig->id}}"
+                                                                                class="form-control form-control-solid form-control-sm">
+                                                                        </select>
+                                                                        <a href="javascript:;" data-repeater-delete
+                                                                           class="btn btn-light-danger btn-sm ms-2">
+                                                                            Delete
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Form group-->
+
+                                                        <!--begin::Form group-->
+                                                        <div class="form-group mt-5">
+                                                            <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
+                                                                + Add More
+                                                            </a>
+
+                                                        </div>
+                                                        <!--end::Form group-->
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endslot
+                            </x-table.general-table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,8 +189,8 @@
                 $(this).slideDown();
 
                 new Inputmask({
-                    mask: "(+62) 8[9]{0,20}",
-                    placeholder: "(+62) 8xxxxxxx",
+                    mask: "(+62) [9]{0,20}",
+                    placeholder: "(+62) xxxxxxxx",
                     definitions: {
                         '9': {
                             validator: "[0-9]",
@@ -151,8 +206,8 @@
 
             ready: function () {
                 new Inputmask({
-                    mask: "(+62) 8[9]{0,20}",
-                    placeholder: "(+62) 8xxxxxxx",
+                    mask: "(+62) [9]{0,20}",
+                    placeholder: "(+62) xxxxxxxx",
                     definitions: {
                         '9': {
                             validator: "[0-9]",
@@ -184,5 +239,174 @@
         });
 
 
+    </script>
+
+    {{-- APPROVAL_SALES_MAPPING   --}}
+    <script>
+        var $repeater = $('#APPROVAL_SALES_MAPPING').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'Default Outer',
+            },
+
+            show: function () {
+                $(this).slideDown()
+                $('[data-kt-repeater="approved_byAPPROVAL_SALES_MAPPING"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            },
+
+            ready: function () {
+                $('[data-kt-repeater="approved_byAPPROVAL_SALES_MAPPING"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            }
+        });
+    </script>
+
+    {{--  APPROVAL_SCHEDULE_VISIT  --}}
+    <script>
+        var $repeater = $('#APPROVAL_SCHEDULE_VISIT').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'Default Outer',
+            },
+
+            show: function () {
+                $(this).slideDown();
+
+                $('[data-kt-repeater="approved_byAPPROVAL_SCHEDULE_VISIT"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            },
+
+            hide: function (deleteElement) {
+                $(this).slideUp(deleteElement);
+            },
+
+            ready: function () {
+                $('[data-kt-repeater="approved_byAPPROVAL_SCHEDULE_VISIT"]').select2({
+                    ajax: {
+                        url: "{{route('api.get.employees')}}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                search: params.term,
+                                page: params.page || 1,
+                                page_size: 25,
+                            };
+                        },
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            return {
+                                results: data.result.data.map(function (item) {
+                                    return {
+                                        id: item.id,
+                                        text: item.user.name
+                                    };
+                                }),
+                                pagination: {
+                                    more: (params.page * 25) < data.result.total // load more data
+                                }
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 0,
+                    placeholder: 'Select an Approval',
+                });
+            }
+        });
     </script>
 @endpush

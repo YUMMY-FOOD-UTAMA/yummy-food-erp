@@ -17,8 +17,8 @@
         </div>
         <div class="d-flex align-items-center justify-content-center flex-grow-1 flex-lg-grow-0 d-md-none">
             <a href="{{ route('dashboard') }}" class="mt-3">
-                <img alt="Logo" src="{{ asset('assets/images/logo-new.png') }}"
-                     class="h-45px app-sidebar-logo-default"/>
+                <img alt="Logo" src="{{ asset('assets/images/newlogo.jpeg') }}"
+                     class="h-50px app-sidebar-logo-default"/>
             </a>
         </div>
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
@@ -31,8 +31,8 @@
             </div>
             <div class="w-100 d-none d-md-flex justify-content-center">
                 <a href="{{ route('dashboard') }}" class="mt-3">
-                    <img alt="Logo" src="{{ asset('assets/images/logo-new.png') }}"
-                         class="h-45px app-sidebar-logo-default"/>
+                    <img alt="Logo" src="{{ asset('assets/images/newlogo.jpeg') }}"
+                         class="h-50px app-sidebar-logo-default"/>
                 </a>
             </div>
             <div class="app-navbar flex-shrink-0">

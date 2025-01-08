@@ -37056,8 +37056,8 @@ code:not([class*=language-]) {
 }
 
 .table.gy-7 th, .table.gy-7 td {
-    padding-top: 6px;
-    padding-bottom: 7px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     vertical-align: middle;
 }
 
