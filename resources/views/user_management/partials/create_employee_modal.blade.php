@@ -106,7 +106,6 @@
                                 <!--begin::Form group-->
                                 <div class="form-group mt-5">
                                     <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
-                                        <i class="ki-duotone ki-plus fs-3"></i>
                                         Add
                                     </a>
                                 </div>
@@ -154,8 +153,7 @@
 
                                                         <!--begin::Form group-->
                                                         <div class="form-group mt-5">
-                                                            <a href="javascript:;" data-repeater-create
-                                                               style="font-style: italic; font-size: 16px;">
+                                                            <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
                                                                 + Add More
                                                             </a>
 
