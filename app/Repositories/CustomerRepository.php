@@ -64,7 +64,6 @@ class CustomerRepository
     {
         $pageSize = $this->request->query('page_size', 10);
         $regionID = $this->request->query('region_id');
-        $subRegionID = $this->request->query('sub_region_id');
         $areaID = $this->request->query('area_id');
         $customerCategoryID = $this->request->query('customer_category_id');
         $searchKeyword = $this->request->query('search');
@@ -113,13 +112,8 @@ class CustomerRepository
         if ($areaID) {
             $customers->where('area_id', $areaID);
         }
-        if ($subRegionID && !$areaID) {
-            $customers->whereHas('area', function ($query) use ($subRegionID) {
-                $query->where('sub_region_id', $subRegionID);
-            });
-        }
-        if ($regionID && !$subRegionID && !$areaID) {
-            $customers->whereHas('area.subRegion', function ($query) use ($regionID) {
+        if ($regionID && !$areaID) {
+            $customers->whereHas('area.region', function ($query) use ($regionID) {
                 $query->where('region_id', $regionID);
             });
         }
