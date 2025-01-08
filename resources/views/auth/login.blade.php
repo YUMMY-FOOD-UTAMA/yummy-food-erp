@@ -102,7 +102,7 @@
 </head>
 <body>
 <div class="login-container">
-    <img src="{{asset('assets/images/logo-new.png')}}" alt="Yummy Food Utama Logo">
+    <img src="{{asset('assets/images/newlogo.jpeg')}}" alt="Yummy Food Utama Logo">
     <h1>Yummy Food Utama</h1>
     <form action="{{route('login')}}" method="post">
         @csrf

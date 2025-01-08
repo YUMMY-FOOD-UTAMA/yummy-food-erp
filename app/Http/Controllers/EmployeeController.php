@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
 use App\Models\Division\SubDepartment;
 use App\Models\Employee;
+use App\Models\EmployeeConfigs;
 use App\Models\Level\LevelGrade;
 use App\Models\User;
 use App\Repositories\EmployeeRepository;
 use App\Trait\ApiResponseTrait;
 use App\Utils\Helpers\FileHelper;
 use App\Utils\Helpers\Transaction;
+use App\Utils\Primitives\Enum\EmployeeConfigs as EmployeeConfigsEnum;
 use App\Utils\Primitives\ListPageSize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -68,6 +71,7 @@ class EmployeeController extends Controller
 
     public function store(CreateEmployeeRequest $request)
     {
+
         $image = null;
         if ($request->hasFile('avatar')) {
             $image = FileHelper::optimizeAndUploadPicture($request->file('avatar'), $this->avatarPath);
@@ -101,7 +105,7 @@ class EmployeeController extends Controller
                 'is_active' => true,
             ]);
 
-            Employee::create([
+            $employee = Employee::create([
                 'user_id' => $user->id,
                 'join_date' => $request->join_date,
                 'position' => $request->position,
@@ -116,6 +120,30 @@ class EmployeeController extends Controller
             if ($request->role_name) {
                 $user->assignRole($request->role_name);
             }
+
+            $employeeConfigs = [];
+            foreach ($request->APPROVAL_SALES_MAPPING as $key => $value) {
+                if (!empty($value['employee_id'])) {
+                    $employeeConfigs[] = [
+                        "feature" => EmployeeConfigsEnum::FEATURE_CRM,
+                        "type" => EmployeeConfigsEnum::CRM_APPROVAL_SALES_MAPPING,
+                        "external_id" => $value["employee_id"],
+                        "employee_id" => $employee->id,
+                    ];
+                }
+            }
+
+            foreach ($request->APPROVAL_SCHEDULE_VISIT as $key => $value) {
+                if (!empty($value['employee_id'])) {
+                    $employeeConfigs[] = [
+                        "feature" => EmployeeConfigsEnum::FEATURE_CRM,
+                        "type" => EmployeeConfigsEnum::CRM_APPROVAL_SCHEDULE_VISIT,
+                        "external_id" => $value["employee_id"],
+                        "employee_id" => $employee->id,
+                    ];
+                }
+            }
+            EmployeeConfigs::create($employeeConfigs);
         });
 
         if ($res) {

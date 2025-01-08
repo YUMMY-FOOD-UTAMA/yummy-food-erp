@@ -103,7 +103,7 @@
                     </x-card>
                     <button type="submit" class="btn btn-primary"
                             id="btnVisitModal{{$scheduleVisit->id}}" disabled>
-                        Visit
+                        Submit
                     </button>
                 </form>
             </x-modal>

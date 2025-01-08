@@ -13,6 +13,7 @@ class ScheduleVisitRepository
     private Request $request;
     private array $statuses = [];
     private array $employeeIDs = [];
+    private bool $excludePastVisits = true;
 
     public function setRequest(Request $request): void
     {
@@ -29,6 +30,11 @@ class ScheduleVisitRepository
         $this->employeeIDs = $employeeIDs;
     }
 
+    public function setExcludePastVisits(bool $excludePastVisits): void
+    {
+        $this->excludePastVisits = $excludePastVisits;
+    }
+
     public function getAll()
     {
         $startDate = $this->request->query("start_date");
@@ -39,6 +45,8 @@ class ScheduleVisitRepository
         $customerStatus = $this->request->query("customer_status");
         $pageSize = $this->request->query("page_size", ListPageSize::defaultPageSize());
         $search = $this->request->query("search");
+
+        $today = now();
 
         $scheduleVisit = SalesScheduleVisit::with([
             'customer' => function ($query) {
@@ -86,6 +94,11 @@ class ScheduleVisitRepository
                 $query->where('status', $customerStatus);
             });
         }
+
+        if ($this->excludePastVisits) {
+            $scheduleVisit = $scheduleVisit->whereDate('end_visit', '>=', $today->toDateString());
+        }
+
         $scheduleVisit = $scheduleVisit->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query())
             ->through(function ($visit) {
                 $customer = $visit->customer;

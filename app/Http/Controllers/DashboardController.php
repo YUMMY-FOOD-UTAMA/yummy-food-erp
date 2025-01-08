@@ -14,6 +14,7 @@ class DashboardController extends Controller
         $scheduleVisits = new ScheduleVisitRepository;
         $scheduleVisits->setEmployeeIDs(PermissionHelper::onlySelfAccessEmployeeIDs());
         $scheduleVisits->setRequest($request);
+        $scheduleVisits->setExcludePastVisits(true);
         $scheduleVisits->setStatuses([SalesScheduleVisitStatus::APPROVED]);
         $scheduleVisits = $scheduleVisits->getAll();
 
