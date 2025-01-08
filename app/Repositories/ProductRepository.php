@@ -54,7 +54,7 @@ class ProductRepository
     {
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
         $search = $this->request->query('search');
-        $branchID = $this->request->query('branch_id');
+        $brandID = $this->request->query('brand_id');
         $divisionID = $this->request->query('division_id');
         $categoryID = $this->request->query('category_id');
         $groupID = $this->request->query('group_id');
@@ -73,8 +73,8 @@ class ProductRepository
         if ($this->withTrashed) {
             $products->withTrashed();
         }
-        if ($branchID) {
-            $products->where('branch_id', $branchID);
+        if ($brandID) {
+            $products->where('brand_id', $brandID);
         }
         if ($divisionID) {
             $products->where('division_id', $divisionID);

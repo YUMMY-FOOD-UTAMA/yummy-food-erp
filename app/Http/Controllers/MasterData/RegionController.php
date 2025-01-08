@@ -5,7 +5,6 @@ namespace App\Http\Controllers\MasterData;
 use App\Http\Controllers\Controller;
 use App\Models\Region\Area;
 use App\Models\Region\Region;
-use App\Models\Region\SubRegion;
 use App\Trait\ApiResponseTrait;
 use Illuminate\Http\Request;
 
