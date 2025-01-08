@@ -17,6 +17,11 @@ class Employee extends Model
 
     protected $guarded = ['id'];
 
+    public function employeeConfigs()
+    {
+        return $this->hasMany(EmployeeConfigs::class, 'employee_id', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

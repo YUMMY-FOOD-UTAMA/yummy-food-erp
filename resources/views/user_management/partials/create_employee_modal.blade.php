@@ -40,11 +40,13 @@
                             <x-form.select-box name="sub_department_id" class="col-md-6 fv-row" type="row"
                                                placeholder="Select Sub Department..." :required="true"
                                                label="Sub Department" drop-down-parent-i-d="modal_createEmployee"
+                                               id="sub_department_id_create"
                                                :items="$subDepartments"/>
 
                             <x-form.select-box name="level_grade_id" class="col-md-6 fv-row" type="row"
                                                placeholder="Select Level Name..." :required="true"
                                                label="Level Name" drop-down-parent-i-d="modal_createEmployee"
+                                               id="level_grade_id_create"
                                                custom-name-key="$t->levelName->name.' ('.$t->name.')'"
                                                :items="$levelGrades"/>
 
