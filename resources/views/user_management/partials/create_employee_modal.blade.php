@@ -189,8 +189,8 @@
                 $(this).slideDown();
 
                 new Inputmask({
-                    mask: "(+62) 8[9]{0,20}",
-                    placeholder: "(+62) 8xxxxxxx",
+                    mask: "(+62) [9]{0,20}",
+                    placeholder: "(+62) xxxxxxxx",
                     definitions: {
                         '9': {
                             validator: "[0-9]",
@@ -206,8 +206,8 @@
 
             ready: function () {
                 new Inputmask({
-                    mask: "(+62) 8[9]{0,20}",
-                    placeholder: "(+62) 8xxxxxxx",
+                    mask: "(+62) [9]{0,20}",
+                    placeholder: "(+62) xxxxxxxx",
                     definitions: {
                         '9': {
                             validator: "[0-9]",

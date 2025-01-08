@@ -11,15 +11,17 @@ class GeneralTable extends Component
     public $dataTable;
     public $type;
     public $withOutCardBody;
+    public $scrollable;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($withOutCardBody = false, $dataTable = null, $type = null)
+    public function __construct($scrollable = false, $withOutCardBody = false, $dataTable = null, $type = null)
     {
         $this->dataTable = $dataTable;
         $this->type = $type;
         $this->withOutCardBody = $withOutCardBody;
+        $this->scrollable = $scrollable;
     }
 
     /**
