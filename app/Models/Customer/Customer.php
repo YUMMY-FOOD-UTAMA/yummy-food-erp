@@ -8,7 +8,6 @@ use App\Models\Geographic\SubDistrict;
 use App\Models\Geographic\SubDistrictVillage;
 use App\Models\Region\Area;
 use App\Models\Region\Region;
-use App\Models\Region\SubRegion;
 use App\Models\SalesScheduleVisit;
 use App\Trait\AuditTrait;
 use App\Utils\Primitives\Enum\SalesScheduleVisitStatus;
@@ -24,31 +23,6 @@ class Customer extends Model
     protected $table = 'customers';
 
     protected $guarded = ['id'];
-
-    public static function generateCustomerCode($regionID, $subRegionID, $areaID, $segmentID, $categoryID)
-    {
-        $region = Region::find($regionID);
-        $subRegion = SubRegion::find($subRegionID);
-        $area = Area::find($areaID);
-        $segment = CustomerSegment::find($segmentID);
-        $category = CustomerCategory::find($categoryID);
-
-        if (!$region || !$subRegion || !$area || !$segment || !$category) {
-            throw new \Exception('One or more data are invalid.');
-        }
-
-        $code = strtoupper(
-            $region->code . $subRegion->code . $area->code . $segment->code . $category->code
-        );
-
-        $lastCustomer = self::latest('id')->first();
-
-        $lastID = $lastCustomer ? $lastCustomer->id : 0;
-
-        $newID = $lastID + 1;
-
-        return $code . str_pad($newID, 4, '0', STR_PAD_LEFT);
-    }
 
     public function nameCode()
     {

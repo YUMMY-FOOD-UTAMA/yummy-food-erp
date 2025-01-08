@@ -22,9 +22,4 @@ class Region extends Model
         $formattedNumber = str_pad($this->id, 2, '0', STR_PAD_LEFT);
         return $prefix.$formattedNumber;
     }
-
-    public function subRegions()
-    {
-        return $this->hasMany(SubRegion::class);
-    }
 }
