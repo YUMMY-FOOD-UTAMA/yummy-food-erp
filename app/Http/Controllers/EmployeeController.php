@@ -122,28 +122,34 @@ class EmployeeController extends Controller
             }
 
             $employeeConfigs = [];
-            foreach ($request->APPROVAL_SALES_MAPPING as $key => $value) {
-                if (!empty($value['employee_id'])) {
-                    $employeeConfigs[] = [
-                        "feature" => EmployeeConfigsEnum::FEATURE_CRM,
-                        "type" => EmployeeConfigsEnum::CRM_APPROVAL_SALES_MAPPING,
-                        "external_id" => $value["employee_id"],
-                        "employee_id" => $employee->id,
-                    ];
+            if ($request->APPROVAL_SALES_MAPPING) {
+                foreach ($request->APPROVAL_SALES_MAPPING as $key => $value) {
+                    if (!empty($value['employee_id'])) {
+                        $employeeConfigs[] = [
+                            "feature" => EmployeeConfigsEnum::FEATURE_CRM,
+                            "type" => EmployeeConfigsEnum::CRM_APPROVAL_SALES_MAPPING,
+                            "external_id" => $value["employee_id"],
+                            "employee_id" => $employee->id,
+                        ];
+                    }
+                }
+            }
+            if ($request->APPROVAL_SCHEDULE_VISIT) {
+                foreach ($request->APPROVAL_SCHEDULE_VISIT as $key => $value) {
+                    if (!empty($value['employee_id'])) {
+                        $employeeConfigs[] = [
+                            "feature" => EmployeeConfigsEnum::FEATURE_CRM,
+                            "type" => EmployeeConfigsEnum::CRM_APPROVAL_SCHEDULE_VISIT,
+                            "external_id" => $value["employee_id"],
+                            "employee_id" => $employee->id,
+                        ];
+                    }
                 }
             }
 
-            foreach ($request->APPROVAL_SCHEDULE_VISIT as $key => $value) {
-                if (!empty($value['employee_id'])) {
-                    $employeeConfigs[] = [
-                        "feature" => EmployeeConfigsEnum::FEATURE_CRM,
-                        "type" => EmployeeConfigsEnum::CRM_APPROVAL_SCHEDULE_VISIT,
-                        "external_id" => $value["employee_id"],
-                        "employee_id" => $employee->id,
-                    ];
-                }
+            if (!empty($employeeConfigs)) {
+                EmployeeConfigs::create($employeeConfigs);
             }
-            EmployeeConfigs::create($employeeConfigs);
         });
 
         if ($res) {
