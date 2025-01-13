@@ -12,7 +12,7 @@
             <x-card title="Scheduling Visit" id="scheduling_visit">
                 <div class="row g-9 mb-8">
                     <x-data-driven.select2.employee class="col-12 col-md-4 mb-5" type="row" :only-sales="true"
-                                                label="Sales Name" :employee-i-d="old('employee_id')"/>
+                                                    label="Sales Name" :employee-i-d="old('employee_id')"/>
                     <x-form.select-box name="visit_category" label="Visit Category" class="col-12 col-md-4 mb-5"
                                        type="row"
                                        placeholder="Select Visit Category" :items="VisitCategory::valuesObject()"/>
@@ -38,6 +38,9 @@
         <x-card title="Customer Data" id="customer_data">
             <div class="table-responsive">
                 <x-table.advance-filter>
+                    <x-form.input type="row" class="col-12 col-md-3 mb-5" id="search_customer" name="search"
+                                  size-form="sm" label="Search Customer"
+                                  placeholder="Search Customer"/>
                     <x-form.select-box type="row" class="col-12 col-md-3 mb-5" id="customer_category_id"
                                        :items="\App\Models\Customer\CustomerCategory::all()"
                                        name="customer_category_id" size-form="sm" label="Customer Category"
@@ -101,7 +104,7 @@
                 });
                 filters['customer_category_id'] = $('#customer_category_id').val()
                 filters['available_customer'] = $('input[name="available_customer"]:checked').val() || "0";
-
+                filters['search']=$('input[id^="search_customer"]').val()
                 $.get("{{route('api.get.customers')}}", {
                         page_size: data.length,
                         page: (data.start / data.length) + 1,
@@ -178,6 +181,9 @@
         }
 
         $('#customer_category_id').on('change', function () {
+            table.ajax.reload()
+        })
+        $('input[id^="search_customer"]').on('keyup', function () {
             table.ajax.reload()
         })
         $('input[name="available_customer"]').on('change', function () {
