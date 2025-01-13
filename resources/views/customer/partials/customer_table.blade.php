@@ -2,9 +2,9 @@
     @slot('slotTheadTh')
         <th style="width: 20px; vertical-align: middle; text-align: left;">No</th>
         <th style="vertical-align: middle; text-align: left;">Customer Code</th>
-        <th style="vertical-align: middle; text-align: left;">Region Name</th>
+{{--        <th style="vertical-align: middle; text-align: left;">Region Name</th>--}}
         <th style="vertical-align: middle; text-align: left;">Area Name</th>
-        <th style="vertical-align: middle; text-align: left;">Customer Segment</th>
+{{--        <th style="vertical-align: middle; text-align: left;">Customer Segment</th>--}}
         <th style="vertical-align: middle; text-align: left;">Customer Category</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Contact Person</th>
@@ -15,9 +15,9 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $customer->code }}</td>
-                <td>{{ $customer->area?->region?->name }}</td>
+{{--                <td>{{ $customer->area?->region?->name }}</td>--}}
                 <td>{{ $customer->area->name }}</td>
-                <td>{{ $customer->customerSegment->name }}</td>
+{{--                <td>{{ $customer->customerSegment->name }}</td>--}}
                 <td>{{ $customer->customerCategory->name }}</td>
                 <td>{{ $customer->name }}</td>
                 <td>{{ $customer->contact_person_phone }}</td>
