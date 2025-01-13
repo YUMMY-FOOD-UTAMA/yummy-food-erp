@@ -22,7 +22,7 @@
                data-kt-image-input-action="change" data-bs-toggle="tooltip" data-bs-dismiss="click"
                title="Change {{$name}}">
             <i class="bi bi-pencil-fill fs-7"><span class="path1"></span><span class="path2"></span></i>
-            <input type="file" name="{{ $name }}" accept=".png, .jpg, .jpeg .webp"/>
+            <input type="file" name="{{ $name }}" accept="image/png, image/jpg, image/jpeg, image/webp"/>
             <input type="hidden" hidden name="{{ $name }}"/>
         </label>
         <span class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
