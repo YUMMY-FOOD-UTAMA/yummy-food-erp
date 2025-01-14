@@ -123,7 +123,6 @@ class CustomerRepository
         if ($searchKeyword) {
             $customers->where(function ($query) use ($searchKeyword) {
                 $query->where('name', 'like', '%' . $searchKeyword . '%')
-                    ->orWhere('code', 'like', '%' . $searchKeyword . '%')
                     ->orWhere('company_name', 'like', '%' . $searchKeyword . '%');
             });
         }
