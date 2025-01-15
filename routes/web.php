@@ -13,6 +13,7 @@ use App\Http\Controllers\ManagementSettingController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterData\RegionController;
+use App\Http\Controllers\ReceivableEntry\InvoiceController;
 use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\PermissionRole;
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::fallback(function () {
     return view('errors.404');
 });
+
+Route::get('/excel', [InvoiceController::class, 'readInvoice']);
 
 Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'account'], function () {
