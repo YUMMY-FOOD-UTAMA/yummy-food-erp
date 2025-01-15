@@ -9,7 +9,11 @@
                             @endif
                             <thead>
                             <tr style="height: 45px;padding: 10px 0;">
-                                {{$slotTheadTh ?? ''}}
+                                @if(isset($nameSlotTh) && isset(${$nameSlotTh}))
+                                    {{ ${$nameSlotTh} }}
+                                @else
+                                    {{$nameSlotTh ?? ''}}
+                                @endif
                             </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-800">
@@ -26,7 +30,11 @@
                                     </td>
                                 </tr>
                             @else
-                                {{$slotTbodyTr ?? ''}}
+                                @if(isset($nameSlotTr) && isset(${$nameSlotTr}))
+                                    {{ ${$nameSlotTr} }}
+                                @else
+                                    {{$nameSlotTr ?? ''}}
+                                @endif
                             @endif
                             </tbody>
                         </table>

@@ -27,6 +27,11 @@ class SalesScheduleVisit extends Model
         return $this->belongsTo(Employee::class)->withTrashed();
     }
 
+    public function requestProducts()
+    {
+        return $this->hasMany(ScheduleVisitRequestProduct::class, 'schedule_visit_id', 'id');
+    }
+
     public function expiredAtTheDay()
     {
         $today = Carbon::now()->startOfDay();
