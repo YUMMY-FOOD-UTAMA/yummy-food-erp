@@ -12,20 +12,16 @@ class GeneralTable extends Component
     public $type;
     public $withOutCardBody;
     public $scrollable;
-    public $nameSlotTh;
-    public $nameSlotTr;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($nameSlotTh = "slotTheadTh", $nameSlotTr = "slotTbodyTr", $scrollable = false, $withOutCardBody = false, $dataTable = null, $type = null)
+    public function __construct($scrollable = false, $withOutCardBody = false, $dataTable = null, $type = null)
     {
         $this->dataTable = $dataTable;
         $this->type = $type;
         $this->withOutCardBody = $withOutCardBody;
         $this->scrollable = $scrollable;
-        $this->nameSlotTh = $nameSlotTh;
-        $this->nameSlotTr = $nameSlotTr;
     }
 
     /**

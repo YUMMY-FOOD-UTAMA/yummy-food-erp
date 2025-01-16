@@ -11,12 +11,12 @@ class ScheduleVisitRequestProduct extends Model
 {
     use HasFactory;
 
-    protected $table = 'schedule_visit_request_products';
+    protected $table = 'sales_schedule_visit_request_products';
 
     protected $guarded = ['id'];
 
     public function scheduleVisit()
     {
-        return $this->belongsTo(SalesScheduleVisit::class, 'schedule_visit_id');
+        return $this->belongsTo(SalesScheduleVisit::class, 'sales_schedule_visit_id');
     }
 }

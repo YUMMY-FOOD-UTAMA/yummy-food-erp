@@ -29,7 +29,7 @@ class SalesScheduleVisit extends Model
 
     public function requestProducts()
     {
-        return $this->hasMany(ScheduleVisitRequestProduct::class, 'schedule_visit_id', 'id');
+        return $this->hasMany(ScheduleVisitRequestProduct::class, 'sales_schedule_visit_id', 'id');
     }
 
     public function expiredAtTheDay()
