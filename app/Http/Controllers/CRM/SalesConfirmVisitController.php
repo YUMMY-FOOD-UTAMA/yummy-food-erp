@@ -26,6 +26,7 @@ class SalesConfirmVisitController extends Controller
 
     public function visitConfirmation(SalesScheduleVisit $scheduleVisit, Request $request)
     {
+        dd($request);
         if ($scheduleVisit->status == SalesScheduleVisitStatus::VISITED) {
             return redirect()->back()->with([
                 "status" => "warning",
