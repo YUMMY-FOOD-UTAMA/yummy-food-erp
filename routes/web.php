@@ -23,7 +23,7 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
-Route::get('/excel', [InvoiceController::class, 'readInvoice']);
+Route::get('/excel', [InvoiceController::class, 'importInvoice']);
 
 Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'account'], function () {
