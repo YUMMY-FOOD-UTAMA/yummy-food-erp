@@ -19,7 +19,7 @@
                 @can($routeCreateName)
                     @if($usingCreateModal)
                         <a href="#" class="btn btn-sm fw-bold btn-primary hover-scale" data-bs-toggle="modal"
-                           data-bs-target="#modal_create{{$name}}">Create</a>
+                           data-bs-target="#modal_create{{$name}}">{{$createLabelName}}</a>
                     @else
                         <a href="{{route($routeCreateName)}}"
                            class="btn btn-sm fw-bold hover-scale btn-primary">Create {{$name}}</a>
@@ -65,7 +65,7 @@
                               method="POST">
                             @csrf
                             <div class="mb-13 text-center">
-                                <h1 class="mb-3">Create {{$name}}</h1>
+                                <h1 class="mb-3">{{$createLabelName}} {{$name}}</h1>
                             </div>
                             {{$slotModalForm ?? ''}}
 

@@ -26,6 +26,15 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
+        Blade::directive('rupiah', function ($amount) {
+            return "<?php echo 'Rp. ' . number_format($amount, 2, ',', '.'); ?>";
+        });
+
+        Blade::directive('percentage', function ($expression) {
+            return "<?php echo intval($expression * 100) . '%'; ?>";
+        });
+
+
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage)
                 ->subject('Verify Email Address')

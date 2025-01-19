@@ -137,6 +137,7 @@ return [
         'CustomerStatus' => \App\Utils\Primitives\Enum\CustomerStatus::class,
         'VisitStatus' => \App\Utils\Primitives\Enum\SalesScheduleVisitStatus::class,
         'VisitCategory' => \App\Utils\Primitives\Enum\SalesScheduleVisitCategory::class,
+        'Util' => \App\Utils\Util::class,
         'PermissionHelper' => \App\Utils\Helpers\PermissionHelper::class,
         'DefaultCustomerDepartment' => \App\Utils\Primitives\DefaultCustomerDepartment::class,
         'ProductRepository' => \App\Repositories\ProductRepository::class,

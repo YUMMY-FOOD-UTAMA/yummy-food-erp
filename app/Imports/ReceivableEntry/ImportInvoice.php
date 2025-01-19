@@ -23,33 +23,35 @@ class ImportInvoice implements ToCollection, WithEvents
             return;
         }
         $products = [];
-        $netRate = 0;
 
         $isProductData = false;
         $totalAmountProduct = 0;
         $ppn = 0;
-        $totalAmountAfterPPN = 0;
-        $totalQuantity = 0;
         $deliveryNotes = explode(",", trim(preg_replace('/\s*,\s*/', ',', str_replace(':', '', $rows[4][6]))));
         $buyerOrderNumbers = explode(",", trim(preg_replace('/\s*,\s*/', ',', str_replace(':', '', $rows[8][6]))));
         $productBuyerDates = explode(",", trim(preg_replace('/\s*,\s*/', ',', str_replace(':', '', $rows[8][9]))));
         $deliveryNoteDates = explode(",", trim(preg_replace('/\s*,\s*/', ',', str_replace(':', '', $rows[10][9]))));
+        $totalDiscountProduct = 0;
+
         foreach ($rows as $index => $row) {
             if ($row[1] == "PPN") {
                 $ppn = $row[10];
-                $totalQuantity = $rows[$index + 1][9];
-                $totalAmountAfterPPN = $rows[$index + 1][14];
-                $totalAmountProduct = $row[14];
-                $netRate = $rows[$index - 1][13];
                 break;
             }
             if ($isProductData && $row[0] != null && $row[0] != "") {
+                $qty = (int)preg_replace('/\D/', '', $row[9] ?? '0');
+                $discount = $row[12];
+                $totalAmountProduct += $row[10] * $qty;
+                if ($discount != 0) {
+                    $discountPerProduct = ($row[10] * $discount);
+                    $totalDiscountProduct += $discountPerProduct * $qty;
+                }
                 $products[] = [
                     'name' => $row[0],
-                    'quantity' => $row[9] ?? 0,
+                    'quantity' => $qty,
                     'rate' => $row[10] ?? 0,
                     'unit' => $row[11] ?? "",
-                    'discount' => $row[12] ?? 0,
+                    'discount' => $discount,
                     'net_rate' => $row[13] ?? 0,
                     'amount' => $row[14] ?? 0,
                     'delivery_note' => $deliveryNotes[count($products)] ?? "",
@@ -73,7 +75,6 @@ class ImportInvoice implements ToCollection, WithEvents
         $supplierRef = $rows[6][6] ?? "";
         $termOfDelivery = $rows[14][6] ?? "";
 
-
         $this->processedData = [
             'invoice_number' => $invoiceNo,
             'invoice_date' => $date,
@@ -82,10 +83,8 @@ class ImportInvoice implements ToCollection, WithEvents
             'address' => $address,
             'products' => $products,
             'product_total_amount' => $totalAmountProduct,
-            'total_quantity_product' => $totalQuantity,
-            'product_total_net_rate' => $netRate,
+            'product_total_discount' => round($totalDiscountProduct, 2),
             'ppn' => $ppn,
-            'product_total_amount_ppn' => $totalAmountAfterPPN,
             'term_of_payment' => $TOP,
             'term_of_delivery' => $termOfDelivery,
             'supplier_ref' => $supplierRef,

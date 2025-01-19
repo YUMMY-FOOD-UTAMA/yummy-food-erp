@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Inventory\ProductController;
 use App\Http\Controllers\ManagementSettingController;
+use App\Http\Controllers\MasterData\CustomerInvoiceController;
 use App\Http\Controllers\MasterData\GeographicController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterData\RegionController;
@@ -23,7 +24,6 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
-Route::get('/excel', [InvoiceController::class, 'importInvoice']);
 Route::get('/invoice-1', function () {
     return view('invoice.export.invoice-pdf-model-1');
 });
@@ -52,6 +52,9 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'api'], function () {
         Route::get('/employees', [EmployeeController::class, 'apiGet'])->name('api.get.employees');
+        Route::get('/invoices', [InvoiceController::class, 'apiGet'])->name('api.get.invoices');
+        Route::get('/product-invoices', [InvoiceController::class, 'apiGetProductInvoice'])->name('api.get.product-invoices');
+        Route::get('/customer-invoices', [CustomerInvoiceController::class, 'apiGet'])->name('api.get.customer-invoices');
         Route::get('/customers', [CustomerController::class, 'apiGet'])->name('api.get.customers');
         Route::post('/product/generate-name-code', [ProductController::class, 'generateNameCode'])->name('api.generate.name.code');
     });
@@ -102,6 +105,17 @@ Route::middleware('auth')->group(function () {
                 Route::get('/detail/{customer}', [CustomerController::class, 'show'])->name('receivable.customer.show');
                 Route::put('/update/{customer}', [CustomerController::class, 'update'])->name('receivable.customer.update');
             });
+
+            Route::group(['prefix' => 'entry'], function () {
+                Route::group(['prefix' => 'invoice'], function () {
+                    Route::post('/import', [InvoiceController::class, 'importInvoice'])->name('receivable.entry.invoice.import');
+                    Route::delete('/delete/{invoice}', [InvoiceController::class, 'delete'])->name('receivable.entry.invoice.delete');
+                    Route::post('/restore/{id}', [InvoiceController::class, 'restore'])->name('receivable.entry.invoice.restore');
+                    Route::get('/', [InvoiceController::class, 'index'])->name('receivable.entry.invoice.index');
+                    Route::get('/trash', [InvoiceController::class, 'trash'])->name('receivable.entry.invoice.trash');
+                    Route::post('/export', [InvoiceController::class, 'export'])->name('receivable.entry.invoice.export');
+                });
+            });
         });
 
         Route::group(['prefix' => 'inventory'], function () {
@@ -133,7 +147,9 @@ Route::middleware('auth')->group(function () {
                 Route::put('/edit/{role}', [RoleManagementController::class, 'update'])->name('user-management.role-management.update');
                 Route::get('/detail/{role}', [RoleManagementController::class, 'show'])->name('user-management.role-management.show');
             });
+
         });
+
     });
 });
 
