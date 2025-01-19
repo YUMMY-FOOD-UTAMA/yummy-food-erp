@@ -69,7 +69,13 @@ class ImportInvoice implements ToCollection, WithEvents
         $invoiceNo = ltrim($rows[2][6], ": ") ?? "";
         $date = $rows[2][9] ?? "";
         $customerName = $rows[6][0] ?? "";
-        $address = trim($rows[7][0] . " " . $rows[8][0] . " " . $rows[9][0] . " " . $rows[10][0] . " " . $rows[11][0]) ?? "";
+        $address = implode("<br>", array_filter([
+            $rows[7][0] ?? null,
+            $rows[8][0] ?? null,
+            $rows[9][0] ?? null,
+            $rows[10][0] ?? null,
+            $rows[11][0] ?? null
+        ]));
         $supplierName = $rows[1][0];
         $TOP = $rows[4][9] ?? "";
         $supplierRef = $rows[6][6] ?? "";
@@ -78,7 +84,7 @@ class ImportInvoice implements ToCollection, WithEvents
         $this->processedData = [
             'invoice_number' => $invoiceNo,
             'invoice_date' => $date,
-            'supplier_address' => "Jl. Raya Bogor No. 40 Kec. Ciracas, Jakarta 13750, Indonesia",
+            'supplier_address' => "Jl. Raya Bogor No. 40 Kec. Ciracas, Jakarta 13750<br>Indonesia",
             'customer_name' => $customerName,
             'address' => $address,
             'products' => $products,

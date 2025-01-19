@@ -26,6 +26,7 @@
 
 <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
     @csrf
+    <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
     @if(!$onlyReceipt)
         <div class="checkbox-container">
             <input type="radio" name="export_invoice_model" value="invoice_model1"

@@ -21,7 +21,7 @@
                                              name="Invoice"/>
             <x-modal id="receivable.entry.invoice.export"
                      title="Export Kwitansi" size="1000">
-                @include('invoice.partials.export_modal',['onlyReceipt'=>true])
+                @include('invoice.partials.export_modal',['onlyReceipt'=>true,'invoice'=>null])
             </x-modal>
             @include('invoice.partials.table_invoice',['isTrash'=>false])
         </div>

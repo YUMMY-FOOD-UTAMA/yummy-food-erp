@@ -33,11 +33,12 @@ class Invoice extends Model
         $dppEtcValue = round($subTotal - $discountTotal * 11 / 12, 2);
         $ppn12 = round($dppEtcValue * 12 / 100, 2);
         $grandTotal = round($subTotal + $ppn12, 2);
-
+        $dpp = $subTotal - $discountTotal;
         return [
             'sub_total' => round($subTotal, 2),
             'dpp_etc_value' => $dppEtcValue,
             'ppn12' => $ppn12,
+            'dpp' => $dpp,
             'grand_total' => $grandTotal,
             'discount_total' => round($discountTotal, 2),
         ];

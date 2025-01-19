@@ -13,8 +13,10 @@ use App\Repositories\InvoiceRepository;
 use App\Repositories\ProductInvoiceRepository;
 use App\Trait\ApiResponseTrait;
 use App\Utils\Helpers\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
@@ -110,6 +112,29 @@ class InvoiceController extends Controller
 
     public function export(Request $request)
     {
+        $request->validate([
+            'export_invoice_model' => 'required',
+            'invoice_ids' => 'required',
+        ]);
+        $exportModel = $request->get("export_invoice_model");
+        $invoiceIDs = explode(",", $request->get("invoice_ids"));
+
+        switch ($exportModel) {
+            case "invoice_model1":
+                $invoice = Invoice::where("id", $invoiceIDs[0])->first();
+                if (!$invoice) {
+                    redirect()->back()->with([
+                        'status' => "error",
+                        'message' => "invoice not found"
+                    ]);
+                }
+
+                $timestamp = Carbon::now()->format('Y-m-d_H-i-s');
+                $filename = "{$exportModel}_invoice_{$timestamp}.pdf";
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice]);
+                return $pdf->download($filename);
+        }
+
         return redirect()->back()->with([
             'status' => "success",
             'message' => "export invoice successfully"

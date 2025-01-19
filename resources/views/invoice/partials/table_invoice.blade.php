@@ -59,7 +59,7 @@
                     </x-modal>
                     <x-modal id="modalExportInvoice{{$invoice->id}}"
                              title="Export {{$invoice->number}}" size="1000">
-                        @include('invoice.partials.export_modal',['onlyReceipt' => false])
+                        @include('invoice.partials.export_modal',['onlyReceipt' => false,'invoice'=>$invoice])
                     </x-modal>
                 </td>
             </tr>
