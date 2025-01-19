@@ -24,6 +24,9 @@ Route::fallback(function () {
 });
 
 Route::get('/excel', [InvoiceController::class, 'importInvoice']);
+Route::get('/invoice-1', function () {
+    return view('invoice.export.invoice-pdf-model-1');
+});
 
 Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'account'], function () {
@@ -130,9 +133,7 @@ Route::middleware('auth')->group(function () {
                 Route::put('/edit/{role}', [RoleManagementController::class, 'update'])->name('user-management.role-management.update');
                 Route::get('/detail/{role}', [RoleManagementController::class, 'show'])->name('user-management.role-management.show');
             });
-
         });
-
     });
 });
 
