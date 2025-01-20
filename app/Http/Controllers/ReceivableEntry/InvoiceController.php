@@ -47,7 +47,6 @@ class InvoiceController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:xlsx',
-            'customer_account_name' => 'nullable|max:255',
         ]);
 
         $file = $request->file('file');
@@ -66,7 +65,7 @@ class InvoiceController extends Controller
         $res = Transaction::doTx(function () use ($data, $request) {
             $customer = CustomerInvoice::firstOrCreate(
                 ['name' => $data['customer_name']],
-                ['address' => $data['address'], "account_name" => $request->get("customer_account_name") ?? ""]
+                ['address' => $data['address'], "account_name" => ""]
             );
 
             $invoice = Invoice::create([
@@ -121,7 +120,10 @@ class InvoiceController extends Controller
 
         if ($exportModel == "invoice_model1" || $exportModel == "invoice_model2" || $exportModel == "invoice_model3_tax" ||
             $exportModel == "invoice_model3_no_tax") {
-            $invoice = Invoice::where("id", $invoiceID)->withTrashed()->first();
+            $invoice = Invoice::with([
+                'products',
+                'customer',
+            ])->where("id", $invoiceID)->withTrashed()->first();
             if (!$invoice) {
                 redirect()->back()->with([
                     'status' => "error",
@@ -131,18 +133,27 @@ class InvoiceController extends Controller
 
             $timestamp = Carbon::now('Asia/Jakarta')->format('d-M-Y');
             $timestamp = "Jakarta, " . $timestamp;
-            $filename = "{$exportModel}_invoice_{$timestamp}.pdf";
+            $formatInvoiceNumber = str_replace("/", "-", $invoice->number);
+            $filename = "Invoice {$formatInvoiceNumber}.pdf";
             $pdf = null;
             if ($exportModel === "invoice_model1") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice, 'timestamp' => $timestamp]);
             } else if ($exportModel === "invoice_model2") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-2', ['invoice' => $invoice, 'timestamp' => $timestamp]);
             } else if ($exportModel === "invoice_model3_tax") {
-                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-with-tax', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-with-tax', ['invoice' => $invoice, 'timestamp' => $timestamp,
+                    'taxNumber' => $request->get('tax_number')]);
             } else if ($exportModel === "invoice_model3_no_tax") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-without-tax', ['invoice' => $invoice, 'timestamp' => $timestamp]);
             }
             return $pdf->download($filename);
+        } else {
+            if (count($invoiceIDs) <= 0) {
+                redirect()->back()->with([
+                    'status' => "error",
+                    'message' => "minimum invoice is 1"
+                ]);
+            }
         }
 
         return redirect()->back()->with([

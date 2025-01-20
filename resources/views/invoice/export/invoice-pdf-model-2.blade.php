@@ -130,9 +130,6 @@
     </tr>
     </thead>
     <tbody>
-    @php
-        $data = [1, 2, 3];
-    @endphp
     @foreach ($invoice->products as $product)
         <tr>
             <td>{{ $loop->iteration }}</td>
