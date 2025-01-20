@@ -143,11 +143,11 @@
                 </tr>
             @endforeach
             <tr>
-                <td colspan="6" rowspan="6"
+                <td colspan="6" rowspan="7"
                     style="vertical-align: top; padding-bottom: 0; border-left: 0; border-bottom: 0; border-right: 0;">
                     <div style="width: 50%; margin-top: 20px;">
                         <div style="text-align: center;">
-                            <p style="margin-bottom: 0;">Jakarta, 15-Nov-2024</p>
+                            <p style="margin-bottom: 0;">{{$timestamp}}</p>
                         </div>
                         <div style="text-align: center; margin-top: 100px;">
                             <div style="border-top: 1px solid black; width: 200px; margin: 0 auto; padding-top: 10px;">
@@ -158,6 +158,10 @@
                 </td>
                 <td>Sub Total</td>
                 <td>@rupiah($invoice->calculate()['sub_total'])</td>
+            </tr>
+            <tr>
+                <td>Discount</td>
+                <td>@rupiah($invoice->calculate()['discount_total'])</td>
             </tr>
             <tr>
                 <td>DPP</td>
@@ -172,8 +176,8 @@
                 <td>@rupiah($invoice->calculate()['ppn12'])</td>
             </tr>
             <tr>
-                <td>Grand Total</td>
-                <td>@rupiah($invoice->calculate()['grand_total'])</td>
+                <td style="font-weight: bold;">Grand Total</td>
+                <td style="font-weight: bold;">@rupiah($invoice->calculate()['grand_total'])</td>
             </tr>
             <tr>
                 <td style="border: 0"></td>

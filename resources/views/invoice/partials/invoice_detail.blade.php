@@ -37,7 +37,7 @@
                       name="name"/>
         <x-form.text-area class="col-md-6 fv-row"
                           view-only="true"
-                          :default-value="$invoice->supplier_address"
+                          :default-value="strip_tags($invoice->supplier_address)"
                           label="Supplier Address" view-only="true"
                           name="name"/>
         <x-form.input class="col-md-6 fv-row"
@@ -53,7 +53,7 @@
     </div>
     <x-form.text-area class="fv-row mb-10"
                       view-only="true"
-                      :default-value="$invoice->customer->address"
+                      :default-value="strip_tags($invoice->customer->address)"
                       label="Customer Address" view-only="true"
                       name="name"/>
     <div class="row g-9 mb-8">

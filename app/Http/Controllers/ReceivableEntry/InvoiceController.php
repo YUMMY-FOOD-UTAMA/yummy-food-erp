@@ -114,25 +114,35 @@ class InvoiceController extends Controller
     {
         $request->validate([
             'export_invoice_model' => 'required',
-            'invoice_ids' => 'required',
         ]);
         $exportModel = $request->get("export_invoice_model");
         $invoiceIDs = explode(",", $request->get("invoice_ids"));
+        $invoiceID = $request->get("invoice_id");
 
-        switch ($exportModel) {
-            case "invoice_model1":
-                $invoice = Invoice::where("id", $invoiceIDs[0])->first();
-                if (!$invoice) {
-                    redirect()->back()->with([
-                        'status' => "error",
-                        'message' => "invoice not found"
-                    ]);
-                }
+        if ($exportModel == "invoice_model1" || $exportModel == "invoice_model2" || $exportModel == "invoice_model3_tax" ||
+            $exportModel == "invoice_model3_no_tax") {
+            $invoice = Invoice::where("id", $invoiceID)->withTrashed()->first();
+            if (!$invoice) {
+                redirect()->back()->with([
+                    'status' => "error",
+                    'message' => "invoice not found"
+                ]);
+            }
 
-                $timestamp = Carbon::now()->format('Y-m-d_H-i-s');
-                $filename = "{$exportModel}_invoice_{$timestamp}.pdf";
-                $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-1', ['invoice' => $invoice]);
-                return $pdf->stream($filename);
+            $timestamp = Carbon::now('Asia/Jakarta')->format('d-M-Y');
+            $timestamp = "Jakarta, " . $timestamp;
+            $filename = "{$exportModel}_invoice_{$timestamp}.pdf";
+            $pdf = null;
+            if ($exportModel === "invoice_model1") {
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+            } else if ($exportModel === "invoice_model2") {
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-2', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+            } else if ($exportModel === "invoice_model3_tax") {
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-with-tax', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+            } else if ($exportModel === "invoice_model3_no_tax") {
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-without-tax', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+            }
+            return $pdf->download($filename);
         }
 
         return redirect()->back()->with([

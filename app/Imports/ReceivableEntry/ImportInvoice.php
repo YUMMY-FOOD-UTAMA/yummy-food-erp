@@ -84,7 +84,7 @@ class ImportInvoice implements ToCollection, WithEvents
         $this->processedData = [
             'invoice_number' => $invoiceNo,
             'invoice_date' => $date,
-            'supplier_address' => "Jl. Raya Bogor No. 40 Kec. Ciracas, Jakarta 13750<br>Indonesia",
+            'supplier_address' => "Jl. Raya Bogor No. 40 Kec. Ciracas, Jakarta 13750 <br>Indonesia",
             'customer_name' => $customerName,
             'address' => $address,
             'products' => $products,
