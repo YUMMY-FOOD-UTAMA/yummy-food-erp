@@ -142,8 +142,6 @@
                 <input hidden name="invoice_id" value="{{$invoice? $invoice->id :""}}">
                 <input hidden name="export_invoice_model" value="invoice_model3_no_tax">
                 <div class="checkbox-container">
-                    <x-form.input class="col-md-6 fv-row mb-3 mt-3" label="tax Number" placeholder="Input Tax Number"
-                                  name="tax_number"/>
                     <img src="{{asset('assets/images/invoice/invoice-model3-without-tax.png')}}" alt="Invoice Model 1"
                          class="img-preview">
                 </div>
