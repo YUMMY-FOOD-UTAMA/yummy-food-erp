@@ -132,7 +132,7 @@ class InvoiceController extends Controller
                 $timestamp = Carbon::now()->format('Y-m-d_H-i-s');
                 $filename = "{$exportModel}_invoice_{$timestamp}.pdf";
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice]);
-                return $pdf->download($filename);
+                return $pdf->stream($filename);
         }
 
         return redirect()->back()->with([
