@@ -72,113 +72,117 @@
 </head>
 
 <body>
-    <h3 style="text-align: center; margin: 0;">INVOICE</h3>
-    <table class="table-header" style="margin-bottom: 1rem;">
+<h3 style="text-align: center; margin: 0;">INVOICE</h3>
+<table class="table-header" style="margin-bottom: 1rem;">
+    <tr>
+        <td>
+            <span style="font-weight: bold;">{{ $invoice->supplier_name }}</span>
+            <br>
+            {!! $invoice->supplier_address !!}
+        </td>
+        <td colspan="2" style="font-weight: bold; font-size: 20px; vertical-align: top;">
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>Invoce Number</td>
+        <td style="text-align: right;">:</td>
+        <td style="text-align: left;">{{ $invoice->number }}</td>
+    </tr>
+    <tr>
+        <td rowspan="3" style="vertical-align: top;">
+            <span style="font-weight: bold;">{{ $invoice->customer->name }}</span>
+            <br>
+            {!! $invoice->customer->address !!}
+        </td>
+        <td></td>
+        <td>Date</td>
+        <td style="text-align: right;">:</td>
+        <td style="text-align: left;">{{ $invoice->date }}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Cust. Acc</td>
+        <td style="text-align: right;">:</td>
+        <td style="text-align: left;">{{ $invoice->customer->account_name }}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Due Date</td>
+        <td style="text-align: right;">:</td>
+        <td style="text-align: left;">{{ $invoice->term_of_payment }}</td>
+    </tr>
+</table>
+<table class="table">
+    <thead>
+    <tr>
+        <th style="width:20px; max-width: 40px; text-align: center;">No</th>
+        <th style="width:130px; max-width: 130px; text-align: center;">Delivery Note Date</th>
+        <th style="width:130px; max-width: 130px; text-align: center;">Delivery Note Number</th>
+        <th style="width:130px; max-width: 130px; text-align: center;">Tax Number</th>
+        <th style="width:130px; max-width: 130px; text-align: center;">Total Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach ($invoice->products as $product)
         <tr>
-            <td><span style="font-weight: bold;">YUMMY FOOD UTAMA 2024</span><br>Jl. Raya Bogor No. 40 Kec. Ciracas,
-                Jakarta 13750<br>indonesia
-            </td>
-            <td colspan="2" style="font-weight: bold; font-size: 20px; vertical-align: top;">
-            </td>
-            <td></td>
-            <td></td>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $product->delivery_note_date }}</td>
+            <td>{{ $product->delivery_note }}</td>
+            <td>{{ $taxNumber }}</td>
+            <td>@rupiah($product->rate * $product->quantity)</td>
         </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>Invoce Number</td>
-            <td style="text-align: right;">:</td>
-            <td style="text-align: left;">GI 24/11/0736</td>
-        </tr>
-        <tr>
-            <td rowspan="3" style="vertical-align: top;"><span style="font-weight: bold;">PT. JCO DONUT &amp;
-                    COFFE</span><br>Buaran Plaza Lantai Dasar, Jl. Radin Inten <br> No. 1 Buaran Klender, Duren Sawit,
-                <br> Jakarta Timur
-            </td>
-            <td></td>
-            <td>Date</td>
-            <td style="text-align: right;">:</td>
-            <td style="text-align: left;">15-Nov-2024</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Cust. Acc </td>
-            <td style="text-align: right;">:</td>
-            <td style="text-align: left;">J. CO Donuts &amp; Coffe Buaran </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Due Date</td>
-            <td style="text-align: right;">:</td>
-            <td style="text-align: left;">14 Days</td>
-        </tr>
-    </table>
-    <table class="table">
-        <thead>
-            <tr>
-                <th style="width:20px; max-width: 40px; text-align: center;">No</th>
-                <th style="width:130px; max-width: 130px; text-align: center;">Delivery Note Date</th>
-                <th style="width:130px; max-width: 130px; text-align: center;">Delivery Note Number</th>
-                <th style="width:130px; max-width: 130px; text-align: center;">Tax Number</th>
-                <th style="width:130px; max-width: 130px; text-align: center;">Total Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $data = [1, 2, 3];
-            @endphp
-            @foreach ($data as $data)
-                <tr>
-                    <td style="text-align: center;">1</td>
-                    <td>01/11/2024 </td>
-                    <td>DO 24/11/0024 </td>
-                    <td>010.011-24.11548883</td>
-                    <td>Rp183.783,60</td>
-                </tr>
-            @endforeach
-            <tr>
-                <td colspan="3" rowspan="7"
-                    style="vertical-align: top; padding-bottom: 0; border-left: 0; border-bottom: 0; border-right: 0;">
-                    <div style="width: 50%; margin-top: 20px;">
-                        <div style="text-align: center;">
-                            <p style="margin-bottom: 0;">Jakarta, 15-Nov-2024</p>
-                        </div>
-                        <div style="text-align: center; margin-top: 100px;">
-                            <div style="border-top: 1px solid black; width: 200px; margin: 0 auto; padding-top: 10px;">
-                                Finance Manager
-                            </div>
-                        </div>
+    @endforeach
+    <tr>
+        <td colspan="3" rowspan="8"
+            style="vertical-align: top; padding-bottom: 0; border-left: 0; border-bottom: 0; border-right: 0;">
+            <div style="width: 50%; margin-top: 20px;">
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 0;">{{$timestamp}}</p>
+                </div>
+                <div style="text-align: center; margin-top: 100px;">
+                    <div style="border-top: 1px solid black; width: 200px; margin: 0 auto; padding-top: 10px;">
+                        Finance Manager
                     </div>
-                </td>
-                <td>Sub Total</td>
-                <td>Rp551.350,80</td>
-            </tr>
-            <tr>
-                <td>DPP</td>
-                <td>Rp551.350,80</td>
-            </tr>
-            <tr>
-                <td>DPP Nilai lain</td>
-                <td>Rp505.404,90</td>
-            </tr>
-            <tr>
-                <td>PPN 12%</td>
-                <td>Rp505.404,90</td>
-            </tr>
-            <tr>
-                <td>Bea</td>
-                <td>Rp0</td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Grand Total</td>
-                <td style="font-weight: bold;">Rp505.404,90</td>
-            </tr>
-            <tr>
-                <td style="border: 0"></td>
-                <td style="border: 0;"></td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </td>
+        <td>Sub Total</td>
+        <td>@rupiah($invoice->calculate()['sub_total'])</td>
+    </tr>
+    <tr>
+        <td>Discount</td>
+        <td>@rupiah($invoice->calculate()['discount_total'])</td>
+    </tr>
+    <tr>
+        <td>DPP</td>
+        <td>@rupiah($invoice->calculate()['dpp'])</td>
+    </tr>
+    <tr>
+        <td>DPP Nilai lain</td>
+        <td>@rupiah($invoice->calculate()['dpp_etc_value'])</td>
+    </tr>
+    <tr>
+        <td>PPN 12%</td>
+        <td>@rupiah($invoice->calculate()['ppn12'])</td>
+    </tr>
+    <tr>
+        <td>Bea</td>
+        <td>Rp0</td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold;">Grand Total</td>
+        <td style="font-weight: bold;">@rupiah($invoice->calculate()['grand_total'])</td>
+    </tr>
+    <tr>
+        <td style="border: 0"></td>
+        <td style="border: 0;"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 
 </html>
