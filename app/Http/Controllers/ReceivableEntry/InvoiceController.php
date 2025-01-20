@@ -13,6 +13,7 @@ use App\Repositories\InvoiceRepository;
 use App\Repositories\ProductInvoiceRepository;
 use App\Trait\ApiResponseTrait;
 use App\Utils\Helpers\Transaction;
+use App\Utils\Util;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -154,12 +155,36 @@ class InvoiceController extends Controller
                     'message' => "minimum invoice is 1"
                 ]);
             }
-        }
 
-        return redirect()->back()->with([
-            'status' => "success",
-            'message' => "export invoice successfully"
-        ]);
+            $invoices = new InvoiceRepository();
+            $invoices->setRequest($request);
+            $invoices->setInvoiceIDs($invoiceIDs);
+            $invoices->setWithOutPagination(true);
+            $invoices = $invoices->getAll();
+
+            $grandTotal = 0;
+            $formatInvoiceNumber = "";
+            foreach ($invoices as $invoice) {
+                $grandTotal += $invoice->calculate()["grand_total"];
+                $formatInvoiceNumber = $formatInvoiceNumber . " " . $invoice->number;
+            }
+            $grandTotalAsIndonesia = Util::amountToIndonesia($grandTotal);
+
+            $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
+            $timestamp = Carbon::now('Asia/Jakarta')->format('d-M-Y');
+            $timestamp = "Jakarta, " . $timestamp;
+            $filename = "Kwitansi {$formatInvoiceNumber}.pdf";
+
+            $pdf = null;
+            if ($exportModel === "kwitansi_model1") {
+                $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-1', ['invoices' => $invoices,
+                    'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'timestamp' => $timestamp]);
+            } else if ($exportModel === "kwitansi_model2") {
+                $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-2', ['invoices' => $invoices,
+                    'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'timestamp' => $timestamp]);
+            }
+            return $pdf->download($filename);
+        }
     }
 
     public function delete(Invoice $invoice)

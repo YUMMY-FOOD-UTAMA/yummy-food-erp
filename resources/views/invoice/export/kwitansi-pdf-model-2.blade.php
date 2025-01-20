@@ -19,21 +19,15 @@
                         <tr>
                             <td style="padding: 5px 0; width: 130px; vertical-align: top;">Sudah terima dari</td>
                             <td style="padding: 5px 0; vertical-align: top; text-align: right;">:</td>
-                            <td style="padding: 5px;"><span style="font-weight: bold;">PT. JCO DONUT &
-                                    COFFEE</span><br>J.CO Donuts & Coffee
-                                Buaran</td>
+                            <td style="padding: 5px;"><span
+                                    style="font-weight: bold;">{{$invoices[0]->customer->name}}</span><br>{{$invoices[0]->customer->account_name}}
+                            </td>
                         </tr>
                         <tr>
                             <td style="padding: 5px 0; vertical-align: top;">Uang Sejumlah</td>
                             <td style="padding: 5px 0; vertical-align: top;">:</td>
-                            <td style="padding: 5px;">Enam ratus sebelas ribu sembilan ratus sembilan puluh tiga
-                                rupiah tiga puluh sembilan sen</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 5px 0; vertical-align: top;">Untuk Pembayaran</td>
-                            <td style="padding: 5px 0; vertical-align: top;">:</td>
-                            <td style="padding: 5px;">Pembelian produk sesuai dengan nota / faktur / invoice
-                                (terlampir)<br>GI 24/11/0736</td>
+                            <td style="padding: 5px;">{{$grand_total_as_indonesia}}
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -44,7 +38,7 @@
                         <img src="{{ public_path('assets/media/svg/brand-logos/google-icon.svg') }}" alt="QR Code"
                             width="100" style="margin-top: 20px;">
                         <p style="font-size: 14px; text-align: right; margin-top: 20px;">
-                            Jakarta, 15 November 2024
+                            {{$timestamp}}
                         </p>
                     </div>
                 </div>
@@ -55,7 +49,7 @@
             <tr>
                 <td style="padding: 5px 0; width: 130px">Jumlah</td>
                 <td style="padding: 5px 0; vertical-align: top;">:</td>
-                <td style="padding: 5px; font-weight: bold; font-size: 18px;">Rp611.999,39</td>
+                <td style="padding: 5px; font-weight: bold; font-size: 18px;">@rupiah($grand_total)</td>
             </tr>
         </table>
 

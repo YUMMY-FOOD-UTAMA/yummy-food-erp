@@ -8,4 +8,36 @@ class Util
     {
         return 'Rp. ' . number_format($amount, 2, ',', '.');
     }
+
+    public static function amountToIndonesia($amount) {
+        $amount = abs($amount);
+        $bilangan = [
+            '', 'satu', 'dua', 'tiga', 'empat', 'lima',
+            'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'
+        ];
+
+        if ($amount < 12) {
+            return ' ' . $bilangan[$amount];
+        } elseif ($amount < 20) {
+            return self::amountToIndonesia($amount - 10) . ' belas';
+        } elseif ($amount < 100) {
+            return self::amountToIndonesia($amount / 10) . ' puluh' . self::amountToIndonesia($amount % 10);
+        } elseif ($amount < 200) {
+            return ' seratus' . self::amountToIndonesia($amount - 100);
+        } elseif ($amount < 1000) {
+            return self::amountToIndonesia($amount / 100) . ' ratus' . self::amountToIndonesia($amount % 100);
+        } elseif ($amount < 2000) {
+            return ' seribu' . self::amountToIndonesia($amount - 1000);
+        } elseif ($amount < 1000000) {
+            return self::amountToIndonesia($amount / 1000) . ' ribu' . self::amountToIndonesia($amount % 1000);
+        } elseif ($amount < 1000000000) {
+            return self::amountToIndonesia($amount / 1000000) . ' juta' . self::amountToIndonesia($amount % 1000000);
+        } elseif ($amount < 1000000000000) {
+            return self::amountToIndonesia($amount / 1000000000) . ' milyar' . self::amountToIndonesia($amount % 1000000000);
+        } elseif ($amount < 1000000000000000) {
+            return self::amountToIndonesia($amount / 1000000000000) . ' triliun' . self::amountToIndonesia($amount % 1000000000000);
+        } else {
+            return 'Angka terlalu besar';
+        }
+    }
 }

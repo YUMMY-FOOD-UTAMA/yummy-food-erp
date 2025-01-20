@@ -11,6 +11,8 @@ class InvoiceRepository
     private Request $request;
     private bool $onlyTrashed = false;
     private bool $withTrashed = false;
+    private array $invoiceIDs = [];
+    private bool $withOutPagination = false;
 
     public function setRequest(Request $request): void
     {
@@ -27,13 +29,23 @@ class InvoiceRepository
         $this->withTrashed = $withTrashed;
     }
 
+    public function setInvoiceIDs(array $invoiceIDs): void
+    {
+        $this->invoiceIDs = $invoiceIDs;
+    }
+
+    public function setWithOutPagination(bool $withOutPagination): void
+    {
+        $this->withOutPagination = $withOutPagination;
+    }
+
     public function getAll()
     {
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
         $searchKeyword = $this->request->query('search');
         $startDate = $this->request->query('start_date');
         $endDate = $this->request->query('end_date');
-        $customerID = $this->request->query('customer_id');
+        $customerID = $this->request->query('customer_invoice_id');
         $productInvoiceID = $this->request->query('product_invoice_id');
         $invoiceNo = $this->request->query('invoice_no');
         $invoiceID = $this->request->query('invoice_id');
@@ -48,6 +60,9 @@ class InvoiceRepository
         }
         if ($this->withTrashed) {
             $invoices = $invoices->withTrashed();
+        }
+        if ($this->invoiceIDs) {
+            $invoices = $invoices->whereIn('id', $this->invoiceIDs);
         }
         if ($searchKeyword) {
             $invoices->where(function ($query) use ($searchKeyword) {
@@ -79,7 +94,11 @@ class InvoiceRepository
         }
 
 
-        $invoices = $invoices->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
+        if ($this->withOutPagination) {
+            $invoices = $invoices->orderByDesc('created_at')->get();
+        } else {
+            $invoices = $invoices->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
+        }
         return $invoices;
     }
 }

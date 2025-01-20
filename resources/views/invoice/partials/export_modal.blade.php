@@ -38,32 +38,50 @@
         @slot('slot0')
             <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
                 @csrf
-                <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
+                <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model1">
                 <input hidden name="export_invoice_model" value="kwitansi_model1">
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
-                <button type="submit" disabled class="btn btn-primary">
+                <button onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1')"
+                        class="btn btn-primary">
                     Export
                 </button>
             </form>
         @endslot
-        @slot('slot1')
+        @slot('slot1')kwitansi_model2
             <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
                 @csrf
-                <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
-                <input hidden name="export_invoice_model" value="kwitansi_model1">
+                <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model2">
+                <input hidden name="export_invoice_model" value="kwitansi_model2">
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
-                <button type="submit" disabled class="btn btn-primary">
+                <button onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2')"
+                        id="btn_kwitansi_model2" class="btn btn-primary">
                     Export
                 </button>
             </form>
         @endslot
     </x-tabs>
+    @push('script')
+        <script>
+            function processSelected(btnID, invoiceIDsInput) {
+                const selectedIds = Array.from(document.querySelectorAll('.select-item-invoice:checked'))
+                    .map(cb => cb.value);
+
+                if (selectedIds.length === 0) {
+                    toastr.warning('No items selected.')
+                    return;
+                }
+
+                document.getElementById(invoiceIDsInput).value = selectedIds.join(',');
+                document.getElementById(btnID).submit();
+            }
+        </script>
+    @endpush
 @else
     <x-tabs :tabs="[
                         [
@@ -159,7 +177,7 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
-                <button type="submit" disabled class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                     Export
                 </button>
             </form>
@@ -173,7 +191,7 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
-                <button type="submit" disabled class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                     Export
                 </button>
             </form>
