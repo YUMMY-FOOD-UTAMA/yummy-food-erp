@@ -26,6 +26,7 @@ class SalesConfirmVisitController extends Controller
 
     public function visitConfirmation(SalesScheduleVisit $scheduleVisit, Request $request)
     {
+        dd($request);
         if ($scheduleVisit->status == SalesScheduleVisitStatus::VISITED) {
             return redirect()->back()->with([
                 "status" => "warning",
@@ -42,8 +43,7 @@ class SalesConfirmVisitController extends Controller
             ]);
             $scheduleVisit->update([
                 "status" => SalesScheduleVisitStatus::VISITED,
-                "customer_feedback" => $request->get('customer_feedback'),
-                "customer_request_product_new" => $request->get('new_product_request'),
+                "sales_note" => $request->get('sales_note'),
                 "visit_location" => $request->get('address'),
             ]);
         });
