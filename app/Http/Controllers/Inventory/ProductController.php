@@ -7,6 +7,7 @@ use App\Http\Requests\Product\CreateProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\MasterDataCodeValue;
 use App\Models\Product;
+use App\Repositories\EmployeeRepository;
 use App\Repositories\MasterDataCodeValuesRepository;
 use App\Repositories\ProductRepository;
 use App\Trait\ApiResponseTrait;
@@ -147,5 +148,14 @@ class ProductController extends Controller
             'productCode' => $result->productCode,
             'productName' => $result->productName,
         ]);
+    }
+
+    public function apiGet(Request $request)
+    {
+        $products = new ProductRepository;
+        $products->setRequest($request);
+
+        $products = $products->all();
+        return $this->successResponse($products);
     }
 }
