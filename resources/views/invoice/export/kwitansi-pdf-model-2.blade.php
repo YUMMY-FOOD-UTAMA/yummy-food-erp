@@ -19,7 +19,9 @@
                         <tr>
                             <td style="padding: 5px 0; width: 130px; vertical-align: top;">Sudah terima dari</td>
                             <td style="padding: 5px 0; vertical-align: top; text-align: right;">:</td>
-                            <td style="padding: 5px;">PT. JCO DONUT & COFFEE<br>J.CO Donuts & Coffee Buaran</td>
+                            <td style="padding: 5px;"><span style="font-weight: bold;">PT. JCO DONUT &
+                                    COFFEE</span><br>J.CO Donuts & Coffee
+                                Buaran</td>
                         </tr>
                         <tr>
                             <td style="padding: 5px 0; vertical-align: top;">Uang Sejumlah</td>
