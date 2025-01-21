@@ -29,7 +29,7 @@ Route::get('/invoice-1', function () {
 });
 
 Route::group(['prefix' => 'public-uri'], function () {
-    Route::get('/invoice-payment/{receiptNumber}', [InvoiceController::class, 'invoicePaymentView'])->name('public-uri.invoice-payment');
+    Route::get('/invoice-payment/{receiptNumber}', [InvoiceController::class, 'invoicePaymentView'])->name('public-uri.invoice-payment.view');
     Route::post('/invoice-payment', [InvoiceController::class, 'invoicePaymentPost'])->name('public-uri.invoice-payment');
 });
 
