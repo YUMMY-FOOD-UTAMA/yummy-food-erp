@@ -9,7 +9,7 @@
 
 <body>
 <div>
-    <h2 style="text-align: center; font-size: 24px;">KWITANSI</h2>
+    <h2 style="text-align: center; font-size: 24px; margin-top: 30px">KWITANSI</h2>
 
     <div style="display: table; width: 100%;">
         <div style="display: table-row;">
@@ -65,11 +65,12 @@
         </tr>
     </table>
 
-    <p style="font-size: 15px; margin-top: 20px; font-weight: bold !important;">
+    <p style="font-size: 15px; margin-top: 20px; font-weight: normal; font-style: italic;">
         Untuk Pembayaran Via Transfer dapat dilakukan melalui:<br>
         Bank BNI Cab 22 Melawai Raya 199.578.889.6 an PT. Yummy Food Utama<br>
         Bank Mandiri Cab Cimanggis 129.000.476062.1 an PT. Yummy Food Utama
     </p>
+
 </div>
 </body>
 

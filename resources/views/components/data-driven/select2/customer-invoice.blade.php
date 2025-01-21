@@ -6,7 +6,7 @@
                     class="form-select form-select-solid form-select-{{$sizeForm}}">
                 @if ($customerInvoice)
                     <option value="{{ $customerInvoice->id }}" selected>
-                        {{$customerInvoice->name}}
+                        {{$customerInvoice->account_name}}
                     </option>
                 @endif
             </select>
@@ -17,7 +17,7 @@
                 class="form-select form-select-solid form-select-{{$sizeForm}}">
             @if ($customerInvoice)
                 <option value="{{ $customerInvoice->id }}" selected>
-                    {{$customerInvoice->name}}
+                    {{$customerInvoice->account_name}}
                 </option>
             @endif
         </select>
@@ -47,7 +47,7 @@
                             results: data.result.data.map(function (item) {
                                 return {
                                     id: item.id,
-                                    text: item.name
+                                    text: item.account_name
                                 };
                             }),
                             pagination: {

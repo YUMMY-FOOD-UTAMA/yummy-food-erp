@@ -72,7 +72,7 @@
 </head>
 
 <body>
-<h3 style="text-align: center; margin: 0;">INVOICE</h3>
+<h3 style="text-align: center; margin: 0; margin-top: 30px">INVOICE</h3>
 <table class="table-header" style="margin-bottom: 1rem;">
     <tr>
         <td>
