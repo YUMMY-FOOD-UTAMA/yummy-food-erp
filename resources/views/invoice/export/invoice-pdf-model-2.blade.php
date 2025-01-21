@@ -88,7 +88,7 @@
     <tr>
         <td></td>
         <td></td>
-        <td>Invoce Number</td>
+        <td style=" width: 100px; max-width: 90px">Invoce Number</td>
         <td style="text-align: right;">:</td>
         <td style="text-align: left;">{{ $invoice->number }}</td>
     </tr>
