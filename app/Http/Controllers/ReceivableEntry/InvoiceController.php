@@ -47,6 +47,7 @@ class InvoiceController extends Controller
 
     public function invoicePaymentView(Request $request, string $receiptNumber)
     {
+        $receiptNumber = str_replace("-", ".", $receiptNumber);
         $invoices = new InvoiceRepository();
         $invoices->setRequest($request);
         $invoices->setReceiptNumber($receiptNumber);
@@ -202,7 +203,7 @@ class InvoiceController extends Controller
             $timestamp = "Jakarta, " . $timestamp;
             $filename = "Kwitansi {$formatInvoiceNumber}.pdf";
 
-            $urL = config('app.url') . '/public-uri/' . $receiptNumber;
+            $urL = config('app.url') . '/public-uri/' . str_replace(".", "-", $receiptNumber);
 
             $qrCodePath = "qr-codes/{$receiptNumber}.png";
             Storage::disk('public')->put($qrCodePath, QrCode::format('png')->size(200)->generate($urL));
