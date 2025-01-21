@@ -202,7 +202,7 @@ class InvoiceController extends Controller
             $timestamp = "Jakarta, " . $timestamp;
             $filename = "Kwitansi {$formatInvoiceNumber}.pdf";
 
-            $urL = env('APP_URL') . '/public-uri/' . $receiptNumber;
+            $urL = config('app.url') . '/public-uri/' . $receiptNumber;
 
             $qrCodePath = "qr-codes/{$receiptNumber}.png";
             Storage::disk('public')->put($qrCodePath, QrCode::format('png')->size(200)->generate($urL));
