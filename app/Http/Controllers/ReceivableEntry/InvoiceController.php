@@ -8,11 +8,13 @@ use App\Models\Customer\Customer;
 use App\Models\Invoice\CustomerInvoice;
 use App\Models\Invoice\Invoice;
 use App\Models\Invoice\ProductInvoice;
-use App\Repositories\CustomerInvoiceRepository;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Repositories\InvoiceRepository;
 use App\Repositories\ProductInvoiceRepository;
 use App\Trait\ApiResponseTrait;
 use App\Utils\Helpers\Transaction;
+use App\Utils\Util;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -40,6 +42,29 @@ class InvoiceController extends Controller
         $invoices = $invoices->getAll();
         return view('invoice.trash', [
             'invoices' => $invoices
+        ]);
+    }
+
+    public function invoicePaymentView(Request $request, string $receiptNumber)
+    {
+        $invoices = new InvoiceRepository();
+        $invoices->setRequest($request);
+        $invoices->setReceiptNumber($receiptNumber);
+        $invoices = $invoices->getAll();
+
+        $grandTotal = 0;
+        foreach ($invoices as $invoice) {
+            $grandTotal += $invoice->calculate()["grand_total"];
+        }
+        return view('invoice.invoice-payment', compact('invoices', 'receiptNumber', 'grandTotal'));
+    }
+
+    public function invoicePaymentPost(Request $request)
+    {
+        Invoice::where('receipt_number', $request->get('receipt_number'))->update(['status' => "done"]);
+        return redirect()->back()->with([
+            'status' => 'success',
+            'message' => 'Confirmation Payment Successfully'
         ]);
     }
 
@@ -154,12 +179,44 @@ class InvoiceController extends Controller
                     'message' => "minimum invoice is 1"
                 ]);
             }
-        }
 
-        return redirect()->back()->with([
-            'status' => "success",
-            'message' => "export invoice successfully"
-        ]);
+            $invoices = new InvoiceRepository();
+            $invoices->setRequest($request);
+            $invoices->setInvoiceIDs($invoiceIDs);
+            $invoices->setWithOutPagination(true);
+            $receiptNumber = $invoices->generateReceiptNumber();
+            $invoices = $invoices->getAll();
+
+            Invoice::whereIn('id', $invoiceIDs)->update(['receipt_number' => $receiptNumber]);
+
+            $grandTotal = 0;
+            $formatInvoiceNumber = "";
+            foreach ($invoices as $invoice) {
+                $grandTotal += $invoice->calculate()["grand_total"];
+                $formatInvoiceNumber = $formatInvoiceNumber . " " . $invoice->number;
+            }
+            $grandTotalAsIndonesia = Util::amountToIndonesia($grandTotal);
+
+            $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
+            $timestamp = Carbon::now('Asia/Jakarta')->format('d-M-Y');
+            $timestamp = "Jakarta, " . $timestamp;
+            $filename = "Kwitansi {$formatInvoiceNumber}.pdf";
+
+            $urL = env('APP_URL') . '/public-uri/' . $receiptNumber;
+
+            $qrCodePath = "qr-codes/{$receiptNumber}.png";
+            Storage::disk('public')->put($qrCodePath, QrCode::format('png')->size(200)->generate($urL));
+
+            $pdf = null;
+            if ($exportModel === "kwitansi_model1") {
+                $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-1', ['invoices' => $invoices,
+                    'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
+            } else if ($exportModel === "kwitansi_model2") {
+                $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-2', ['invoices' => $invoices,
+                    'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
+            }
+            return $pdf->download($filename);
+        }
     }
 
     public function delete(Invoice $invoice)

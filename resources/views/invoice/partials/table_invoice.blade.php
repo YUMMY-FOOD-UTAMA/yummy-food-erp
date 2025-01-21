@@ -1,6 +1,10 @@
 <x-table.general-table :data-table="$invoices">
     @slot('slotTheadTh')
-        <th style="width: 20px; vertical-align: middle; text-align: left;">No</th>
+        @if(request()->get('customer_invoice_id'))
+            <th style="width: 20px; vertical-align: middle; text-align: left;">
+                <input type="checkbox" id="selectAllExportInvoice" onclick="toggleSelectAll(this)">
+            </th>
+        @endif
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
         <th style="vertical-align: middle; text-align: left;">Invoice Number</th>
@@ -12,7 +16,12 @@
     @slot('slotTbodyTr')
         @foreach($invoices as $invoice)
             <tr>
-                <td>{{$loop->iteration}}</td>
+                @if(request()->get('customer_invoice_id'))
+                    <td>
+                        <input type="checkbox" class="select-item-invoice"
+                               value="{{ $invoice->id }}">
+                    </td>
+                @endif
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
                 <td>{{$invoice->number}}</td>
@@ -67,3 +76,34 @@
     @endslot
 </x-table.general-table>
 
+@push('script')
+    <script>
+        let btnDomID = document.getElementById("receivable.entry.invoice.exportbtn");
+        let selectItems = document.querySelectorAll(".select-item-invoice");
+
+        function updateButtonVisibility() {
+            let checkedCount = document.querySelectorAll(".select-item-invoice:checked").length;
+
+            if (checkedCount > 0) {
+                btnDomID.style.visibility = "visible";
+            } else {
+                btnDomID.style.visibility = "hidden";
+            }
+        }
+
+        selectItems.forEach((item) => {
+            item.addEventListener("change", updateButtonVisibility);
+        });
+
+
+        function toggleSelectAll(checkbox) {
+            const checkboxes = document.querySelectorAll('.select-item-invoice');
+            checkboxes.forEach(cb => {
+                if (!cb.disabled) {
+                    cb.checked = checkbox.checked;
+                }
+            });
+            updateButtonVisibility()
+        }
+    </script>
+@endpush
