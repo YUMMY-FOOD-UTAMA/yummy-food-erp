@@ -29,6 +29,13 @@
                             <td style="padding: 5px;">{{$grand_total_as_indonesia}}
                             </td>
                         </tr>
+                        <tr>
+                            <td style="padding: 5px 0; vertical-align: top;">Untuk Pembayaran</td>
+                            <td style="padding: 5px 0; vertical-align: top;">:</td>
+                            <td style="padding: 5px;">Pembelian produk sesuai dengan nota / faktur / invoice
+                                (terlampir)
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <!-- Bagian barcode -->
@@ -45,7 +52,7 @@
             </div>
         </div>
 
-        <table style="border-spacing: 0; font-size: 15px;">
+        <table style="border-spacing: 0; font-size: 15px; margin-top: -15px;">
             <tr>
                 <td style="padding: 5px 0; width: 130px">Jumlah</td>
                 <td style="padding: 5px 0; vertical-align: top;">:</td>

@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    <table style="border-spacing: 0; font-size: 15px;">
+    <table style="border-spacing: 0; font-size: 15px; margin-top: 15px;">
         <tr>
             <td style="padding: 5px 0; width: 130px">Jumlah</td>
             <td style="padding: 5px 0; vertical-align: top;">:</td>
