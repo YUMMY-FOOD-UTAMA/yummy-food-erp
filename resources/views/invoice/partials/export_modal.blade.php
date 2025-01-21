@@ -186,7 +186,7 @@
             <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
                 @csrf
                 <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
-                <input hidden name="export_invoice_model" value="kwitansi_model1">
+                <input hidden name="export_invoice_model" value="kwitansi_model2">
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">

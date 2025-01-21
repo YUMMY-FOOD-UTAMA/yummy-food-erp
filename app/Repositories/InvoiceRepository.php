@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Invoice\Invoice;
 use App\Utils\Primitives\ListPageSize;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InvoiceRepository
@@ -13,6 +14,7 @@ class InvoiceRepository
     private bool $withTrashed = false;
     private array $invoiceIDs = [];
     private bool $withOutPagination = false;
+    private string $receiptNumber = "";
 
     public function setRequest(Request $request): void
     {
@@ -39,6 +41,35 @@ class InvoiceRepository
         $this->withOutPagination = $withOutPagination;
     }
 
+    public function setReceiptNumber(string $receiptNumber): void
+    {
+        $this->receiptNumber = $receiptNumber;
+    }
+
+    public function generateReceiptNumber()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $year = $now->format('y');
+        $month = $now->format('m');
+        $day = $now->format('d');
+
+        $receiptPrefix = "IR.{$year}{$month}{$day}";
+
+        $latestReceipt = Invoice::where('receipt_number', 'like', "{$receiptPrefix}%")
+            ->orderBy('receipt_number', 'desc')
+            ->first();
+
+        if ($latestReceipt) {
+            $lastNumber = (int)substr($latestReceipt->receipt_number, -2);
+            $nextNumber = str_pad($lastNumber + 1, 2, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '01';
+        }
+        $receiptNumber = "{$receiptPrefix}{$nextNumber}";
+
+        return $receiptNumber;
+    }
+
     public function getAll()
     {
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
@@ -63,6 +94,9 @@ class InvoiceRepository
         }
         if ($this->invoiceIDs) {
             $invoices = $invoices->whereIn('id', $this->invoiceIDs);
+        }
+        if ($this->receiptNumber) {
+            $invoices = $invoices->where('receipt_number', $this->receiptNumber);
         }
         if ($searchKeyword) {
             $invoices->where(function ($query) use ($searchKeyword) {

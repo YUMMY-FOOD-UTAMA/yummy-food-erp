@@ -41,9 +41,9 @@
                 <!-- Bagian barcode -->
                 <div style="display: table-cell; vertical-align: top; text-align: right; width: 25%;">
                     <div style="margin-left: 10px;">
-                        <strong>IR.25010278</strong><br>
-                        <img src="{{ public_path('assets/media/svg/brand-logos/google-icon.svg') }}" alt="QR Code"
-                            width="100" style="margin-top: 20px;">
+                        <strong>{{$receiptNumber}}</strong><br>
+                        <img src="{{ public_path('storage/qr-codes/'.$receiptNumber.".png") }}" alt="QR Code"
+                             width="100" style="margin-top: 20px;">
                         <p style="font-size: 14px; text-align: right; margin-top: 20px;">
                             {{$timestamp}}
                         </p>
@@ -54,7 +54,7 @@
 
         <table style="border-spacing: 0; font-size: 15px; margin-top: -15px;">
             <tr>
-                <td style="padding: 5px 0; width: 130px">Jumlah</td>
+                <td style="padding: 5px 0; width: 130px; margin-top: 15px">Jumlah</td>
                 <td style="padding: 5px 0; vertical-align: top;">:</td>
                 <td style="padding: 5px; font-weight: bold; font-size: 18px;">@rupiah($grand_total)</td>
             </tr>
