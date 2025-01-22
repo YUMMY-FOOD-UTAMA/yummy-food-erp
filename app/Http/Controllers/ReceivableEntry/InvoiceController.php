@@ -221,7 +221,8 @@ class InvoiceController extends Controller
 
     public function delete(Invoice $invoice)
     {
-        $invoice->delete();
+        ProductInvoice::where('invoice_id', $invoice->id)->delete();
+        $invoice->forceDelete();
 
         return redirect()->back()->with([
             'status' => "success",

@@ -30,6 +30,7 @@ class CustomerInvoiceRepository
 
     public function getAll()
     {
+        $onlyAvailableInvoice = $this->request->query('only_available_invoice');
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
         $searchKeyword = $this->request->query('search');
         $customerInvoices = new CustomerInvoice();
@@ -38,6 +39,9 @@ class CustomerInvoiceRepository
         }
         if ($this->withTrashed) {
             $customerInvoices = $customerInvoices->withTrashed();
+        }
+        if ($onlyAvailableInvoice) {
+            $customerInvoices = $customerInvoices->whereHas('invoices');
         }
         if ($searchKeyword) {
             $customerInvoices->where(function ($query) use ($searchKeyword) {

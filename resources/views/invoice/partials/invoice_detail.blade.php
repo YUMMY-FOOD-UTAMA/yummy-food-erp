@@ -88,9 +88,9 @@
                     <td>{{$product->delivery_note}}</td>
                     <td>{{$product->delivery_note_date}}</td>
                     <td>{{$product->quantity}}</td>
-                    <td>@rupiah($product->rate)</td>
+                    <td>{{\App\Utils\Util::rupiah($product->rate)}}</td>
                     <td>@percentage($product->discount)</td>
-                    <td>@rupiah($product->net_rate)</td>
+                    <td>{{\App\Utils\Util::rupiah($product->net_rate)}}</td>
                 </tr>
             @endforeach
         @endslot

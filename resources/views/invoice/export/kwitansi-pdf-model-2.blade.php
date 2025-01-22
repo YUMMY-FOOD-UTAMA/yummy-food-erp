@@ -56,7 +56,7 @@
             <tr>
                 <td style="padding: 5px 0; width: 130px; margin-top: 15px">Jumlah</td>
                 <td style="padding: 5px 0; vertical-align: top;">:</td>
-                <td style="padding: 5px; font-weight: bold; font-size: 18px;">@rupiah($grand_total)</td>
+                <td style="padding: 5px; font-weight: bold; font-size: 18px;">{{\App\Utils\Util::rupiah($grand_total)}}</td>
             </tr>
         </table>
 

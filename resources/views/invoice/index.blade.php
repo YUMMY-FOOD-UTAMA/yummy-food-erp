@@ -4,16 +4,14 @@
     <x-general-section-content>
         @slot('slotToolbar')
             <x-toolbar name="Invoice" route-create-name="receivable.entry.invoice.import" create-label-name="Import"
-                       using-create-modal="true"
-                       route-trash-name="receivable.entry.invoice.trash">
+                       using-create-modal="true">
                 @include('invoice.partials.import_invoice_modal')
             </x-toolbar>
         @endslot
         @slot('bottomSlot')
             <x-toolbar name="Invoice" :with-out-heading="true" route-create-name="receivable.entry.invoice.import"
                        create-label-name="import"
-                       using-create-modal="true"
-                       route-trash-name="receivable.entry.invoice.trash"/>
+                       using-create-modal="true"/>
         @endslot
         <div class="card">
             @include('invoice.partials.filter_invoice')

@@ -58,8 +58,12 @@
 
         let formData = new FormData(form);
         for (let pair of formData.entries()) {
-            params.set(pair[0], pair[1]);
+            let key = pair[0];
+            let value = pair[1].trim();
+
+            params.set(key, value || '');
         }
+
         window.location.href = url.origin + url.pathname + '?' + params.toString();
     }
 

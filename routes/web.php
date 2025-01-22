@@ -116,9 +116,9 @@ Route::middleware('auth')->group(function () {
                 Route::group(['prefix' => 'invoice'], function () {
                     Route::post('/import', [InvoiceController::class, 'importInvoice'])->name('receivable.entry.invoice.import');
                     Route::delete('/delete/{invoice}', [InvoiceController::class, 'delete'])->name('receivable.entry.invoice.delete');
-                    Route::post('/restore/{id}', [InvoiceController::class, 'restore'])->name('receivable.entry.invoice.restore');
+//                    Route::post('/restore/{id}', [InvoiceController::class, 'restore'])->name('receivable.entry.invoice.restore');
                     Route::get('/', [InvoiceController::class, 'index'])->name('receivable.entry.invoice.index');
-                    Route::get('/trash', [InvoiceController::class, 'trash'])->name('receivable.entry.invoice.trash');
+//                    Route::get('/trash', [InvoiceController::class, 'trash'])->name('receivable.entry.invoice.trash');
                     Route::post('/export', [InvoiceController::class, 'export'])->name('receivable.entry.invoice.export');
                 });
             });

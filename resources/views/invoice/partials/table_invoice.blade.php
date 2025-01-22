@@ -11,7 +11,7 @@
         <th style="vertical-align: middle; text-align: left;">Grand Total Include Tax</th>
         <th style="vertical-align: middle; text-align: left;">Kwitansi Number</th>
         <th style="vertical-align: middle; text-align: left;">Billing</th>
-        <th class="text-end" style="width: 200px; min-width: 70px; max-width: 200px;">Actions</th>
+        <th class="text-end" style="width: 250px; min-width: 70px; max-width: 250px;">Actions</th>
     @endslot
     @slot('slotTbodyTr')
         @foreach($invoices as $invoice)
@@ -25,18 +25,20 @@
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
                 <td>{{$invoice->number}}</td>
-                <td>@rupiah($invoice->calculate()["grand_total"])</td>
+                <td>{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"])}}</td>
                 <td>{{$invoice->receipt_number}}</td>
                 <td>{{$invoice->status}}</td>
                 <td>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalDetailInvoice{{$invoice->id}}"
-                       class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2">
+                       class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2"
+                       >
                         Detail
                     </a>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalExportInvoice{{$invoice->id}}"
-                       class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2">
+                       class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2"
+                       >
                         Export
                     </a>
                     @if($isTrash)
@@ -52,13 +54,14 @@
                         @endcan
                     @else
                         @can('receivable.entry.invoice.delete')
-                            <form action="{{route('receivable.entry.invoice.delete',$invoice->id)}}" method="POST">
+                            <a href="#" onclick="submitDeleteForm(event, 'deleteform_{{$invoice->id}}')"
+                               class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2">
+                                Delete
+                            </a>
+                            <form action="{{route('receivable.entry.invoice.delete',$invoice->id)}}" id="deleteform_{{$invoice->id}}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <a onclick="event.preventDefault();this.closest('form').submit();"
-                                   class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2">
-                                    Soft Delete
-                                </a>
+
                             </form>
                         @endcan
                     @endif
@@ -95,7 +98,6 @@
             item.addEventListener("change", updateButtonVisibility);
         });
 
-
         function toggleSelectAll(checkbox) {
             const checkboxes = document.querySelectorAll('.select-item-invoice');
             checkboxes.forEach(cb => {
@@ -104,6 +106,16 @@
                 }
             });
             updateButtonVisibility()
+        }
+
+        function submitDeleteForm(event, formId) {
+            event.preventDefault();
+            var form = document.getElementById(formId);
+            if (form) {
+                form.submit();
+            } else {
+                console.error("Form dengan ID " + formId + " tidak ditemukan.");
+            }
         }
     </script>
 @endpush

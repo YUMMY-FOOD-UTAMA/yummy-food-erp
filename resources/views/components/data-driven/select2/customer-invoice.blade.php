@@ -6,7 +6,7 @@
                     class="form-select form-select-solid form-select-{{$sizeForm}}">
                 @if ($customerInvoice)
                     <option value="{{ $customerInvoice->id }}" selected>
-                        {{$customerInvoice->account_name}}
+                        {{$accountName ? $customerInvoice->account_name : $customerInvoice->name}}
                     </option>
                 @endif
             </select>
@@ -17,7 +17,7 @@
                 class="form-select form-select-solid form-select-{{$sizeForm}}">
             @if ($customerInvoice)
                 <option value="{{ $customerInvoice->id }}" selected>
-                    {{$customerInvoice->account_name}}
+                    {{$accountName ? $customerInvoice->account_name : $customerInvoice->name}}
                 </option>
             @endif
         </select>
@@ -37,6 +37,7 @@
                             search: params.term,
                             page: params.page || 1,
                             page_size: 25,
+                            only_available_invoice: true,
                             with_trashed: "{{$withTrashed}}",
                             only_trashed: "{{$onlyTrashed}}"
                         };
@@ -45,10 +46,18 @@
                         params.page = params.page || 1;
                         return {
                             results: data.result.data.map(function (item) {
-                                return {
+                                @if($accountName)
+                                    return {
                                     id: item.id,
                                     text: item.account_name
                                 };
+                                @else
+                                    return {
+                                    id: item.id,
+                                    text: item.name
+                                };
+                                @endif
+
                             }),
                             pagination: {
                                 more: (params.page * 25) < data.result.total // load more data

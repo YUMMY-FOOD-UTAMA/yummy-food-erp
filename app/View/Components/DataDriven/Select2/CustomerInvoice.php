@@ -18,12 +18,14 @@ class CustomerInvoice extends Component
     public $onlyTrashed;
     public $required;
     public $label;
+    public $accountName;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($label = 'Customer Name', $required = false, $onlyTrashed = false, $withTrashed = false, string $customerInvoiceID = null, $uuid = null, string $type = 'inline', string $dropDownParentID = '', $sizeForm = 'lg')
+    public function __construct($accountName = false, $label = 'Customer Name', $required = false, $onlyTrashed = false, $withTrashed = false, string $customerInvoiceID = null, $uuid = null, string $type = 'inline', string $dropDownParentID = '', $sizeForm = 'lg')
     {
+        $this->accountName = $accountName;
         $this->label = $label;
         $this->customerInvoiceID = $customerInvoiceID;
         $this->type = $type;

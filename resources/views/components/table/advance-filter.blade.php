@@ -8,6 +8,7 @@
         @if ($usingApplyButton)
             <div class="col-12 col-md-2 mt-0 mt-md-8">
                 <button type="submit" class="btn btn-primary btn-sm w-100">Apply</button>
+{{--                <button type="submit" class="btn btn-primary btn-sm w-100">Apply</button>--}}
             </div>
         @endif
     </div>

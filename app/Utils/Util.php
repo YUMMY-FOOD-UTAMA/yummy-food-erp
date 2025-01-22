@@ -4,12 +4,32 @@ namespace App\Utils;
 
 class Util
 {
-    public static function rupiah($amount)
+    public static function roundAmount($amount)
     {
-        return 'Rp. ' . number_format($amount, 2, ',', '.');
+        $whole = floor($amount);
+        $fraction = $amount - $whole;
+
+        $cents = round($fraction * 100);
+
+        if ($cents <= 50) {
+            return $whole;
+        } else {
+            return $whole + 1;
+        }
     }
 
-    public static function amountToIndonesia($amount) {
+
+    public static function rupiah($amount, $notRound = false)
+    {
+        if ($notRound) {
+            return 'Rp. '.number_format($amount, 2, ',', '.');
+        }
+        return 'Rp. ' . number_format(self::roundAmount($amount), 2, ',', '.');
+    }
+
+    public static function amountToIndonesia($amount)
+    {
+        $amount = self::roundAmount($amount);
         $amount = abs($amount);
         $bilangan = [
             '', 'satu', 'dua', 'tiga', 'empat', 'lima',

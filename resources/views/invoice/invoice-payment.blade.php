@@ -34,7 +34,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <strong>Total Pembayaran (IDR):</strong>
-                            <span id="totalAmount">@rupiah($grandTotal)</span>
+                            <span id="totalAmount">{{\App\Utils\Util::rupiah($grandTotal)}}</span>
                         </li>
                     </ul>
                 </div>

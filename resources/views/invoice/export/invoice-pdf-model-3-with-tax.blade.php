@@ -133,7 +133,7 @@
             <td>{{ $product->delivery_note_date }}</td>
             <td>{{ $product->delivery_note }}</td>
             <td>{{ $taxNumber }}</td>
-            <td>@rupiah($product->rate * $product->quantity)</td>
+            <td>{{\App\Utils\Util::rupiah($product->rate * $product->quantity)}}</td>
         </tr>
     @endforeach
     <tr>
@@ -151,23 +151,23 @@
             </div>
         </td>
         <td>Sub Total</td>
-        <td>@rupiah($invoice->calculate()['sub_total'])</td>
+        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['sub_total'])}}</td>
     </tr>
     <tr>
         <td>Discount</td>
-        <td>@rupiah($invoice->calculate()['discount_total'])</td>
+        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['discount_total'])}}</td>
     </tr>
     <tr>
         <td>DPP</td>
-        <td>@rupiah($invoice->calculate()['dpp'])</td>
+        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
     </tr>
     <tr>
         <td>DPP Nilai lain</td>
-        <td>@rupiah($invoice->calculate()['dpp_etc_value'])</td>
+        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'])}}</td>
     </tr>
     <tr>
         <td>PPN 12%</td>
-        <td>@rupiah($invoice->calculate()['ppn12'])</td>
+        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'])}}</td>
     </tr>
     <tr>
         <td>Bea</td>
@@ -175,7 +175,7 @@
     </tr>
     <tr>
         <td style="font-weight: bold;">Grand Total</td>
-        <td style="font-weight: bold;">@rupiah($invoice->calculate()['grand_total'])</td>
+        <td style="font-weight: bold;">{{\App\Utils\Util::rupiah($invoice->calculate()['grand_total'])}}</td>
     </tr>
     <tr>
         <td style="border: 0"></td>

@@ -94,7 +94,7 @@ class ImportInvoice implements ToCollection, WithEvents
             'term_of_payment' => $TOP,
             'term_of_delivery' => $termOfDelivery,
             'supplier_ref' => $supplierRef,
-            'supplier_name' => $supplierName,
+            'supplier_name' => "Yummy Food Utama",
         ];
     }
 

@@ -10,7 +10,7 @@
                         fill="currentColor"/>
                 </svg>
             </span>
-            <input type="text" data-kt-user-table-filter="search" id="search_keyword" name="search"
+            <input type="search" data-kt-user-table-filter="search" id="search_keyword" name="search"
                    value="{{ request()->search }}"
                    class="form-control form-control-solid w-250px ps-14" placeholder="Search {{ $name }}"/>
         </div>
