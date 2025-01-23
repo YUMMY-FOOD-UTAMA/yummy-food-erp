@@ -69,7 +69,7 @@ class ImportInvoice implements ToCollection, WithEvents
         $invoiceNo = ltrim($rows[2][6], ": ") ?? "";
         $date = $rows[2][9] ?? "";
         $customerName = $rows[6][0] ?? "";
-        $address = implode("<br>", array_filter([
+        $address = implode(" ", array_filter([
             $rows[7][0] ?? null,
             $rows[8][0] ?? null,
             $rows[9][0] ?? null,
@@ -94,7 +94,7 @@ class ImportInvoice implements ToCollection, WithEvents
             'term_of_payment' => $TOP,
             'term_of_delivery' => $termOfDelivery,
             'supplier_ref' => $supplierRef,
-            'supplier_name' => "Yummy Food Utama",
+            'supplier_name' => "YUMMY FOOD UTAMA",
         ];
     }
 

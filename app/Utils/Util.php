@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use Illuminate\Support\Str;
+
 class Util
 {
     public static function roundAmount($amount)
@@ -22,7 +24,7 @@ class Util
     public static function rupiah($amount, $notRound = false)
     {
         if ($notRound) {
-            return 'Rp. '.number_format($amount, 2, ',', '.');
+            return 'Rp. ' . number_format($amount, 2, ',', '.');
         }
         return 'Rp. ' . number_format(self::roundAmount($amount), 2, ',', '.');
     }
@@ -59,5 +61,37 @@ class Util
         } else {
             return 'Angka terlalu besar';
         }
+    }
+
+    public static function splitText($text, $maxLength, $spacing = "<br>", $delimiter = ' ')
+    {
+        $words = explode($delimiter, $text);
+        $lines = [];
+        $currentLine = '';
+        $totalLine = 0;
+
+        foreach ($words as $word) {
+            if (Str::length($currentLine . $delimiter . $word) > $maxLength) {
+                $lines[] = trim($currentLine);
+                $currentLine = $word;
+            } else {
+                $currentLine .= ($currentLine === '') ? $word : $delimiter . $word;
+            }
+            $totalLine += 1;
+        }
+
+        if (!empty($currentLine)) {
+            $lines[] = trim($currentLine);
+        }
+
+        $line = "";
+        foreach ($lines as $line) {
+            echo $line . "\n";
+        }
+        return [
+            'lines' => $lines,
+            'line' => $line,
+            'total_line' => $totalLine
+        ];
     }
 }

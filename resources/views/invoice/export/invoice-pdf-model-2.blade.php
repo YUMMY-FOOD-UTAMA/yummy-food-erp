@@ -89,11 +89,11 @@
         <td></td>
         <td></td>
         <td style=" width: 100px; max-width: 90px">Invoce Number</td>
-        <td style="text-align: right;">:</td>
+        <td style="text-align: right">:</td>
         <td style="text-align: left;">{{ $invoice->number }}</td>
     </tr>
     <tr>
-        <td rowspan="3" style="vertical-align: top;">
+        <td rowspan="3" style="vertical-align: top;width: 320px; max-width: 320px">
             <span style="font-weight: bold;">{{ $invoice->customer->name }}</span>
             <br>
             {!! $invoice->customer->address !!}
@@ -110,7 +110,7 @@
         <td style="text-align: left;">{{ $invoice->customer->account_name }}</td>
     </tr>
     <tr>
-        <td></td>
+        <td style="padding-left: 60px;"></td>
         <td>Due Date</td>
         <td style="text-align: right;">:</td>
         <td style="text-align: left;">{{ $invoice->term_of_payment }}</td>

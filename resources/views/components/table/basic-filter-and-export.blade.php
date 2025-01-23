@@ -16,7 +16,7 @@
         </div>
         @if ($exportRoute)
             <button type="button" id="{{$exportRoute."btn"}}"
-                    {{$attributes->merge(['style' => ''])}} class="btn btn-light-primary me-3"
+                    {{$attributes->merge(['style' => ''])}} class="btn btn-success me-3"
                     data-bs-toggle="modal"
                     data-bs-target="#{{$exportRoute}}">
                     <span class="svg-icon svg-icon-2">

@@ -1,10 +1,8 @@
 <x-table.general-table :data-table="$invoices">
     @slot('slotTheadTh')
-        @if(request()->get('customer_invoice_id'))
-            <th style="width: 20px; vertical-align: middle; text-align: left;">
-                <input type="checkbox" id="selectAllExportInvoice" onclick="toggleSelectAll(this)">
-            </th>
-        @endif
+        <th style="width: 20px; vertical-align: middle; text-align: left;">
+            <input type="checkbox" id="selectAllExportInvoice" onclick="toggleSelectAll(this)">
+        </th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
         <th style="vertical-align: middle; text-align: left;">Invoice Number</th>
@@ -16,12 +14,12 @@
     @slot('slotTbodyTr')
         @foreach($invoices as $invoice)
             <tr>
-                @if(request()->get('customer_invoice_id'))
-                    <td>
-                        <input type="checkbox" class="select-item-invoice"
-                               value="{{ $invoice->id }}">
-                    </td>
-                @endif
+                {{--                @if(request()->get('customer_invoice_id'))--}}
+                <td>
+                    <input type="checkbox" class="select-item-invoice"
+                           value="{{ $invoice->id }}">
+                </td>
+                {{--                @endif--}}
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
                 <td>{{$invoice->number}}</td>
@@ -32,13 +30,13 @@
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalDetailInvoice{{$invoice->id}}"
                        class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2"
-                       >
+                    >
                         Detail
                     </a>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalExportInvoice{{$invoice->id}}"
                        class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2"
-                       >
+                    >
                         Export
                     </a>
                     @if($isTrash)
@@ -58,7 +56,8 @@
                                class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2">
                                 Delete
                             </a>
-                            <form action="{{route('receivable.entry.invoice.delete',$invoice->id)}}" id="deleteform_{{$invoice->id}}" method="POST">
+                            <form action="{{route('receivable.entry.invoice.delete',$invoice->id)}}"
+                                  id="deleteform_{{$invoice->id}}" method="POST">
                                 @method('DELETE')
                                 @csrf
 
@@ -85,12 +84,24 @@
         let selectItems = document.querySelectorAll(".select-item-invoice");
 
         function updateButtonVisibility() {
-            let checkedCount = document.querySelectorAll(".select-item-invoice:checked").length;
+            let checkedItems = document.querySelectorAll(".select-item-invoice:checked");
 
-            if (checkedCount > 0) {
-                btnDomID.style.visibility = "visible";
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (!urlParams.has('customer_invoice_id') || urlParams.get('customer_invoice_id').trim() === '') {
+                alert('Silakan lakukan filter berdasarkan nama customer atau account name customer.');
+                checkedItems.forEach((item) => {
+                    item.checked = false;
+                });
+                return
+            }
+
+            if (checkedItems.length > 0) {
+                btnDomID.style.pointerEvents = "auto";
+                btnDomID.style.opacity = "1";
             } else {
-                btnDomID.style.visibility = "hidden";
+                btnDomID.style.pointerEvents = "none";
+                btnDomID.style.opacity = "0.5";
             }
         }
 
@@ -99,6 +110,12 @@
         });
 
         function toggleSelectAll(checkbox) {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (!urlParams.has('customer_invoice_id') || urlParams.get('customer_invoice_id').trim() === '') {
+                checkbox.checked = false
+                alert('Silakan lakukan filter berdasarkan nama customer atau account name customer.');
+                return
+            }
             const checkboxes = document.querySelectorAll('.select-item-invoice');
             checkboxes.forEach(cb => {
                 if (!cb.disabled) {
