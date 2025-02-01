@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kwitansi</title>
+    <style>
+        @page {
+            margin-top: 3cm;
+            margin-bottom: 1.5cm;
+            margin-left: 1.5cm;
+            margin-right: 1.5cm;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,11 +42,7 @@
                         <td style="padding: 5px 0; vertical-align: top;">:</td>
                         <td style="padding: 5px;">Pembelian produk sesuai dengan nota / faktur / invoice
                             (terlampir)<br><br>
-                            <ul style="list-style: none; padding: 0; margin: 0;">
-                                @foreach ($invoices as $invoice)
-                                    <li>{{$invoice->number}}</li>
-                                @endforeach
-                            </ul>
+                            {{ $invoices->pluck('number')->implode(', ') }}
                         </td>
                     </tr>
                 </table>

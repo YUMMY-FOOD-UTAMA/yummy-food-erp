@@ -7,6 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        @page {
+            size: A4;
+            margin-top: 3cm;
+            margin-bottom: 1.5cm;
+            margin-left: 1.5cm;
+            margin-right: 1.5cm;
+        }
+
         .table-header {
             border-collapse: collapse;
             width: 100%;
@@ -135,11 +143,11 @@
             <td>{{ $loop->iteration }}</td>
             <td>{{ $product->name }}</td>
             <td>{{ $product->quantity }} {{ $product->unit }}</td>
-            <td>{{ \App\Utils\Util::rupiah($product->rate)  }}</td>
+            <td style="text-align: right">{{ \App\Utils\Util::rupiah($product->rate)  }}</td>
             <td>{{ $product->unit }}</td>
             <td>@percentage($product->discount)</td>
-            <td>{{\App\Utils\Util::rupiah($product->net_rate,true)}}</td>
-            <td>{{\App\Utils\Util::rupiah($product->net_rate * $product->quantity)}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate,true)}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate * $product->quantity)}}</td>
         </tr>
     @endforeach
     <tr>
@@ -147,7 +155,7 @@
             style="vertical-align: top; padding-bottom: 0; border-left: 0; border-bottom: 0; border-right: 0;">
             <div style="width: 50%; margin-top: 20px;">
                 <div style="text-align: center;">
-                    <p style="margin-bottom: 0;">{{$timestamp}}</p>
+                    {{--                    <p style="margin-bottom: 0;">{{$timestamp}}</p>--}}
                 </div>
                 <div style="text-align: center; margin-top: 100px;">
                     <div style="border-top: 1px solid black; width: 200px; margin: 0 auto; padding-top: 10px;">
@@ -157,23 +165,23 @@
             </div>
         </td>
         <td>Sub Total</td>
-        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
+        <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
     </tr>
     <tr>
         <td>DPP</td>
-        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
+        <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
     </tr>
     <tr>
         <td>DPP Nilai lain</td>
-        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'])}}</td>
+        <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'])}}</td>
     </tr>
     <tr>
         <td>PPN 12%</td>
-        <td>{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'])}}</td>
+        <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'])}}</td>
     </tr>
     <tr>
         <td style="font-weight: bold;">Grand Total</td>
-        <td style="font-weight: bold;">{{\App\Utils\Util::rupiah($invoice->calculate()['grand_total'])}}</td>
+        <td style="font-weight: bold; text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['grand_total'])}}</td>
     </tr>
     <tr>
         <td style="border: 0"></td>
