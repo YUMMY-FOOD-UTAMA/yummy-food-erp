@@ -26,7 +26,7 @@ class Util
         if ($notRound) {
             return 'Rp.' . number_format($amount, 2, ',', '.');
         }
-        return 'Rp.' . number_format(self::roundAmount($amount), 2, ',', '.');
+        return 'Rp.' . number_format(self::roundAmount($amount), 0, ',', '.');
     }
 
     public static function amountToIndonesia($amount)
