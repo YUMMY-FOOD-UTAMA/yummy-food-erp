@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Utils\Util;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -25,6 +26,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
+
+        Blade::directive('rupiah', function ($amount) {
+            $amount = Util::roundAmount($amount);
+            return "<?php echo 'Rp. ' . number_format($amount, 2, ',', '.'); ?>";
+        });
+
+        Blade::directive('percentage', function ($expression) {
+            return "<?php echo intval($expression * 100) . '%'; ?>";
+        });
+
 
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage)
