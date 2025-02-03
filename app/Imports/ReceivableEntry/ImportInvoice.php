@@ -146,6 +146,7 @@ class ImportInvoice implements ToCollection, WithEvents
                 $discount = $row[$rowDiscount];
                 $totalAmountProduct += $row[$rowRate] * $qty;
                 if ($discount != 0) {
+                    $discount = $discount/100;
                     $discountPerProduct = ($row[$rowRate] * $discount);
                     $totalDiscountProduct += $discountPerProduct * $qty;
                 }
