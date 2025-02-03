@@ -13,8 +13,8 @@
                             </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-800">
-                            @if($dataTable && $dataTable->total() == 0)
-                                <tr>
+                            @if($dataTable && method_exists($dataTable, 'total') && $dataTable->total() == 0)
+                            <tr>
                                     <td class="no-data-row text-center">
                                         <div style="display: grid;place-items: center" class="my-5">
                                             <i class="bi bi-window-x mb-3" style="font-size: 48px"></i>

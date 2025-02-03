@@ -125,14 +125,22 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+//    'providers' => [
+//        /*
+//         * Package Service Providers...
+//         */
+//        Maatwebsite\Excel\ExcelServiceProvider::class,
+//    ],
     'aliases' => Facade::defaultAliases()->merge([
         'FileHelper' => \App\Utils\Helpers\FileHelper::class,
         'StatusEmployee' => \App\Utils\Primitives\Enum\EmployeeStatus::class,
         'CustomerStatus' => \App\Utils\Primitives\Enum\CustomerStatus::class,
         'VisitStatus' => \App\Utils\Primitives\Enum\SalesScheduleVisitStatus::class,
         'VisitCategory' => \App\Utils\Primitives\Enum\SalesScheduleVisitCategory::class,
+        'Util' => \App\Utils\Util::class,
         'PermissionHelper' => \App\Utils\Helpers\PermissionHelper::class,
         'DefaultCustomerDepartment' => \App\Utils\Primitives\DefaultCustomerDepartment::class,
         'ProductRepository' => \App\Repositories\ProductRepository::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 ];
