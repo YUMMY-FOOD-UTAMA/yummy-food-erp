@@ -216,7 +216,7 @@ class InvoiceController extends Controller
                 $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-2', ['invoices' => $invoices,
                     'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
             }
-            return $pdf->setPaper('a4', 'landscape')->download($filename);
+            return $pdf->download($filename);
         }
     }
 
