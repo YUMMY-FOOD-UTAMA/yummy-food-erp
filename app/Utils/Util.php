@@ -34,8 +34,8 @@ class Util
         $amount = self::roundAmount($amount);
         $amount = abs($amount);
         $bilangan = [
-            '', 'satu', 'dua', 'tiga', 'empat', 'lima',
-            'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'
+            '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima',
+            'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'
         ];
 
         if ($amount < 12) {

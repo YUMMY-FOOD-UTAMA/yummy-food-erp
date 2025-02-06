@@ -7,16 +7,20 @@
     <title>Kwitansi</title>
     <style>
         @page {
-            margin-top: 3cm;
-            margin-bottom: 1.5cm;
-            margin-left: 1.5cm;
-            margin-right: 1.5cm;
+
+            margin-top: 1.5cm;
+            margin-bottom: 1.5cm; /* Atau 56.69px */
+            margin-left: 3cm;
+            margin-right: 1.5cm; /* Minimum 1.5cm */
+        }
+        .content {
+
         }
     </style>
 </head>
 
 <body>
-<div>
+<div class="content">
     <h2 style="text-align: center; font-size: 24px; margin-top: 30px">KWITANSI</h2>
 
     <div style="display: table; width: 100%;">

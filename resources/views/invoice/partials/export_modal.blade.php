@@ -50,7 +50,8 @@
                 </button>
             </form>
         @endslot
-        @slot('slot1')kwitansi_model2
+        @slot('slot1')
+            kwitansi_model2
             <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
                 @csrf
                 <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model2">
@@ -107,6 +108,10 @@
                         [
                             'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
                             'title'=>'kwitansi model 2'
+                        ],
+                        [
+                            'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                            'title'=>'Faktur Pajak'
                         ],
                 ]">
 
@@ -191,6 +196,29 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
+                <button type="submit" class="btn btn-primary">
+                    Export
+                </button>
+            </form>
+        @endslot
+        @slot('slot6')
+            <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
+                @csrf
+                <input hidden name="invoice_id" value="{{$invoice? $invoice->id :""}}">
+                <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                        <span class="required">Select Tax Invoice</span>
+                    </label>
+                    <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
+                            data-control="select2" data-placeholder="Select Tax Invoice Type"
+                            class="form-select form-select-solid form-select-lg">
+                        <option value="">Pilih Tax Number</option>
+                        <option value="header_tax_invoice">Header Faktur Pajak</option>
+                        <option value="body_tax_invoice">Body Faktur Pajak</option>
+                        <option value="xml_tax_invoice">XML upload ke coretax</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">
                     Export
                 </button>
