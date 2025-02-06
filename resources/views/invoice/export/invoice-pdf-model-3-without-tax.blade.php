@@ -11,8 +11,8 @@
             size: 21.2cm 28cm;
             margin-top: 3cm;
             margin-bottom: 1.5cm; /* Atau 56.69px */
-            margin-left: 1.5cm;
-            margin-right: 1.5cm; /* Minimum 1.5cm */
+            margin-left: 1cm;
+            margin-right: 0.5cm; /* Minimum 1.5cm */
         }
 
         .content {
@@ -143,9 +143,9 @@
         <tbody>
         @foreach ($invoice->products as $product)
             <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $product->delivery_note_date }}</td>
-                <td>{{ $product->delivery_note }}</td>
+                <td style="text-align: center;">{{ $loop->iteration }}</td>
+                <td style="text-align: center;">{{ $product->delivery_note_date }}</td>
+                <td style="text-align: center;">{{ $product->delivery_note }}</td>
                 <td style="text-align: right">{{\App\Utils\Util::rupiah($product->rate * $product->quantity)}}</td>
             </tr>
         @endforeach

@@ -11,8 +11,8 @@
             size: 21.2cm 28cm;
             margin-top: 3cm;
             margin-bottom: 1.5cm; /* Atau 56.69px */
-            margin-left: 1.5cm;
-            margin-right: 1.5cm; /* Minimum 1.5cm */
+            margin-left: 1cm;
+            margin-right: 0.5cm; /* Minimum 1.5cm */
         }
 
         .table-header {
@@ -150,12 +150,12 @@
         <tbody>
         @foreach ($invoice->products as $product)
             <tr>
-                <td>{{ $loop->iteration }}</td>
+                <td style="text-align: center;">{{ $loop->iteration }}</td>
                 <td>{{ $product->name }}</td>
-                <td>{{ $product->quantity }} {{ $product->unit }}</td>
+                <td style="text-align: center;">{{ $product->quantity }} {{ $product->unit }}</td>
                 <td style="text-align: right">{{ \App\Utils\Util::rupiah($product->rate)  }}</td>
-                <td>{{ $product->unit }}</td>
-                <td>@percentage($product->discount)</td>
+                <td style="text-align: center;">{{ $product->unit }}</td>
+                <td style="text-align: center;">@percentage($product->discount)</td>
                 <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate,true)}}</td>
                 <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate * $product->quantity)}}</td>
             </tr>
