@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ReceivableEntry;
 
+use App\Exports\ReceivableEntry\ExportInvoiceTaxHeader;
 use App\Http\Controllers\Controller;
 use App\Imports\ReceivableEntry\ImportInvoice;
 use App\Models\Customer\Customer;
@@ -172,7 +173,7 @@ class InvoiceController extends Controller
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-without-tax', ['invoice' => $invoice, 'timestamp' => $timestamp]);
             }
             return $pdf->download($filename);
-        } else {
+        } else if ($exportModel == "kwitansi_model1" || $exportModel == "kwitansi_model2") {
             if (count($invoiceIDs) <= 0) {
                 redirect()->back()->with([
                     'status' => "error",
@@ -216,7 +217,11 @@ class InvoiceController extends Controller
                 $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-2', ['invoices' => $invoices,
                     'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
             }
-            return $pdf->setPaper('a4', 'landscape')->download($filename);
+            return $pdf->download($filename);
+        } else {
+            if ($exportModel === "header_tax_invoice") {
+                return Excel::download(new ExportInvoiceTaxHeader($invoiceID, $request), 'CATEGORY Language .xlsx');
+            }
         }
     }
 
