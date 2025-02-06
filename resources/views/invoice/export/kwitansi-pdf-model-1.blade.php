@@ -8,7 +8,7 @@
     <style>
         @page {
             
-            margin-top: 3cm;
+            margin-top: 1.5cm;
             margin-bottom: 1.5cm; /* Atau 56.69px */
             margin-left: 1.5cm;
             margin-right: 1.5cm; /* Minimum 1.5cm */
