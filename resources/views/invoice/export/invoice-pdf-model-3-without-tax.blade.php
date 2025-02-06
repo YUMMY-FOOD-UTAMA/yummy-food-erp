@@ -48,7 +48,7 @@
             border: 1px solid black;
             text-align: left;
             padding: 3px;
-            font-size: 13px;
+            font-size: 11px;
         }
 
         .text-center {
