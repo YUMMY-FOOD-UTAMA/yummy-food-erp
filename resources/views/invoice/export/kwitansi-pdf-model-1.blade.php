@@ -14,9 +14,7 @@
             margin-right: 1.5cm; /* Minimum 1.5cm */
         }
         .content {
-            width: 100%;
-            min-height: 100%;
-            box-sizing: border-box;
+           
         }
     </style>
 </head>
