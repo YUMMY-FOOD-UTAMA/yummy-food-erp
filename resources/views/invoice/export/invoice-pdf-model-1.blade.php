@@ -42,7 +42,7 @@
             border: 1px solid black;
             text-align: left;
             padding: 3px;
-            font-size: 11px;
+            font-size: 13px;
         }
 
         .text-center {
@@ -135,7 +135,7 @@
         <thead>
         <tr>
             <th style="text-align: center;">No</th>
-            <th style="width:80px; max-width: 80px; text-align: center;">Delivery Note<br>Number</th>
+            <th style="width:90px; max-width: 90px; text-align: center;">Delivery Note<br>Number</th>
             <th style="width:80px; max-width: 80px; text-align: center;">Buyer Order<br>Number</th>
             <th style="width:70px; max-width: 70px; text-align: center;">Delivery<br>Note Date</th>
             <th style="width:130px; max-width: 130px; text-align: center;">Product Name</th>
