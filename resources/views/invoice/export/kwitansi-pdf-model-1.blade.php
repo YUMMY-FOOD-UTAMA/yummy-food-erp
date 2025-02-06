@@ -7,7 +7,7 @@
     <title>Kwitansi</title>
     <style>
         @page {
-            size: 21.2cm 28cm;
+            
             margin-top: 3cm;
             margin-bottom: 1.5cm; /* Atau 56.69px */
             margin-left: 1.5cm;
