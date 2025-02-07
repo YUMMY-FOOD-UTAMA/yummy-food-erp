@@ -141,7 +141,7 @@ class InvoiceController extends Controller
             'export_invoice_model' => 'required',
         ]);
         $exportModel = $request->get("export_invoice_model");
-        $invoiceIDs = explode(",", $request->get("invoice_ids"));
+        $invoiceIDs = explode(",", $request->get("invoice_ids")) ?? [];
         $invoiceID = $request->get("invoice_id");
 
         if ($exportModel == "invoice_model1" || $exportModel == "invoice_model2" || $exportModel == "invoice_model3_tax" ||
@@ -220,7 +220,7 @@ class InvoiceController extends Controller
             return $pdf->download($filename);
         } else {
             if ($exportModel === "header_tax_invoice") {
-                return Excel::download(new ExportInvoiceTaxHeader($invoiceID, $request), 'CATEGORY Language .xlsx');
+                return Excel::download(new ExportInvoiceTaxHeader($invoiceIDs, $request), 'CATEGORY Language .xlsx');
             }
         }
     }

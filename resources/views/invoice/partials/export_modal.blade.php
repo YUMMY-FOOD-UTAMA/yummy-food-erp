@@ -24,8 +24,11 @@
     </style>
 @endpush
 
+@if(request('customer_invoice_id') != '')
+@endif
 @if($onlyReceipt)
-    <x-tabs :tabs="[
+    @if(request('customer_invoice_id') != '')
+        <x-tabs :tabs="[
                         [
                             'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
                             'title'=>'kwitansi model 1'
@@ -34,39 +37,101 @@
                             'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
                             'title'=>'kwitansi model 2'
                         ],
+                        [
+                            'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                            'title'=>'Faktur Pajak'
+                        ],
                 ]">
-        @slot('slot0')
-            <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
-                @csrf
-                <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model1">
-                <input hidden name="export_invoice_model" value="kwitansi_model1">
-                <div class="checkbox-container">
-                    <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
-                         class="img-preview">
-                </div>
-                <button onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1')"
-                        class="btn btn-primary">
-                    Export
-                </button>
-            </form>
-        @endslot
-        @slot('slot1')
-            kwitansi_model2
-            <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
-                @csrf
-                <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model2">
-                <input hidden name="export_invoice_model" value="kwitansi_model2">
-                <div class="checkbox-container">
-                    <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
-                         class="img-preview">
-                </div>
-                <button onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2')"
-                        id="btn_kwitansi_model2" class="btn btn-primary">
-                    Export
-                </button>
-            </form>
-        @endslot
-    </x-tabs>
+            @slot('slot0')
+                <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
+                    @csrf
+                    <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model1">
+                    <input hidden name="export_invoice_model" value="kwitansi_model1">
+                    <div class="checkbox-container">
+                        <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
+                             class="img-preview">
+                    </div>
+                    <button onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1')"
+                            class="btn btn-primary">
+                        Export
+                    </button>
+                </form>
+            @endslot
+            @slot('slot1')
+                kwitansi_model2
+                <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
+                    @csrf
+                    <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model2">
+                    <input hidden name="export_invoice_model" value="kwitansi_model2">
+                    <div class="checkbox-container">
+                        <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
+                             class="img-preview">
+                    </div>
+                    <button onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2')"
+                            id="btn_kwitansi_model2" class="btn btn-primary">
+                        Export
+                    </button>
+                </form>
+            @endslot
+            @slot('slot2')
+                <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
+                    @csrf
+                    <input hidden name="invoice_ids" id="tax_invoice_export" value="{{$invoice? $invoice->id :""}}">
+                    <div class="checkbox-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">Select Tax Invoice</span>
+                        </label>
+                        <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
+                                data-control="select2" data-placeholder="Select Tax Invoice Type"
+                                class="form-select form-select-solid form-select-lg">
+                            <option value="">Pilih Tax Number</option>
+                            <option value="header_tax_invoice">Header Faktur Pajak</option>
+                            <option value="body_tax_invoice">Body Faktur Pajak</option>
+                            <option value="xml_tax_invoice">XML upload ke coretax</option>
+                        </select>
+                    </div>
+
+                    <button onclick="processSelected('btn_tax_invoice_export','tax_invoice_export')"
+                            id="btn_tax_invoice_export" class="btn btn-primary">
+                        Export
+                    </button>
+                </form>
+            @endslot
+        </x-tabs>
+    @else
+        <p>If you want to export receipts then filter by customer name or customer account first</p>
+        <x-tabs :tabs="[
+                        [
+                            'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                            'title'=>'Faktur Pajak'
+                        ],
+                ]">
+            @slot('slot0')
+                <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
+                    @csrf
+                    <input hidden name="invoice_ids" id="tax_invoice_export" value="{{$invoice? $invoice->id :""}}">
+                    <div class="checkbox-container">
+                        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                            <span class="required">Select Tax Invoice</span>
+                        </label>
+                        <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
+                                data-control="select2" data-placeholder="Select Tax Invoice Type"
+                                class="form-select form-select-solid form-select-lg">
+                            <option value="">Pilih Tax Number</option>
+                            <option value="header_tax_invoice">Header Faktur Pajak</option>
+                            <option value="body_tax_invoice">Body Faktur Pajak</option>
+                            <option value="xml_tax_invoice">XML upload ke coretax</option>
+                        </select>
+                    </div>
+
+                    <button onclick="processSelected('btn_tax_invoice_export','tax_invoice_export')"
+                            id="btn_tax_invoice_export" class="btn btn-primary">
+                        Export
+                    </button>
+                </form>
+            @endslot
+        </x-tabs>
+    @endif
     @push('script')
         <script>
             function processSelected(btnID, invoiceIDsInput) {
@@ -204,7 +269,7 @@
         @slot('slot6')
             <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
                 @csrf
-                <input hidden name="invoice_id" value="{{$invoice? $invoice->id :""}}">
+                <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
                 <div class="checkbox-container">
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">Select Tax Invoice</span>
