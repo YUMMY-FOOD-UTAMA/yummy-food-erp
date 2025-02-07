@@ -136,7 +136,7 @@
         <tr>
             <th style="text-align: center;">No</th>
             <th style="width:90px; max-width: 90px; text-align: center;">Delivery Note<br>Number</th>
-            <th style="width:90px; max-width: 90px; text-align: center;">Buyer Order<br>Number</th>
+            <th style="width:100px; max-width: 100px; text-align: center;">Buyer Order<br>Number</th>
             <th style="width:70px; max-width: 70px; text-align: center;">Delivery<br>Note Date</th>
             <th style="width:130px; max-width: 130px; text-align: center;">Product Name</th>
             <th class="min-w-50px" style="text-align: center;">Qty</th>

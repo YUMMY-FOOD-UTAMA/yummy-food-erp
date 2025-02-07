@@ -41,27 +41,29 @@ class Util
         if ($amount < 12) {
             return ' ' . $bilangan[$amount];
         } elseif ($amount < 20) {
-            return self::amountToIndonesia($amount - 10) . ' belas';
+            return self::amountToIndonesia($amount - 10) . ' Belas';
         } elseif ($amount < 100) {
-            return self::amountToIndonesia($amount / 10) . ' puluh' . self::amountToIndonesia($amount % 10);
+            return self::amountToIndonesia(intval($amount / 10)) . ' Puluh' . self::amountToIndonesia($amount % 10);
         } elseif ($amount < 200) {
             return ' seratus' . self::amountToIndonesia($amount - 100);
         } elseif ($amount < 1000) {
-            return self::amountToIndonesia($amount / 100) . ' ratus' . self::amountToIndonesia($amount % 100);
+            return self::amountToIndonesia(intval($amount / 100)) . ' Ratus' . self::amountToIndonesia($amount % 100);
         } elseif ($amount < 2000) {
             return ' seribu' . self::amountToIndonesia($amount - 1000);
         } elseif ($amount < 1000000) {
-            return self::amountToIndonesia($amount / 1000) . ' ribu' . self::amountToIndonesia($amount % 1000);
+            return self::amountToIndonesia(intval($amount / 1000)) . ' Ribu' . self::amountToIndonesia($amount % 1000);
         } elseif ($amount < 1000000000) {
-            return self::amountToIndonesia($amount / 1000000) . ' juta' . self::amountToIndonesia($amount % 1000000);
+            return self::amountToIndonesia(intval($amount / 1000000)) . ' Juta' . self::amountToIndonesia($amount % 1000000);
         } elseif ($amount < 1000000000000) {
-            return self::amountToIndonesia($amount / 1000000000) . ' milyar' . self::amountToIndonesia($amount % 1000000000);
+            return self::amountToIndonesia(intval($amount / 1000000000)) . ' Milyar' . self::amountToIndonesia($amount % 1000000000);
         } elseif ($amount < 1000000000000000) {
-            return self::amountToIndonesia($amount / 1000000000000) . ' triliun' . self::amountToIndonesia($amount % 1000000000000);
+            return self::amountToIndonesia(intval($amount / 1000000000000)) . ' Triliun' . self::amountToIndonesia($amount % 1000000000000);
         } else {
             return 'Angka terlalu besar';
         }
+
     }
+
 
     public static function splitText($text, $maxLength, $spacing = "<br>", $delimiter = ' ')
     {
