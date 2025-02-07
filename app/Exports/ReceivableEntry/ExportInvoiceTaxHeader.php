@@ -4,6 +4,7 @@ namespace App\Exports\ReceivableEntry;
 
 use App\Models\Invoice\Invoice;
 use DateTime;
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
@@ -17,21 +18,21 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class ExportInvoiceTaxHeader implements FromCollection, WithColumnWidths, WithMapping, WithHeadings, WithStyles, WithColumnFormatting
+class ExportInvoiceTaxHeader implements FromArray, WithColumnWidths, WithHeadings, WithStyles, WithColumnFormatting
 {
-    protected $id;
+    protected $ids;
     protected $request;
 
-    public function __construct($id, $request)
+    public function __construct($ids, $request)
     {
-        $this->id = $id;
+        $this->ids = $ids;
         $this->request = $request;
     }
 
     public function collection()
     {
-        $invoice = Invoice::where('id', $this->id)->first();
-        return $invoice;
+        $invoices = Invoice::whereIn('id', $this->ids)->get();
+        return $invoices;
     }
 
     public function headings(): array
@@ -43,6 +44,38 @@ class ExportInvoiceTaxHeader implements FromCollection, WithColumnWidths, WithMa
                 'Referensi', 'Cap Fasilitas', 'ID TKU Penjual', 'NPWP/NIK Pembeli', 'Jenis ID Pembeli', 'Negara Pembeli', 'Nomor Dokumen Pembeli',
                 'Nama Pembeli', 'Alamat Pembeli', 'Email Pembeli', 'ID TKU Pembeli'],
         ];
+    }
+
+    public function array(): array
+    {
+        $invoices = Invoice::whereIn('id', $this->ids)->get();
+        $data[] = [];
+        foreach ($invoices as $i => $invoice) {
+            $date = DateTime::createFromFormat('j-M-Y', $invoice->date);
+            $data[] = [
+                $i+1,
+                Date::dateTimeToExcel($date),
+                'Normal',
+                $this->request->get('code_transaction') ?? '04',
+                $this->request->get('additional_information') ?? '',
+                $this->request->get('supporting_document') ?? '',
+                $invoice->number,
+                $this->request->get('facility_stamp') ?? '',
+                '0013470778007000000000',
+                $invoice->customer->npwp_customer,
+                $this->request->get('buyer_id_type') ?? 'TIN',
+                'IDN',
+                $this->request->get('number_document_buyer') ?? '',
+                $invoice->customer->name,
+                $invoice->customer->npwp_address,
+                $this->request->get('email_buyer') ?? '',
+                $this->request->get('id_tku_buyer') ?? '',
+            ];
+        }
+        $data[] = [
+            'END'
+        ];
+        return $data;
     }
 
     public function styles(Worksheet $sheet)
@@ -85,54 +118,6 @@ class ExportInvoiceTaxHeader implements FromCollection, WithColumnWidths, WithMa
     {
         return [
             'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-        ];
-    }
-
-    public function map($invoice): array
-    {
-        $date = DateTime::createFromFormat('j-M-Y', $invoice->date);
-        return [
-            [
-                1,
-                Date::dateTimeToExcel($date),
-                'Normal',
-                $this->request->get('code_transaction') ?? '04',
-                $this->request->get('additional_information') ?? '',
-                $this->request->get('supporting_document') ?? '',
-                $invoice->number,
-                $this->request->get('facility_stamp') ?? '',
-                '0013470778007000000000',
-                $invoice->customer->npwp_customer,
-                $this->request->get('buyer_id_type') ?? 'TIN',
-                'IDN',
-                $this->request->get('number_document_buyer') ?? '',
-                $invoice->customer->name,
-                $invoice->customer->npwp_address,
-                $this->request->get('email_buyer') ?? '',
-                $this->request->get('id_tku_buyer') ?? '',
-            ],
-            [
-                2,
-                Date::dateTimeToExcel($date),
-                'Normal',
-                $this->request->get('code_transaction') ?? '04',
-                $this->request->get('additional_information') ?? '',
-                $this->request->get('supporting_document') ?? '',
-                $invoice->number,
-                $this->request->get('facility_stamp') ?? '',
-                '0013470778007000000000',
-                $invoice->customer->npwp_customer,
-                $this->request->get('buyer_id_type') ?? 'TIN',
-                'IDN',
-                $this->request->get('number_document_buyer') ?? '',
-                $invoice->customer->name,
-                $invoice->customer->npwp_address,
-                $this->request->get('email_buyer') ?? '',
-                $this->request->get('id_tku_buyer') ?? '',
-            ],
-            [
-                'END'
-            ]
         ];
     }
 }

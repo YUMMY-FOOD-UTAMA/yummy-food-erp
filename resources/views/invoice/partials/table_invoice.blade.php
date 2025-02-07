@@ -88,13 +88,13 @@
 
             const urlParams = new URLSearchParams(window.location.search);
 
-            if (!urlParams.has('customer_invoice_id') || urlParams.get('customer_invoice_id').trim() === '') {
-                alert('Silakan lakukan filter berdasarkan nama customer atau account name customer.');
-                checkedItems.forEach((item) => {
-                    item.checked = false;
-                });
-                return
-            }
+            // if (!urlParams.has('customer_invoice_id') || urlParams.get('customer_invoice_id').trim() === '') {
+            //     alert('Silakan lakukan filter berdasarkan nama customer atau account name customer.');
+            //     checkedItems.forEach((item) => {
+            //         item.checked = false;
+            //     });
+            //     return
+            // }
 
             if (checkedItems.length > 0) {
                 btnDomID.style.pointerEvents = "auto";
@@ -111,11 +111,11 @@
 
         function toggleSelectAll(checkbox) {
             const urlParams = new URLSearchParams(window.location.search);
-            if (!urlParams.has('customer_invoice_id') || urlParams.get('customer_invoice_id').trim() === '') {
-                checkbox.checked = false
-                alert('Silakan lakukan filter berdasarkan nama customer atau account name customer.');
-                return
-            }
+            // if (!urlParams.has('customer_invoice_id') || urlParams.get('customer_invoice_id').trim() === '') {
+            //     checkbox.checked = false
+            //     alert('Silakan lakukan filter berdasarkan nama customer atau account name customer.');
+            //     return
+            // }
             const checkboxes = document.querySelectorAll('.select-item-invoice');
             checkboxes.forEach(cb => {
                 if (!cb.disabled) {

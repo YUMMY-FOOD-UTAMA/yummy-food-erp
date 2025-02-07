@@ -38,7 +38,7 @@
                     <tr>
                         <td style="padding: 5px 0; vertical-align: top;">Uang Sejumlah</td>
                         <td style="padding: 5px 0; vertical-align: top;">:</td>
-                        <td style="padding: 5px;">{{$grand_total_as_indonesia}}
+                        <td style="padding: 5px;">{{$grand_total_as_indonesia}} Rupiah
                         </td>
                     </tr>
                     <tr>
