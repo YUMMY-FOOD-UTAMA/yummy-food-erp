@@ -69,7 +69,7 @@ class ExportInvoiceTaxHeader implements FromArray, WithColumnWidths, WithHeading
                 $invoice->customer->name,
                 $invoice->customer->npwp_address,
                 $this->request->get('email_buyer') ?? '',
-                $this->request->get('id_tku_buyer') ?? '',
+                $invoice->customer->id_tku_customer,
             ];
         }
         $data[] = [
@@ -89,6 +89,8 @@ class ExportInvoiceTaxHeader implements FromArray, WithColumnWidths, WithHeading
         $sheet->getStyle('A3:Q3')->getAlignment()->setHorizontal('left');
 
         $sheet->getStyle('A4:A100')->getAlignment()->setHorizontal('left');
+        $sheet->getStyle('F4:F100')->getAlignment()->setHorizontal('left');
+        $sheet->getStyle('M4:M100')->getAlignment()->setHorizontal('left');
     }
 
     public function columnWidths(): array

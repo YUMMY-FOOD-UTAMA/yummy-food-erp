@@ -82,13 +82,14 @@
                             <span class="required">Select Tax Invoice</span>
                         </label>
                         <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
-                                data-control="select2" data-placeholder="Select Tax Invoice Type"
+                                data-control="select2" data-dropdown-parent="#invoiceExportAllInOne" data-placeholder="Select Tax Invoice Type"
                                 class="form-select form-select-solid form-select-lg">
                             <option value="">Pilih Tax Number</option>
-                            <option value="header_tax_invoice">Header Faktur Pajak</option>
-                            <option value="body_tax_invoice">Body Faktur Pajak</option>
+                            <option value="header_and_body_tax_invoice">Header And Body Faktur Pajak</option>
                             <option value="xml_tax_invoice">XML upload ke coretax</option>
                         </select>
+
+                        @include('invoice.partials.tax_invoice_form_input',['dataDropdownParent'=>"invoiceExportAllInOne"])
                     </div>
 
                     <button onclick="processSelected('btn_tax_invoice_export','tax_invoice_export')"
@@ -115,13 +116,14 @@
                             <span class="required">Select Tax Invoice</span>
                         </label>
                         <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
-                                data-control="select2" data-placeholder="Select Tax Invoice Type"
+                                data-control="select2" data-dropdown-parent="#invoiceExportAllInOne" data-placeholder="Select Tax Invoice Type"
                                 class="form-select form-select-solid form-select-lg">
                             <option value="">Pilih Tax Number</option>
-                            <option value="header_tax_invoice">Header Faktur Pajak</option>
-                            <option value="body_tax_invoice">Body Faktur Pajak</option>
+                            <option value="header_and_body_tax_invoice">Header And Body Faktur Pajak</option>
                             <option value="xml_tax_invoice">XML upload ke coretax</option>
                         </select>
+
+                        @include('invoice.partials.tax_invoice_form_input',['dataDropdownParent'=>"invoiceExportAllInOne"])
                     </div>
 
                     <button onclick="processSelected('btn_tax_invoice_export','tax_invoice_export')"
@@ -271,17 +273,18 @@
                 @csrf
                 <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
                 <div class="checkbox-container">
-                    <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
                         <span class="required">Select Tax Invoice</span>
                     </label>
                     <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
-                            data-control="select2" data-placeholder="Select Tax Invoice Type"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}" data-placeholder="Select Tax Invoice Type"
                             class="form-select form-select-solid form-select-lg">
                         <option value="">Pilih Tax Number</option>
-                        <option value="header_tax_invoice">Header Faktur Pajak</option>
-                        <option value="body_tax_invoice">Body Faktur Pajak</option>
+                        <option value="header_and_body_tax_invoice">Header And Body Faktur Pajak</option>
                         <option value="xml_tax_invoice">XML upload ke coretax</option>
                     </select>
+
+                    @include('invoice.partials.tax_invoice_form_input',['dataDropdownParent'=>"modalExportInvoice".$invoice->id])
                 </div>
 
                 <button type="submit" class="btn btn-primary">

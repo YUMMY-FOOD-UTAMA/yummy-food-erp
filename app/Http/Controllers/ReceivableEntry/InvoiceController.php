@@ -219,7 +219,7 @@ class InvoiceController extends Controller
             }
             return $pdf->download($filename);
         } else {
-            if ($exportModel === "header_tax_invoice") {
+            if ($exportModel === "header_and_body_tax_invoice") {
                 return Excel::download(new ExportInvoiceTaxHeader($invoiceIDs, $request), 'CATEGORY Language .xlsx');
             }
         }

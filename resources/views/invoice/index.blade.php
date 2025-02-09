@@ -15,9 +15,10 @@
         @endslot
         <div class="card">
             @include('invoice.partials.filter_invoice')
-            <x-table.basic-filter-and-export style="pointer-events: none" export-route="receivable.entry.invoice.export"
+            <x-table.basic-filter-and-export style="pointer-events: none" export-modal-i-d="invoiceExportAllInOne"
+                                             export-route="receivable.entry.invoice.export"
                                              name="Invoice"/>
-            <x-modal id="receivable.entry.invoice.export"
+            <x-modal id="invoiceExportAllInOne"
                      title="Export Kwitansi" size="1000">
                 @include('invoice.partials.export_modal',['onlyReceipt'=>true,'invoice'=>null])
             </x-modal>
