@@ -193,7 +193,7 @@ class InvoiceController extends Controller
 
             $grandTotal = 0;
             $formatInvoiceNumber = "";
-            $invoices = $invoices->sortBy('date');
+            $invoices = $invoices->sortByDesc('date');
             $timestamp = $invoices->first()->date;
             foreach ($invoices as $invoice) {
                 $grandTotal += $invoice->calculate()["grand_total"];
