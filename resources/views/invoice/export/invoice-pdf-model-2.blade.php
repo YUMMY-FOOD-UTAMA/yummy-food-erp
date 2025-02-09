@@ -8,11 +8,11 @@
     <title>Document</title>
     <style>
         @page {
-            size: 21.2cm 28cm;
+            size: 22cm 28cm;
             margin-top: 3cm;
             margin-bottom: 1.5cm; /* Atau 56.69px */
             margin-left: 1cm;
-            margin-right: 0.5cm; /* Minimum 1.5cm */
+            margin-right: 0.2cm; /* Minimum 1.5cm */
         }
 
         .table-header {
@@ -42,7 +42,7 @@
             border: 1px solid black;
             text-align: left;
             padding: 3px;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .text-center {
@@ -138,7 +138,7 @@
         <thead>
         <tr>
             <th style="text-align: center;">No</th>
-            <th style="width:200px; max-width: 200px; text-align: center;">Product Name</th>
+            <th style="width:300px; max-width: 300px; text-align: center;">Product Name</th>
             <th class="min-w-60px" style="text-align: center;">Qty</th>
             <th class="min-w-80px" style="text-align: center;">Unit Price</th>
             <th class="min-w-50px" style="text-align: center;">Unit</th>
@@ -153,11 +153,11 @@
                 <td style="text-align: center;">{{ $loop->iteration }}</td>
                 <td>{{ $product->name }}</td>
                 <td style="text-align: center;">{{ $product->quantity }} {{ $product->unit }}</td>
-                <td style="text-align: right">{{ \App\Utils\Util::rupiah($product->rate)  }}</td>
+                <td style="text-align: right">{{ \App\Utils\Util::rupiah($product->rate,false,true,true)  }}</td>
                 <td style="text-align: center;">{{ $product->unit }}</td>
                 <td style="text-align: center;">@percentage($product->discount)</td>
-                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate,true)}}</td>
-                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate * $product->quantity)}}</td>
+                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate,true,true)}}</td>
+                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->net_rate * $product->quantity,false,true)}}</td>
             </tr>
         @endforeach
         <tr>
@@ -175,19 +175,19 @@
                 </div>
             </td>
             <td>Sub Total</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'],false,true)}}</td>
         </tr>
         <tr>
             <td>DPP</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'],false,true)}}</td>
         </tr>
         <tr>
             <td>DPP Nilai lain</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'],false,true)}}</td>
         </tr>
         <tr>
             <td>PPN 12%</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'],false,true)}}</td>
         </tr>
         <tr>
             <td style="font-weight: bold;">Grand Total</td>

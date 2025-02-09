@@ -8,11 +8,11 @@
     <title>Document</title>
     <style>
         @page {
-            size: 21.2cm 28cm;
+            size: 22cm 28cm;
             margin-top: 3cm;
             margin-bottom: 1.5cm; /* Atau 56.69px */
             margin-left: 1cm;
-            margin-right: 0.5cm; /* Minimum 1.5cm */
+            margin-right: 0.2cm; /* Minimum 1.5cm */
         }
 
         .content {
@@ -48,7 +48,7 @@
             border: 1px solid black;
             text-align: left;
             padding: 3px;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .text-center {
@@ -148,7 +148,7 @@
                 <td style="text-align: center;">{{ $product->delivery_note_date }}</td>
                 <td style="text-align: center;">{{ $product->delivery_note }}</td>
                 <td style="text-align: center;">{{ $taxNumber }}</td>
-                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->rate * $product->quantity)}}</td>
+                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->rate * $product->quantity,false,true)}}</td>
             </tr>
         @endforeach
         <tr>
@@ -166,23 +166,23 @@
                 </div>
             </td>
             <td>Sub Total</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['sub_total'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['sub_total'],false,true)}}</td>
         </tr>
         <tr>
             <td>Discount</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['discount_total'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['discount_total'],false,true)}}</td>
         </tr>
         <tr>
             <td>DPP</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'],false,true)}}</td>
         </tr>
         <tr>
             <td>DPP Nilai lain</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'],false,true)}}</td>
         </tr>
         <tr>
             <td>PPN 12%</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'],false,true)}}</td>
         </tr>
         <tr>
             <td>Bea</td>

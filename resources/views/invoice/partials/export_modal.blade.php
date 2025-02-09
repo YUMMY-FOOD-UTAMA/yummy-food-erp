@@ -84,7 +84,6 @@
                         <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
                                 data-control="select2" data-dropdown-parent="#invoiceExportAllInOne" data-placeholder="Select Tax Invoice Type"
                                 class="form-select form-select-solid form-select-lg">
-                            <option value="">Pilih Tax Number</option>
                             <option value="header_and_body_tax_invoice">Header And Body Faktur Pajak</option>
                             <option value="xml_tax_invoice">XML upload ke coretax</option>
                         </select>
@@ -118,7 +117,6 @@
                         <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
                                 data-control="select2" data-dropdown-parent="#invoiceExportAllInOne" data-placeholder="Select Tax Invoice Type"
                                 class="form-select form-select-solid form-select-lg">
-                            <option value="">Pilih Tax Number</option>
                             <option value="header_and_body_tax_invoice">Header And Body Faktur Pajak</option>
                             <option value="xml_tax_invoice">XML upload ke coretax</option>
                         </select>
@@ -279,7 +277,6 @@
                     <select name="export_invoice_model" aria-label="Select Tax Invoice Type" data-allow-clear="true"
                             data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}" data-placeholder="Select Tax Invoice Type"
                             class="form-select form-select-solid form-select-lg">
-                        <option value="">Pilih Tax Number</option>
                         <option value="header_and_body_tax_invoice">Header And Body Faktur Pajak</option>
                         <option value="xml_tax_invoice">XML upload ke coretax</option>
                     </select>

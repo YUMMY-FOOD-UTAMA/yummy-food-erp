@@ -1,5 +1,5 @@
 <x-table.advance-filter using-apply-button="true" class="mt-5 ms-6 me-6">
-    <x-form.input-daterange label="Date" class="col-12 col-md-3 mb-5" type="row" size-form="sm"
+    <x-form.input-daterange label="Invoice Date" class="col-12 col-md-3 mb-5" type="row" size-form="sm"
                             :default-value-start-date="request()->start_date"
                             :default-value-end-date="request()->end_date"/>
     <x-data-driven.select2.customer-invoice size-form="sm" class="col-12 col-md-3 mb-5" type="row"

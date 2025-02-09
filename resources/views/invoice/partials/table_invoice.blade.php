@@ -5,6 +5,7 @@
         </th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
+        <th style="vertical-align: middle; text-align: left;">Invoice Date</th>
         <th style="vertical-align: middle; text-align: left;">Invoice Number</th>
         <th style="vertical-align: middle; text-align: left;">Grand Total Include Tax</th>
         <th style="vertical-align: middle; text-align: left;">Kwitansi Number</th>
@@ -22,6 +23,7 @@
                 {{--                @endif--}}
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
+                <td>{{$invoice->date}}</td>
                 <td>{{$invoice->number}}</td>
                 <td>{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"])}}</td>
                 <td>{{$invoice->receipt_number}}</td>
