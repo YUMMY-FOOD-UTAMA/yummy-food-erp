@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ReceivableEntry;
 
+use App\Exports\ReceivableEntry\ExportInvoiceTax;
 use App\Exports\ReceivableEntry\ExportInvoiceTaxHeader;
 use App\Http\Controllers\Controller;
 use App\Imports\ReceivableEntry\ImportInvoice;
@@ -219,8 +220,24 @@ class InvoiceController extends Controller
             }
             return $pdf->download($filename);
         } else {
+            $invoices = new InvoiceRepository();
+            $invoices->setRequest($request);
+            $invoices->setInvoiceIDs($invoiceIDs);
+            $invoices->setWithOutPagination(true);
+            $invoices = $invoices->getAll();
+
+            $formatInvoiceNumber = "";
+            foreach ($invoices as $invoice) {
+                if ($formatInvoiceNumber == "") {
+                    $formatInvoiceNumber = $invoice->number;
+                } else {
+                    $formatInvoiceNumber = $formatInvoiceNumber . " - " . $invoice->number;
+                }
+            }
+            $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
+
             if ($exportModel === "header_and_body_tax_invoice") {
-                return Excel::download(new ExportInvoiceTaxHeader($invoiceIDs, $request), 'CATEGORY Language .xlsx');
+                return Excel::download(new ExportInvoiceTax($invoices, $request), 'faktur ' . $formatInvoiceNumber . '.xlsx');
             }
         }
     }
