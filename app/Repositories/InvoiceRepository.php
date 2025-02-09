@@ -110,7 +110,7 @@ class InvoiceRepository
             });
         }
         if ($startDate && $endDate) {
-            $invoices->whereBetween('created_at', [$startDate, $endDate]);
+            $invoices->whereBetween('date', [$startDate, $endDate]);
         }
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);
