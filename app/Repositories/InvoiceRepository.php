@@ -110,10 +110,10 @@ class InvoiceRepository
             });
         }
 if ($startDate && $endDate) {
-    $startDate = Carbon::createFromFormat('j-M-Y', $startDate)->format('Y-m-d');
-    $endDate = Carbon::createFromFormat('j-M-Y', $endDate)->format('Y-m-d');
-
-    $invoices->whereBetween('date', [$startDate, $endDate]);
+    $invoices->whereBetween(
+        \DB::raw("STR_TO_DATE(date, '%e-%b-%Y')"),
+        [$startDate, $endDate]
+    );
 }
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);
