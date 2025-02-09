@@ -109,9 +109,12 @@ class InvoiceRepository
                     ->orWhere('supplier_ref', 'like', '%' . $searchKeyword . '%');
             });
         }
-        if ($startDate && $endDate) {
-            $invoices->whereBetween('date', [$startDate, $endDate]);
-        }
+if ($startDate && $endDate) {
+    $startDate = Carbon::createFromFormat('j-M-Y', $startDate)->format('Y-m-d');
+    $endDate = Carbon::createFromFormat('j-M-Y', $endDate)->format('Y-m-d');
+
+    $invoices->whereBetween('date', [$startDate, $endDate]);
+}
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);
         }
