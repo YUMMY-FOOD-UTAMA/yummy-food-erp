@@ -18,7 +18,7 @@
             <button type="button" id="{{$exportRoute."btn"}}"
                     {{$attributes->merge(['style' => ''])}} class="btn btn-success me-3"
                     data-bs-toggle="modal"
-                    data-bs-target="#{{$exportRoute}}">
+                    data-bs-target="#{{$exportModalID}}">
                     <span class="svg-icon svg-icon-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                              xmlns="http://www.w3.org/2000/svg">

@@ -110,7 +110,10 @@ class InvoiceRepository
             });
         }
         if ($startDate && $endDate) {
-            $invoices->whereBetween('created_at', [$startDate, $endDate]);
+            $invoices->whereBetween(
+                \DB::raw("STR_TO_DATE(date, '%e-%b-%Y')"),
+                [$startDate, $endDate]
+            );
         }
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);

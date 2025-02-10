@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ReceivableEntry;
 
+use App\Exports\ReceivableEntry\ExportInvoiceTax;
 use App\Exports\ReceivableEntry\ExportInvoiceTaxHeader;
 use App\Http\Controllers\Controller;
 use App\Imports\ReceivableEntry\ImportInvoice;
@@ -160,7 +161,7 @@ class InvoiceController extends Controller
             $timestamp = Carbon::now('Asia/Jakarta')->format('d-M-Y');
             $timestamp = "Jakarta, " . $timestamp;
             $formatInvoiceNumber = str_replace("/", "-", $invoice->number);
-            $filename = "Invoice {$formatInvoiceNumber}.pdf";
+            $filename = "Invoice_{$invoice->customer->name}_{$formatInvoiceNumber}.pdf";
             $pdf = null;
             if ($exportModel === "invoice_model1") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice, 'timestamp' => $timestamp]);
@@ -192,7 +193,7 @@ class InvoiceController extends Controller
 
             $grandTotal = 0;
             $formatInvoiceNumber = "";
-            $invoices = $invoices->sortBy('date');
+            $invoices = $invoices->sortByDesc('date');
             $timestamp = $invoices->first()->date;
             foreach ($invoices as $invoice) {
                 $grandTotal += $invoice->calculate()["grand_total"];
@@ -202,7 +203,7 @@ class InvoiceController extends Controller
 
             $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
             $timestamp = "Jakarta, " . $timestamp;
-            $filename = "Kwitansi {$formatInvoiceNumber}.pdf";
+            $filename = "Kwitansi_{$invoices[0]->customer->name}_{$formatInvoiceNumber}.pdf";
 
             $urL = config('app.url') . '/public-uri/invoice-payment/' . $receiptNumber;
 
@@ -219,8 +220,28 @@ class InvoiceController extends Controller
             }
             return $pdf->download($filename);
         } else {
-            if ($exportModel === "header_tax_invoice") {
-                return Excel::download(new ExportInvoiceTaxHeader($invoiceIDs, $request), 'CATEGORY Language .xlsx');
+            $invoices = new InvoiceRepository();
+            $invoices->setRequest($request);
+            $invoices->setInvoiceIDs($invoiceIDs);
+            $invoices->setWithOutPagination(true);
+            $invoices = $invoices->getAll();
+            $invoices = $invoices->sortByDesc('date');
+
+            $formatInvoiceNumber = "";
+            foreach ($invoices as $invoice) {
+                if ($formatInvoiceNumber == "") {
+                    $formatInvoiceNumber = $invoice->number;
+                } else {
+                    $formatInvoiceNumber = $formatInvoiceNumber . " - " . $invoice->number;
+                }
+            }
+            $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
+
+            $date = Carbon::createFromFormat('j-M-Y', '3-Jan-2025');
+            $monthName = $date->translatedFormat('F');
+            $fileName = "Faktur Pajak Excel_{$monthName}_{$formatInvoiceNumber}.xlsx";
+            if ($exportModel === "header_and_body_tax_invoice") {
+                return Excel::download(new ExportInvoiceTax($invoices, $request), $fileName);
             }
         }
     }
