@@ -122,11 +122,3 @@
     <option value="National ID">National ID</option>
     <option value="Passport">Passport</option>
 </select>
-
-<x-form.text-area class="fv-row mb-10 mt-2" auto-resize="true"
-                  label="Supporting Document"
-                  name="supporting_document"/>
-
-<x-form.text-area class="fv-row mb-10 mt-2" auto-resize="true"
-                  label="Number Document Buyer"
-                  name="number_document_buyer"/>

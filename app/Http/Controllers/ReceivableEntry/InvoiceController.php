@@ -161,7 +161,7 @@ class InvoiceController extends Controller
             $timestamp = Carbon::now('Asia/Jakarta')->format('d-M-Y');
             $timestamp = "Jakarta, " . $timestamp;
             $formatInvoiceNumber = str_replace("/", "-", $invoice->number);
-            $filename = "Invoice {$formatInvoiceNumber}.pdf";
+            $filename = "Invoice_{$invoice->customer->name}_{$formatInvoiceNumber}.pdf";
             $pdf = null;
             if ($exportModel === "invoice_model1") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice, 'timestamp' => $timestamp]);
@@ -203,7 +203,7 @@ class InvoiceController extends Controller
 
             $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
             $timestamp = "Jakarta, " . $timestamp;
-            $filename = "Kwitansi {$formatInvoiceNumber}.pdf";
+            $filename = "Kwitansi_{$invoices[0]->customer->name}_{$formatInvoiceNumber}.pdf";
 
             $urL = config('app.url') . '/public-uri/invoice-payment/' . $receiptNumber;
 
@@ -225,6 +225,7 @@ class InvoiceController extends Controller
             $invoices->setInvoiceIDs($invoiceIDs);
             $invoices->setWithOutPagination(true);
             $invoices = $invoices->getAll();
+            $invoices = $invoices->sortByDesc('date');
 
             $formatInvoiceNumber = "";
             foreach ($invoices as $invoice) {
@@ -236,8 +237,11 @@ class InvoiceController extends Controller
             }
             $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
 
+            $date = Carbon::createFromFormat('j-M-Y', '3-Jan-2025');
+            $monthName = $date->translatedFormat('F');
+            $fileName = "Faktur Pajak Excel_{$monthName}_{$formatInvoiceNumber}.xlsx";
             if ($exportModel === "header_and_body_tax_invoice") {
-                return Excel::download(new ExportInvoiceTax($invoices, $request), 'faktur ' . $formatInvoiceNumber . '.xlsx');
+                return Excel::download(new ExportInvoiceTax($invoices, $request), $fileName);
             }
         }
     }

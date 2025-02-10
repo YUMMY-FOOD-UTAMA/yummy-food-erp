@@ -109,12 +109,12 @@ class InvoiceRepository
                     ->orWhere('supplier_ref', 'like', '%' . $searchKeyword . '%');
             });
         }
-if ($startDate && $endDate) {
-    $invoices->whereBetween(
-        \DB::raw("STR_TO_DATE(date, '%e-%b-%Y')"),
-        [$startDate, $endDate]
-    );
-}
+        if ($startDate && $endDate) {
+            $invoices->whereBetween(
+                \DB::raw("STR_TO_DATE(date, '%e-%b-%Y')"),
+                [$startDate, $endDate]
+            );
+        }
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);
         }
