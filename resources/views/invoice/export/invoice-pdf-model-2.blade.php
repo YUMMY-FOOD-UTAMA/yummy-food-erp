@@ -82,7 +82,7 @@
 
         .content {
             width: 100%;
-            min-height: 100%;
+            min-height: auto;
             box-sizing: border-box;
         }
     </style>
@@ -138,7 +138,7 @@
         <thead>
         <tr>
             <th style="text-align: center;">No</th>
-            <th style="width:300px; max-width: 300px; text-align: center;">Product Name</th>
+            <th style="width:230px; max-width: 230px; text-align: center;">Product Name</th>
             <th class="min-w-60px" style="text-align: center;">Qty</th>
             <th class="min-w-80px" style="text-align: center;">Unit Price</th>
             <th class="min-w-50px" style="text-align: center;">Unit</th>

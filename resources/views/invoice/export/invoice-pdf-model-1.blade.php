@@ -79,7 +79,7 @@
 
         .content {
             width: 100%;
-            min-height: 100%;
+            min-height: auto;
             box-sizing: border-box;
         }
     </style>

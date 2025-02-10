@@ -50,7 +50,7 @@ class CustomerInvoiceRepository
             });
         }
 
-        $customerInvoices = $customerInvoices->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
+        $customerInvoices = $customerInvoices->orderBy('account_name')->paginate($pageSize)->appends(request()->query());
 
         return $customerInvoices;
     }
