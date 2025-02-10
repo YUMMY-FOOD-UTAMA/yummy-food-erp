@@ -21,12 +21,19 @@ class Util
     }
 
 
-    public static function rupiah($amount, $notRound = false)
+    public static function rupiah($amount, $notRound = false, $withoutRp = false, $notRoundIfDecimalZero = false)
     {
-        if ($notRound) {
-            return 'Rp' . number_format($amount, 2, ',', '.');
+        if (!$notRound) {
+            $amount = self::roundAmount($amount);
         }
-        return 'Rp' . number_format(self::roundAmount($amount), 0, ',', '.');
+
+        if ($notRoundIfDecimalZero && fmod($amount, 1) == 0) {
+            $formatted = number_format($amount, 0, ',', '.');
+        } else {
+            $formatted = number_format($amount, 2, ',', '.');
+        }
+
+        return $withoutRp ? $formatted : 'Rp' . $formatted;
     }
 
     public static function amountToIndonesia($amount)

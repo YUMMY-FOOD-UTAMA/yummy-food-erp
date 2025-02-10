@@ -5,10 +5,11 @@
         </th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
+        <th style="vertical-align: middle; text-align: left;">Invoice Date</th>
         <th style="vertical-align: middle; text-align: left;">Invoice Number</th>
         <th style="vertical-align: middle; text-align: left;">Grand Total Include Tax</th>
         <th style="vertical-align: middle; text-align: left;">Kwitansi Number</th>
-        <th style="vertical-align: middle; text-align: left;">Billing</th>
+        <th style="vertical-align: middle; text-align: left;">Billing Status</th>
         <th class="text-end" style="width: 250px; min-width: 70px; max-width: 250px;">Actions</th>
     @endslot
     @slot('slotTbodyTr')
@@ -22,10 +23,19 @@
                 {{--                @endif--}}
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
+                <td>{{$invoice->date}}</td>
                 <td>{{$invoice->number}}</td>
                 <td>{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"])}}</td>
                 <td>{{$invoice->receipt_number}}</td>
-                <td>{{$invoice->status}}</td>
+                <td>
+                    @if ($invoice->status === 'done')
+                        <span style="color: green; font-weight: bold;">Done</span>
+                    @elseif ($invoice->status === 'pending')
+                        <span style="color: orange; font-weight: bold;">Pending</span>
+                    @else
+                        <span>{{ $invoice->status }}</span>
+                    @endif
+                </td>
                 <td>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalDetailInvoice{{$invoice->id}}"

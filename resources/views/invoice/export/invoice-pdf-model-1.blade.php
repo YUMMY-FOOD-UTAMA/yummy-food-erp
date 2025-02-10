@@ -8,7 +8,7 @@
     <title>Document</title>
     <style>
         @page {
-            size: 21.2cm 28cm;
+            size: 22cm 28cm;
             margin-top: 3cm;
             margin-bottom: 1.5cm; /* Atau 56.69px */
             margin-left: 1cm;
@@ -42,7 +42,7 @@
             border: 1px solid black;
             text-align: left;
             padding: 3px;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .text-center {
@@ -79,7 +79,7 @@
 
         .content {
             width: 100%;
-            min-height: 100%;
+            min-height: auto;
             box-sizing: border-box;
         }
     </style>
@@ -138,7 +138,7 @@
             <th style="width:90px; max-width: 90px; text-align: center;">Delivery Note<br>Number</th>
             <th style="width:100px; max-width: 100px; text-align: center;">Buyer Order<br>Number</th>
             <th style="width:70px; max-width: 70px; text-align: center;">Delivery<br>Note Date</th>
-            <th style="width:130px; max-width: 130px; text-align: center;">Product Name</th>
+            <th style="width:200px; max-width: 200px; text-align: center;">Product Name</th>
             <th class="min-w-50px" style="text-align: center;">Qty</th>
             <th class="min-w-80px" style="text-align: center;">Unit Price</th>
             <th class="min-w-80px" style="text-align: center;">Total Price</th>
@@ -153,8 +153,8 @@
                 <td style="text-align: center;">{{ $product->delivery_note_date }}</td>
                 <td>{{ $product->name }}</td>
                 <td style="text-align: center;">{{ $product->quantity }} {{ $product->unit }}</td>
-                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->rate,true)}}</td>
-                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->rate * $product->quantity)}}</td>
+                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->rate,true,true,true)}}</td>
+                <td style="text-align: right">{{\App\Utils\Util::rupiah($product->rate * $product->quantity,false,true,true)}}</td>
             </tr>
         @endforeach
         <tr>
@@ -172,27 +172,27 @@
                 </div>
             </td>
             <td>Sub Total</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['sub_total'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['sub_total'],false,true,true)}}</td>
         </tr>
         <tr>
             <td>Discount</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['discount_total'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['discount_total'],false,true,true)}}</td>
         </tr>
         <tr>
             <td>DPP</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'],false,true,true)}}</td>
         </tr>
         <tr>
             <td>DPP Nilai lain</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'],false,true,true)}}</td>
         </tr>
         <tr>
             <td>PPN 12%</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'])}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'],false,true,true)}}</td>
         </tr>
         <tr>
             <td style="font-weight: bold;">Grand Total</td>
-            <td style="font-weight: bold; text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['grand_total'])}}</td>
+            <td style="font-weight: bold; text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['grand_total'],false,false,true)}}</td>
         </tr>
         <tr>
             <td style="border: 0"></td>
