@@ -50,7 +50,10 @@ class CustomerInvoiceRepository
             });
         }
 
-        $customerInvoices = $customerInvoices->orderBy('account_name')->paginate($pageSize)->appends(request()->query());
+        $customerInvoices = $customerInvoices
+            ->orderByRaw("CASE WHEN account_name IS NULL OR account_name = '' THEN 1 ELSE 0 END, account_name")
+            ->paginate($pageSize)
+            ->appends(request()->query());
 
         return $customerInvoices;
     }
