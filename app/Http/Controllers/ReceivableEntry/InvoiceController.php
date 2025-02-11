@@ -239,9 +239,22 @@ class InvoiceController extends Controller
 
             $date = Carbon::createFromFormat('j-M-Y', '3-Jan-2025');
             $monthName = $date->translatedFormat('F');
-            $fileName = "Faktur Pajak Excel_{$monthName}_{$formatInvoiceNumber}.xlsx";
+            $fileName = "Faktur Pajak Excel_{$monthName}_{$formatInvoiceNumber}";
             if ($exportModel === "header_and_body_tax_invoice") {
+                $fileName = $fileName.'.xlsx';
                 return Excel::download(new ExportInvoiceTax($invoices, $request), $fileName);
+            } else {
+                $fileName = $fileName.'.xml';
+                $xml = view('invoice.export.xml_tax_invoice', compact(
+                    'invoices',
+                    'request'
+                ))->render();
+
+                return response()->streamDownload(function () use ($xml) {
+                    echo $xml;
+                }, $fileName, [
+                    'Content-Type' => 'application/xml',
+                ]);
             }
         }
     }
