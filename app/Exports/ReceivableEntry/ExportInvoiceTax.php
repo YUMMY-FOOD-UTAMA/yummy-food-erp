@@ -80,7 +80,7 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
                 $invoice->customer->npwp_customer,
                 $this->request->get('buyer_id_type') ?? 'TIN',
                 'IDN',
-                $this->request->get('number_document_buyer') ?? '',
+                $this->request->get('number_document_buyer') == '' ? '' : '-',
                 $invoice->customer->name,
                 $invoice->customer->npwp_address,
                 $this->request->get('email_buyer') ?? '',
@@ -111,7 +111,12 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
 
     public function columnFormats(): array
     {
-        return ['B' => NumberFormat::FORMAT_DATE_DDMMYYYY];
+        return [
+            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'I' => NumberFormat::FORMAT_TEXT,
+            'J' => NumberFormat::FORMAT_TEXT,
+            'Q' => NumberFormat::FORMAT_TEXT,
+        ];
     }
 }
 
@@ -169,6 +174,7 @@ class ExportInvoiceTaxBody implements FromArray, WithTitle, WithHeadings, WithCo
 
             }
         }
+        $data[] = ['END'];
 
         return $data;
     }
