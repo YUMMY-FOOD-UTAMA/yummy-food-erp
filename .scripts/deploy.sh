@@ -3,13 +3,13 @@ set -e
 
 echo "Deployment started ..."
 
-#(php artisan down) || true
-#
-#git pull origin main
-#
-#composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-#
-#php artisan clear-compiled
+(php artisan down) || true
+
+git pull origin main
+
+composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+php artisan clear-compiled
 
 php artisan config:clear
 php artisan config:cache
