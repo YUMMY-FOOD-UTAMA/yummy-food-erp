@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Employee;
+use App\Utils\Primitives\Enum\EmployeeConfigs;
 use App\Utils\Primitives\ListPageSize;
 use Illuminate\Http\Request;
 
@@ -62,7 +63,7 @@ class EmployeeRepository
             'user.subDistrict',
             'user.subDistrictVillage',
             'user.province',
-            'employeeConfigs'
+            'employeeConfigs.externalEmployee.user'
         ]);
         if ($this->onlyTrashed) {
             $employees = $employees->onlyTrashed();
@@ -120,8 +121,30 @@ class EmployeeRepository
             });
         }
 
-        $employees = $employees->orderByDesc('created_at')->paginate($pageSize)->appends(request()->query());
+        $employees = $employees->orderByDesc('created_at')
+            ->paginate($pageSize)
+            ->appends(request()->query());
 
+        $employees->getCollection()->transform(function ($employee) {
+            $groupedConfigs = $employee->employeeConfigs
+                ->whereIn('type', [
+                    EmployeeConfigs::CRM_APPROVAL_SCHEDULE_VISIT,
+                    EmployeeConfigs::CRM_APPROVAL_SALES_MAPPING,
+                ])
+                ->groupBy('type')
+                ->map(function ($items, $type) {
+                    return [
+                        'type' => $type,
+                        'externalEmployees' => $items->pluck('externalEmployee')->toArray(),
+                    ];
+                })
+                ->values();
+
+            $employee->employeeConfigs = $groupedConfigs;
+
+
+            return $employee;
+        });
         return $employees;
     }
 }

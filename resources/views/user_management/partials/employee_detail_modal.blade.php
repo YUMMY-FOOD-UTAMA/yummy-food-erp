@@ -106,6 +106,39 @@
                                       label="Address"
                                       name="address" :default-value="$employee->user->address"
                                       placeholder="Address..."></x-form.text-area>
+
+                    <x-table.general-table :with-out-card-body="true">
+                        @slot('slotTheadTh')
+                            <th style="width: 20px; vertical-align: middle; text-align: left;">Feature</th>
+                            <th style="vertical-align: middle; text-align: left;">Approval Type</th>
+                            <th style="vertical-align: middle; text-align: left;">Approved By</th>
+                        @endslot
+                        @slot('slotTbodyTr')
+                            @foreach($employee->employeeConfigs as $employeeConfig)
+                                <tr>
+                                    <td>{{\App\Utils\Primitives\Enum\EmployeeConfigs::getByType($employeeConfig["type"])["feature"]}}</td>
+                                    <td>{{\App\Utils\Primitives\Enum\EmployeeConfigs::getByType($employeeConfig["type"])["name"]}}</td>
+                                    <td>
+                                        <div class="row g-9 mb-8">
+                                            <div>
+                                                <!--begin::Form group-->
+                                                <div class="form-group">
+                                                    <div class="mt-2 w-100 align-items-center">
+                                                        @foreach($employeeConfig["externalEmployees"] as $value)
+                                                            <x-form.input class="col-md-6 mt-2 fv-row" view-only="true"
+                                                                          :default-value='$value["user"]["name"]'
+                                                                          size-form="sm"
+                                                                          name="sub_district_village"/>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endslot
+                    </x-table.general-table>
                 </div>
             </div>
         </div>
