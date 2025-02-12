@@ -20,23 +20,26 @@
                 <td>{{$employee->subDepartment->name}}</td>
                 <td>{{$employee->position}}</td>
                 <td>{{$employee->levelGrade->levelName->name}}</td>
-                <td>{{$employee->user->roleName()}}</td>
+                <td>
+                    {{$employee->user->roleName()}}
+                    <x-modal id="modal_view{{$employee->id}}"
+                             title="Data {{$employee->user->email}}" size="1000">
+                        @include('user_management.partials.employee_detail_modal',['employee' => $employee])
+                    </x-modal>
+                </td>
                 @if($isTrash)
                     <x-table.action-button restore-route-name="user-management.employee.restore"
                                            restore-route="{{route('user-management.employee.restore',$employee->id)}}"
                                            modal-view-i-d="modal_view{{$employee->id}}"/>
                 @else
                     <x-table.action-button
-                            modal-view-i-d="modal_view{{$employee->id}}"
-                            soft-delete-route-name="user-management.employee.destroy"
-                            soft-delete-route="{{route('user-management.employee.destroy',$employee->id)}}"
-                            delete-preview="{{$employee->user->email}}"/>
+                        modal-view-i-d="modal_view{{$employee->id}}"
+                        soft-delete-route-name="user-management.employee.destroy"
+                        soft-delete-route="{{route('user-management.employee.destroy',$employee->id)}}"
+                        delete-preview="{{$employee->user->email}}"/>
                 @endif
+
             </tr>
-            <x-modal id="modal_view{{$employee->id}}"
-                     title="Data {{$employee->user->email}}" size="1000">
-                @include('user_management.partials.employee_detail_modal',['employee' => $employee])
-            </x-modal>
         @endforeach
     @endslot
 </x-table.general-table>

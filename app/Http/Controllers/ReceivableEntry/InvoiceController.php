@@ -228,20 +228,33 @@ class InvoiceController extends Controller
             $invoices = $invoices->sortByDesc('date');
 
             $formatInvoiceNumber = "";
-            foreach ($invoices as $invoice) {
-                if ($formatInvoiceNumber == "") {
-                    $formatInvoiceNumber = $invoice->number;
-                } else {
-                    $formatInvoiceNumber = $formatInvoiceNumber . " - " . $invoice->number;
-                }
+            if (count($invoices) > 0) {
+                $firstInvoice = $invoices->first()->number;
+                $lastInvoice = $invoices->last()->number;
+
+                $formatInvoiceNumber = ($firstInvoice === $lastInvoice)
+                    ? $firstInvoice
+                    : "{$firstInvoice} s.d {$lastInvoice}";
             }
             $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
 
             $date = Carbon::createFromFormat('j-M-Y', '3-Jan-2025');
             $monthName = $date->translatedFormat('F');
-            $fileName = "Faktur Pajak Excel_{$monthName}_{$formatInvoiceNumber}.xlsx";
             if ($exportModel === "header_and_body_tax_invoice") {
+                $fileName = "Faktur Pajak Excel_{$monthName}_{$formatInvoiceNumber}.xlsx";
                 return Excel::download(new ExportInvoiceTax($invoices, $request), $fileName);
+            } else {
+                $fileName = "Faktur Pajak Xml_{$monthName}_{$formatInvoiceNumber}.xml";
+                $xml = view('invoice.export.xml_tax_invoice', compact(
+                    'invoices',
+                    'request'
+                ))->render();
+
+                return response()->streamDownload(function () use ($xml) {
+                    echo $xml;
+                }, $fileName, [
+                    'Content-Type' => 'application/xml',
+                ]);
             }
         }
     }

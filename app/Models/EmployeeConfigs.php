@@ -19,4 +19,10 @@ class EmployeeConfigs extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function externalEmployee()
+    {
+        return $this->belongsTo(Employee::class, 'external_id', 'id');
+    }
+
 }

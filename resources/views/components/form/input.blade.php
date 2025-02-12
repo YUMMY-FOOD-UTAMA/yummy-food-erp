@@ -1,23 +1,27 @@
 @if($viewOnly)
     <div {{$attributes->merge(['class' => ''])}}>
-        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">{{$label}}
-            @if($tooltip)
-                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                   title="{{$tooltip}}"></i>
-            @endif
-        </label>
+        @if($label)
+            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">{{$label}}
+                @if($tooltip)
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                       title="{{$tooltip}}"></i>
+                @endif
+            </label>
+        @endif
         <input type="text" disabled class="form-control form-control-solid form-control-{{$sizeForm}}"
                name="{{$name}}" value="{{$defaultValue}}" id="{{$id}}"/>
     </div>
 @else
     <div {{$attributes->merge(['class' => ''])}}>
-        <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-            <span class="{{$required ? 'required' : ''}}">{{$label}}</span>
-            @if($tooltip)
-                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                   title="{{$tooltip}}"></i>
-            @endif
-        </label>
+        @if($label)
+            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+                <span class="{{$required ? 'required' : ''}}">{{$label}}</span>
+                @if($tooltip)
+                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                       title="{{$tooltip}}"></i>
+                @endif
+            </label>
+        @endif
 
         <div class="d-flex w-100 align-items-center">
             <input type="{{$type == "date" ? "text" : $type}}"
