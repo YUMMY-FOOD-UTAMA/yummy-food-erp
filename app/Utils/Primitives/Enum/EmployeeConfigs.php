@@ -32,6 +32,24 @@ enum EmployeeConfigs
         }, $options);
     }
 
+    public static function getByType($type): array
+    {
+        if ($type === self::CRM_APPROVAL_SALES_MAPPING) {
+            return [
+                "id" => self::CRM_APPROVAL_SALES_MAPPING,
+                "name" => "Sales Mapping Approval",
+                "feature" => self::FEATURE_CRM,
+            ];
+        }
+        if ($type === self::CRM_APPROVAL_SCHEDULE_VISIT) {
+            return [
+                "id" => self::CRM_APPROVAL_SCHEDULE_VISIT,
+                "feature" => self::FEATURE_CRM,
+                "name" => "Schedule Visit Approval"
+            ];
+        }
+    }
+
     public static function tableValues(): array
     {
         $options = [

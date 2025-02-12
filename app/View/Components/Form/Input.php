@@ -26,7 +26,7 @@ class Input extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $label, $withClipboard = false, $mustUpperCase = false, $sizeForm = 'lg', $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
+    public function __construct($name, $label = null, $withClipboard = false, $mustUpperCase = false, $sizeForm = 'lg', $placeholder = '', $viewOnly = false, $uuid = null, $tooltip = null, $id = null, $type = 'text', $defaultValue = null, $required = false)
     {
         $this->sizeForm = $sizeForm;
         $this->name = $name;
