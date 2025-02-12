@@ -36,7 +36,7 @@
                 <BuyerCountry>IDN</BuyerCountry>
 
                 @if($request->get('number_document_buyer'))
-                    <BuyerDocumentNumber>-</BuyerDocumentNumber>
+                    <BuyerDocumentNumber>{{$request->get('number_document_buyer')}}</BuyerDocumentNumber>
                 @else
                     <BuyerDocumentNumber/>
                 @endif

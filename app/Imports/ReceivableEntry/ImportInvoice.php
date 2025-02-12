@@ -136,9 +136,11 @@ class ImportInvoice implements ToCollection, WithEvents
         $totalDiscountProduct = 0;
 
         foreach ($productData as $index => $row) {
-            if ($row[1] == "PPN") {
-                $ppn = $row[10];
-                break;
+            foreach ($row as $key => $value) {
+                if ((strtolower($value) === 'ppn' || strtolower($value) === 'total')) {
+                    $ppn = 11;
+                    break 2;
+                }
             }
 
             if ($isProductData && $row[0] != "") {
@@ -146,7 +148,7 @@ class ImportInvoice implements ToCollection, WithEvents
                 $discount = $row[$rowDiscount];
                 $totalAmountProduct += $row[$rowRate] * $qty;
                 if ($discount != 0) {
-                    $discount = $discount/100;
+                    $discount = $discount / 100;
                     $discountPerProduct = ($row[$rowRate] * $discount);
                     $totalDiscountProduct += $discountPerProduct * $qty;
                 }
