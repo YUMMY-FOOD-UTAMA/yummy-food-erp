@@ -1,4 +1,4 @@
-<?xml version = "1.0" encoding = "utf-8" ?>
+<? xml version = "1.0" encoding = "utf-8" ?>
 <TaxInvoiceBulk xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <TIN>0013470778007000</TIN>
     <ListOfTaxInvoice>
@@ -38,7 +38,7 @@
                 @if($request->get('number_document_buyer'))
                     <BuyerDocumentNumber>{{$request->get('number_document_buyer')}}</BuyerDocumentNumber>
                 @else
-                    <BuyerDocumentNumber/>
+                    <BuyerDocumentNumber>-</BuyerDocumentNumber>
                 @endif
 
                 <BuyerName>{{$invoice->customer->name}}</BuyerName>
