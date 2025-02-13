@@ -64,11 +64,13 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
 
     public function array(): array
     {
+        $rowIndex = 0;
         $data[] = [];
         foreach ($this->invoices as $i => $invoice) {
+            $rowIndex++;
             $date = DateTime::createFromFormat('j-M-Y', $invoice->date);
             $data[] = [
-                $i + 1,
+                $rowIndex,
                 Date::dateTimeToExcel($date),
                 'Normal',
                 $this->request->get('code_transaction') ?? '04',
