@@ -17,7 +17,20 @@
             @include('invoice.partials.filter_invoice')
             <x-table.basic-filter-and-export style="pointer-events: none" export-modal-i-d="invoiceExportAllInOne"
                                              export-route="receivable.entry.invoice.export"
-                                             name="Invoice"/>
+                                             name="Invoice">
+                @slot('slotExtraBtn')
+                    <form action="{{route('receivable.entry.invoice.deletes')}}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button onclick="processSelected('deleted_select_box_btn')"
+                                id="deleted_select_box_btn" style="pointer-events: none" class="btn btn-danger ms-3">
+                            Delete
+                        </button>
+                        <input type="hidden" name="invoice_ids" id="deleted_invoice_ids">
+
+                    </form>
+                @endslot
+            </x-table.basic-filter-and-export>
             <x-modal id="invoiceExportAllInOne"
                      title="Export Kwitansi" size="1000">
                 @include('invoice.partials.export_modal',['onlyReceipt'=>true,'invoice'=>null])
@@ -30,3 +43,22 @@
     </x-general-section-content>
 
 @endsection
+@push('script')
+    <script>
+        function processSelected(btnID, invoiceIDsInput) {
+            const selectedIds = Array.from(document.querySelectorAll('.select-item-invoice:checked'))
+                .map(cb => cb.value);
+
+            if (selectedIds.length === 0) {
+                toastr.warning('No items selected.')
+                return;
+            }
+
+            if (invoiceIDsInput && invoiceIDsInput != '') {
+                document.getElementById(invoiceIDsInput).value = selectedIds.join(',');
+            }
+            document.getElementById('deleted_invoice_ids').value = selectedIds.join(',');
+            document.getElementById(btnID).submit();
+        }
+    </script>
+@endpush

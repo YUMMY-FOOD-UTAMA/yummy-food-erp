@@ -77,53 +77,57 @@ class InvoiceController extends Controller
         ]);
 
         $file = $request->file('file');
-        $import = new ImportInvoice();
+        $import = new ImportInvoice($request->get("type"));
         Excel::import($import, $file);
         $data = $import->getProcessedData();
 
-        $existsInvoice = Invoice::where("number", $data['invoice_number'])->withTrashed()->first();
-        if ($existsInvoice) {
-            return redirect()->back()->with([
-                'status' => "error",
-                'message' => "Invoice Number already exists, check in data invoice or check in trashed"
-            ]);
-        }
+//        foreach ($data as $invoice) {
+//            $existsInvoice = Invoice::where("number", $invoice['invoice_number'])->withTrashed()->first();
+//            if ($existsInvoice) {
+//                return redirect()->back()->with([
+//                    'status' => "error",
+//                    'message' => "Invoice Number already exists, check in data invoice or check in trashed"
+//                ]);
+//            }
+//        }
 
         $res = Transaction::doTx(function () use ($data, $request) {
-            $customer = CustomerInvoice::firstOrCreate(
-                ['name' => $data['customer_name']],
-                ['address' => $data['address'], "account_name" => ""]
-            );
+            foreach ($data as $invoice) {
+                $customer = CustomerInvoice::firstOrCreate(
+                    ['name' => $invoice['customer_name']],
+                    ['address' => $invoice['address'], "account_name" => ""]
+                );
 
-            $invoice = Invoice::create([
-                'customer_invoice_id' => $customer->id,
-                'supplier_name' => $data['supplier_name'],
-                'supplier_address' => $data['supplier_address'],
-                'supplier_ref' => $data['supplier_ref'],
-                'number' => $data['invoice_number'],
-                'date' => $data['invoice_date'],
-                'term_of_payment' => $data['term_of_payment'],
-                'term_of_delivery' => $data['term_of_delivery'],
-                'ppn' => $data['ppn'],
-                'product_total_amount' => $data['product_total_amount'],
-                'product_total_discount' => $data['product_total_discount'],
-            ]);
-
-
-            foreach ($data['products'] as $product) {
-                ProductInvoice::create([
-                    'invoice_id' => $invoice->id,
-                    'name' => $product['name'],
-                    'buyer_order_number' => $product['buyer_order_number'],
-                    'delivery_note' => $product['delivery_note'],
-                    'delivery_note_date' => $product['delivery_note_date'],
-                    'quantity' => $product['quantity'],
-                    'unit' => $product['unit'],
-                    'rate' => $product['rate'],
-                    'net_rate' => $product['net_rate'],
-                    'discount' => $product['discount'],
-                    'amount' => $product['amount'],
+                $invoiceCreate = Invoice::create([
+                    'customer_invoice_id' => $customer->id,
+                    'supplier_name' => $invoice['supplier_name'],
+                    'supplier_address' => $invoice['supplier_address'],
+                    'supplier_ref' => $invoice['supplier_ref'],
+                    'number' => $invoice['invoice_number'],
+                    'date' => $invoice['invoice_date'],
+                    'term_of_payment' => $invoice['term_of_payment'],
+                    'term_of_delivery' => $invoice['term_of_delivery'],
+                    'ppn' => $invoice['ppn'],
+                    'product_total_amount' => $invoice['product_total_amount'],
+                    'product_total_discount' => $invoice['product_total_discount'],
                 ]);
+
+
+                foreach ($invoice['products'] as $product) {
+                    ProductInvoice::create([
+                        'invoice_id' => $invoiceCreate->id,
+                        'name' => $product['name'],
+                        'buyer_order_number' => $product['buyer_order_number'],
+                        'delivery_note' => $product['delivery_note'],
+                        'delivery_note_date' => $product['delivery_note_date'],
+                        'quantity' => $product['quantity'],
+                        'unit' => $product['unit'],
+                        'rate' => $product['rate'],
+                        'net_rate' => $product['net_rate'],
+                        'discount' => $product['discount'],
+                        'amount' => $product['amount'],
+                    ]);
+                }
             }
         });
         if ($res) {
@@ -261,8 +265,20 @@ class InvoiceController extends Controller
 
     public function delete(Invoice $invoice)
     {
-        ProductInvoice::where('invoice_id', $invoice->id)->delete();
+        ProductInvoice::where('invoice_id', $invoice->id)->forceDelete();
         $invoice->forceDelete();
+
+        return redirect()->back()->with([
+            'status' => "success",
+            'message' => "delete invoice successfully"
+        ]);
+    }
+
+    public function deletes(Request $request)
+    {
+        $invoiceIDs = explode(",", $request->input('invoice_ids'));
+        ProductInvoice::whereIn('invoice_id', $invoiceIDs)->forceDelete();
+        Invoice::whereIn('id', $invoiceIDs)->forceDelete();
 
         return redirect()->back()->with([
             'status' => "success",
