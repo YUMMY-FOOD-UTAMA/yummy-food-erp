@@ -96,22 +96,6 @@
             </form>
         @endslot
     </x-tabs>
-    @push('script')
-        <script>
-            function processSelected(btnID, invoiceIDsInput) {
-                const selectedIds = Array.from(document.querySelectorAll('.select-item-invoice:checked'))
-                    .map(cb => cb.value);
-
-                if (selectedIds.length === 0) {
-                    toastr.warning('No items selected.')
-                    return;
-                }
-
-                document.getElementById(invoiceIDsInput).value = selectedIds.join(',');
-                document.getElementById(btnID).submit();
-            }
-        </script>
-    @endpush
 @else
     <x-tabs :tabs="[
                         [

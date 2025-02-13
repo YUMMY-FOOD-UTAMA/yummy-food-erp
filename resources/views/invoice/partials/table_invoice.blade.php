@@ -91,6 +91,7 @@
 @push('script')
     <script>
         let btnDomID = document.getElementById("receivable.entry.invoice.exportbtn");
+        let btnDomIDDeleteSelectBox = document.getElementById("deleted_select_box_btn");
         let selectItems = document.querySelectorAll(".select-item-invoice");
 
         function updateButtonVisibility() {
@@ -109,9 +110,13 @@
             if (checkedItems.length > 0) {
                 btnDomID.style.pointerEvents = "auto";
                 btnDomID.style.opacity = "1";
+                btnDomIDDeleteSelectBox.style.pointerEvents = "auto";
+                btnDomIDDeleteSelectBox.style.opacity = "1";
             } else {
                 btnDomID.style.pointerEvents = "none";
                 btnDomID.style.opacity = "0.5";
+                btnDomIDDeleteSelectBox.style.pointerEvents = "none";
+                btnDomIDDeleteSelectBox.style.opacity = "0.5";
             }
         }
 
