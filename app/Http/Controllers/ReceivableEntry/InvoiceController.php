@@ -77,7 +77,7 @@ class InvoiceController extends Controller
         ]);
 
         $file = $request->file('file');
-        $import = new ImportInvoice();
+        $import = new ImportInvoice($request->get("type"));
         Excel::import($import, $file);
         $data = $import->getProcessedData();
 

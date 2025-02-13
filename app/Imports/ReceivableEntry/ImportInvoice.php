@@ -8,11 +8,18 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Events\BeforeSheet;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ImportInvoice implements ToCollection, WithEvents
 {
+    private $type = "single_invoice";
     private $processedData = [];
     private int $currentSheetIndex = -1;
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
 
     private function getBuyerData(Collection $buyerData)
     {
@@ -207,7 +214,8 @@ class ImportInvoice implements ToCollection, WithEvents
     /**
      * @param Collection $rows
      */
-    public function collection(Collection $rows)
+
+    public function singleInvoice(Collection $rows)
     {
         if ($this->currentSheetIndex !== 0) {
             return;
@@ -231,6 +239,83 @@ class ImportInvoice implements ToCollection, WithEvents
             'supplier_ref' => $invoiceData['supplierRef'],
             'supplier_name' => "YUMMY FOOD UTAMA",
         ];
+    }
+
+    public function multipleInvoice(Collection $rows)
+    {
+        //
+        $invoice[] = [];
+        $fetch = false;
+        $invoiceDate = '';
+        $invoiceNo = '';
+        $buyerName = '';
+        $buyerAddress = '';
+        $ppn = 11;
+        $termsOfDelivery = '';
+        $termOfPayment = '';
+        $supplierRef = '';
+        $supplierName = 'YUMMY FOOD UTAMA';
+        $supplierAddress = 'Jl. Raya Bogor No. 40 Kec. Ciracas, Jakarta 13750 <br>Indonesia';
+        $products = [];
+        $productTotalAmount = 0;
+        $productTotalDiscount = 0;
+        foreach ($rows as $index => $row) {
+            if ($row[0] == 'Date') {
+                $fetch = true;
+                continue;
+            }
+            if ($fetch) {
+                if ($row[0] != 0) {
+                    $invoiceDate = Date::excelToDateTimeObject($row[0])->format('Y-m-d');
+                    $invoiceNo = ltrim($row[4], ": ");
+                    $buyerName = $row[2];
+                    $buyerAddress = $row[3];
+                    $termsOfDelivery = $row[14];
+                    $termOfPayment = $row[12];
+                    $supplierRef = '-';
+                } else {
+                    $qty = (int)floatval($row[24] ?? '0');
+                    $products[] = [
+                        'name' => $row[1],
+                        'quantity' => $qty,
+                        'rate' => $row[26] ?? 0,
+//                        'unit' => $row[$rowUnit] ?? "",
+//                        'discount' => $discount,
+//                        'net_rate' => $row[$rowNetRate] ?? 0,
+//                        'amount' => $row[$rowAmount] ?? 0,
+//                        'delivery_note' => $invoiceData["deliveryNotes"][count($products)] ?? $invoiceData["deliveryNotes"][0],
+//                        'buyer_order_number' => $invoiceData["buyerOrderNumbers"][count($products)] ?? $invoiceData["buyerOrderNumbers"][0],
+//                        'date' => $invoiceData["productDates"][count($products)] ?? $invoiceData["productDates"][0],
+//                        'delivery_note_date' => $invoiceData["deliveryNoteDates"][count($products)] ?? $invoiceData["deliveryNoteDates"][0],
+                    ];
+                }
+            }
+        }
+
+        $this->processedData = [
+            'invoice_number' => $invoiceData['invoiceNo'],
+            'invoice_date' => $invoiceData['dateInvoice'],
+            'supplier_address' => "Jl. Raya Bogor No. 40 Kec. Ciracas, Jakarta 13750 <br>Indonesia",
+            'customer_name' => $buyerData["buyerName"],
+            'address' => $buyerData["buyerAddress"],
+            'products' => $productData['products'],
+            'product_total_amount' => $productData['totalAmountProduct'],
+            'product_total_discount' => round($productData['totalDiscountProduct'] ?? 0, 2),
+            'ppn' => $productData['ppn'],
+            'term_of_payment' => $invoiceData['termOfPayment'],
+            'term_of_delivery' => $invoiceData['termOfDelivery'],
+            'supplier_ref' => $invoiceData['supplierRef'],
+            'supplier_name' => "YUMMY FOOD UTAMA",
+        ];
+    }
+
+    public function collection(Collection $rows)
+    {
+        if ($this->type == "single_invoice") {
+            $this->singleInvoice($rows);
+        } else {
+            $this->multipleInvoice($rows);
+        }
     }
 
     public function registerEvents(): array

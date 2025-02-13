@@ -4,10 +4,15 @@
                   placeholder="Import Invoice..."
                   type="file"
                   name="file"/>
-{{--    <x-form.input class="d-flex flex-column mb-8"--}}
-{{--                  tooltip="Fill in if the customer account invoice data is not yet available in the database"--}}
-{{--                  label="Customer Account"--}}
-{{--                  placeholder="Customer Account..."--}}
-{{--                  type="customer_account_name"--}}
-{{--                  name="customer_account_name"/>--}}
+
+    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+        <span class="required">Type Import Invoice</span>
+    </label>
+    <select name="type" aria-label="Type Import Invoice" data-allow-clear="true"
+            data-control="select2" required data-dropdown-parent="#modal_createInvoice"
+            data-placeholder="Type Import Invoice"
+            class="form-select form-select-solid form-select-lg">
+        <option value="single_invoice">Single Invoice</option>
+        <option value="multiple_invoice">Multiple/Group Invoice</option>
+    </select>
 @endslot
