@@ -294,6 +294,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                             'supplier_name' => $supplierName,
                         ];
                         $productTotalAmount = 0;
+                        $productTotalDiscount = 0;
                         $products = [];
                     }
                     $doAndDoDate = ltrim($row[15], ': ');
@@ -307,10 +308,6 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     $buyerName = $row[2];
                     $buyerAddress = $row[3];
                     $termsOfDelivery = $row[14];
-                    $productTotalDiscount = 0;
-                    if ($row[28] != 0) {
-                        $productTotalDiscount = $row[28] - $row[27];
-                    }
                     $termOfPayment = $row[12];
                     $supplierRef = '-';
                 } else {
@@ -327,6 +324,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     $rate = $row[26] ?? 0;
                     $grossProduct = $rate * $qty;
                     $discountPrice = $grossProduct - $totalPriceProduct;
+                    $productTotalDiscount += $discountPrice;
                     $discount = $grossProduct > 0 ? ($discountPrice / $grossProduct) * 100 : 0;
                     if ($discount != 0){
                         $discount = $discount / 100;
