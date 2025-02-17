@@ -319,17 +319,30 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                         $unit = "pail";
                     }
                     $qty = (int)floatval($row[24] ?? '0');
-                    $netRate = $row[26] ?? 0;
-                    $rate = 0;
-                    $productTotalAmount += $rate * $qty;
+                    $totalPriceProduct = $row[27] ?? 0;
+                    $netRate = 0;
+                    if ($totalPriceProduct != 0 && $qty != 0) {
+                        $netRate = $totalPriceProduct / $qty;
+                    }
+                    $rate = $row[26] ?? 0;
+                    $grossProduct = $rate * $qty;
+                    $discountPrice = $grossProduct - $totalPriceProduct;
+                    $discount = $grossProduct > 0 ? ($discountPrice / $grossProduct) * 100 : 0;
+                    if ($discount != 0){
+                        $discount = $discount / 100;
+                    }
+                    $productTotalAmount += $grossProduct;
+
+
                     $products[] = [
                         'name' => $row[1],
                         'quantity' => $qty,
                         'rate' => $rate,
                         'unit' => $unit,
-                        'discount' => 0,
+                        'discount' => $discount,
+                        'discount_price'=>$discountPrice,
                         'net_rate' => $netRate,
-                        'amount' => 0,
+                        'amount' => $totalPriceProduct,
                         'delivery_note' => $deliveryNote,
                         'buyer_order_number' => $buyerOrderNumber,
                         'delivery_note_date' => $deliveryNoteDate,
