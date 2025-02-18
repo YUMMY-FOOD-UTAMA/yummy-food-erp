@@ -129,10 +129,10 @@
         @foreach ($invoices as $invoice)
             <tr>
                 <td style="text-align: center;">{{ $loop->iteration }}</td>
-                <td style="text-align: center;">{{$invoice->customer->name}}</td>
-                <td style="text-align: center;">{{$invoice->customer->account_name}}</td>
-                <td style="text-align: center;">{{$invoice->receipt_number}}</td>
-                <td style="text-align: center;">{{$invoice->products[0]->buyer_order_number}}</td>
+                <td style="text-align: left;">{{$invoice->customer->name}}</td>
+                <td style="text-align: left;">{{$invoice->customer->account_name}}</td>
+                <td style="text-align: left;">{{$invoice->receipt_number}}</td>
+                <td style="text-align: left;">{{$invoice->products[0]->buyer_order_number}}</td>
                 <td>{{$invoice->number}}</td>
                 <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"],false,true,true)}}</td>
             </tr>

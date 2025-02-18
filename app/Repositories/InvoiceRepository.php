@@ -100,6 +100,8 @@ class InvoiceRepository
         $searchKeyword = $this->request->query('search');
         $startDate = $this->request->query('start_date');
         $endDate = $this->request->query('end_date');
+        $startCreatedDate = $this->request->query('start_created_at');
+        $endCreatedDate = $this->request->query('end_created_at');
         $customerID = $this->request->query('customer_invoice_id');
         $productInvoiceID = $this->request->query('product_invoice_id');
         $invoiceNo = $this->request->query('invoice_no');
@@ -138,6 +140,9 @@ class InvoiceRepository
                 \DB::raw("STR_TO_DATE(date, '%e-%b-%Y')"),
                 [$startDate, $endDate]
             );
+        }
+        if ($startCreatedDate && $endCreatedDate) {
+            $invoices->whereBetween('created_at', [$startCreatedDate, $endCreatedDate]);
         }
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);

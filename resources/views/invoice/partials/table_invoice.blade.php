@@ -12,7 +12,7 @@
         <th style="vertical-align: middle; text-align: left;">Grand Total Include Tax</th>
         <th style="vertical-align: middle; text-align: left;">Kwitansi Number</th>
         <th style="vertical-align: middle; text-align: left;">Billing Status</th>
-        <th class="text-end" style="width: 250px; min-width: 70px; max-width: 250px;">Actions</th>
+        <th class="text-end" style="width: 250px; min-width: 70px; max-width: 180px;">Actions</th>
     @endslot
     @slot('slotTbodyTr')
         @foreach($invoices as $invoice)
@@ -43,15 +43,15 @@
                 <td>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalDetailInvoice{{$invoice->id}}"
-                       class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2"
+                       class="btn btn-sm edit-td-action-btn mb-2"
                     >
-                        Detail
+                        <img src="{{asset('assets/images/View.svg')}}" alt="Detail" width="16" height="16">
                     </a>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalExportInvoice{{$invoice->id}}"
-                       class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2"
+                       class="btn btn-sm edit-td-action-btn mb-2"
                     >
-                        Export
+                        <img src="{{asset('assets/images/Export.svg')}}" alt="Detail" width="16" height="16">
                     </a>
                     @if($isTrash)
                         @can('receivable.entry.invoice.restore')
@@ -67,8 +67,8 @@
                     @else
                         @can('receivable.entry.invoice.delete')
                             <a href="#" onclick="submitDeleteForm(event, 'deleteform_{{$invoice->id}}')"
-                               class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2">
-                                Delete
+                               class="btn btn-sm edit-td-action-btn mb-2">
+                                <img src="{{asset('assets/images/Delete.svg')}}" alt="Detail" width="16" height="16">
                             </a>
                             <form action="{{route('receivable.entry.invoice.delete',$invoice->id)}}"
                                   id="deleteform_{{$invoice->id}}" method="POST">
