@@ -165,7 +165,7 @@ class ExportInvoiceTaxBody implements FromArray, WithTitle, WithHeadings, WithCo
                     $unit,
                     ceil($item->rate),
                     $item->quantity,
-                    ceil($item->calculate()["discount_total"]),
+                    ceil($item->calculate()["discount_total"]) != 0 ? ceil($item->calculate()["discount_total"]) : '0',
                     ceil($item->calculate()["dpp"]),
                     ceil($item->calculate()["dpp_etc_value"]),
                     12, // Tarif PPN tetap
