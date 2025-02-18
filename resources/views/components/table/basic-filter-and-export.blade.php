@@ -15,12 +15,15 @@
                     <input type="search" data-kt-user-table-filter="search" id="search_keyword" name="search"
                            value="{{ request()->search }}"
                            class="form-control form-control-solid w-250px ps-14" placeholder="Search {{ $name }}"/>
+                    <button type="button" id="search_button" class="btn ms-3 btn-primary">
+                        Search
+                    </button>
                 </div>
             </div>
 
             @if ($exportRoute)
                 <button type="button" id="{{$exportRoute."btn"}}"
-                        {{$attributes->merge(['style' => ''])}} class="btn ms-3 btn-success"
+                        {{$attributes->merge(['style' => ''])}} class="btn btn-success"
                         data-bs-toggle="modal"
                         data-bs-target="#{{$exportModalID}}">
                     <span class="svg-icon svg-icon-2">
@@ -106,8 +109,10 @@
         });
         @endif
 
-        $('#search_keyword').on('change', function () {
-            handleInputChangeQueryParams(this)
+        document.getElementById("search_button").addEventListener("click", function() {
+            let searchInput = document.getElementById("search_keyword").value;
+
+            window.location.href = window.location.pathname + "?search=" + encodeURIComponent(searchInput);
         });
     </script>
 @endpush

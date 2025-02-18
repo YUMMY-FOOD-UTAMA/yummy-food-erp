@@ -3,6 +3,8 @@
         <th style="width: 20px; vertical-align: middle; text-align: left;">
             <input type="checkbox" id="selectAllExportInvoice" onclick="toggleSelectAll(this)">
         </th>
+        <th style="vertical-align: middle; text-align: left;">Date Created</th>
+        <th style="vertical-align: middle; text-align: left;">Time Created</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
         <th style="vertical-align: middle; text-align: left;">Invoice Date</th>
@@ -21,6 +23,8 @@
                            value="{{ $invoice->id }}">
                 </td>
                 {{--                @endif--}}
+                <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('Y-m-d') }}</td>
+                <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('H:i:s') }}</td>
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
                 <td>{{$invoice->date}}</td>

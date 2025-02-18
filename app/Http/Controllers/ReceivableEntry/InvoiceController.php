@@ -86,7 +86,7 @@ class InvoiceController extends Controller
             $invoiceNumbers[] = $invoice["invoice_number"];
         }
 
-        Invoice::whereIn('invoice_number', $invoiceNumbers)->forceDelete();
+        Invoice::whereIn('number', $invoiceNumbers)->forceDelete();
         $res = Transaction::doTx(function () use ($data, $request) {
             foreach ($data as $invoice) {
                 $customer = CustomerInvoice::firstOrCreate(
