@@ -207,6 +207,7 @@ class InvoiceController extends Controller
                 $totalInvoiceNumber = $invoices->count();
                 $totalBuyerOrderNumber = $invoices->count();
                 $bstNumber = $invoicesRepo->generateBSTNumber();
+                Invoice::whereIn('id', $invoiceIDs)->update(['bst_number' => $bstNumber]);
                 $filename = str_replace(".", "", $bstNumber).".pdf";
                 $timestamp = Carbon::now('Asia/Jakarta')->format('d/m/Y');
                 $pdf = Pdf::loadView('invoice.export.export-bst-pdf', [
