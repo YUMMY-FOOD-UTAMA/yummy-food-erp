@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-echo "Deployment started ..."
-
-(php artisan down) || true
-
-git pull origin main
-
-composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+#echo "Deployment started ..."
+#
+#(php artisan down) || true
+#
+#git pull origin main
+#
+#composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
 php artisan clear-compiled
 

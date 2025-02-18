@@ -70,6 +70,30 @@ class InvoiceRepository
         return $receiptNumber;
     }
 
+    public function generateBSTNumber()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $year = $now->format('y');
+        $month = $now->format('m');
+        $day = $now->format('d');
+
+        $bstPrefix = "BST.{$year}{$month}{$day}";
+
+        $latestBst = Invoice::where('bst_number', 'like', "{$bstPrefix}%")
+            ->orderBy('bst_number', 'desc')
+            ->first();
+
+        if ($latestBst) {
+            $lastNumber = (int)substr($latestBst->bst_number, -2);
+            $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '001';
+        }
+        $bstNumber = "{$bstPrefix}{$nextNumber}";
+
+        return $bstNumber;
+    }
+
     public function getAll()
     {
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());

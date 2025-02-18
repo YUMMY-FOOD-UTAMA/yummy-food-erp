@@ -28,6 +28,26 @@ class ListPageSize
                 "id" => 100,
                 "name" => "100"
             ],
+            [
+                "id" => 200,
+                "name" => "200"
+            ],
+            [
+                "id" => 300,
+                "name" => "300"
+            ],
+            [
+                "id" => 400,
+                "name" => "400"
+            ],
+            [
+                "id" => 800,
+                "name" => "800"
+            ],
+            [
+                "id" => 1000,
+                "name" => "1000"
+            ],
         ];
 
         return array_map(function ($item) {

@@ -3,8 +3,8 @@
         <th style="width: 20px; vertical-align: middle; text-align: left;">
             <input type="checkbox" id="selectAllExportInvoice" onclick="toggleSelectAll(this)">
         </th>
-        <th style="vertical-align: middle; text-align: left;">Date Created</th>
-        <th style="vertical-align: middle; text-align: left;">Time Created</th>
+        <th style="vertical-align: middle; text-align: left;">Date Imported</th>
+        <th style="vertical-align: middle; text-align: left;">Time Imported</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
         <th style="vertical-align: middle; text-align: left;">Invoice Date</th>
@@ -23,13 +23,13 @@
                            value="{{ $invoice->id }}">
                 </td>
                 {{--                @endif--}}
-                <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('Y-m-d') }}</td>
-                <td>{{ \Carbon\Carbon::parse($invoice->created_at)->format('H:i:s') }}</td>
+                <td>{{ \Carbon\Carbon::parse($invoice->createdAt())->format('d/m/y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($invoice->createdAt())->format('H:i') }}</td>
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
                 <td>{{$invoice->date}}</td>
                 <td>{{$invoice->number}}</td>
-                <td>{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"])}}</td>
+                <td  style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"],false,true,true)}}</td>
                 <td>{{$invoice->receipt_number}}</td>
                 <td>
                     @if ($invoice->status === 'done')

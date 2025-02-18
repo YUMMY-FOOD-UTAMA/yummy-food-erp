@@ -38,6 +38,10 @@
                             'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
                             'title'=>'Faktur Pajak'
                         ],
+                        [
+                            'id'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                            'title'=>'BST'
+                        ],
                 ]">
         @slot('slot0')
             <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
@@ -55,7 +59,6 @@
             </form>
         @endslot
         @slot('slot1')
-            kwitansi_model2
             <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
                 @csrf
                 <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model2">
@@ -91,6 +94,21 @@
 
                 <button onclick="processSelected('btn_tax_invoice_export','tax_invoice_export')"
                         id="btn_tax_invoice_export" class="btn btn-primary">
+                    Export
+                </button>
+            </form>
+        @endslot
+        @slot('slot3')
+            <form method="POST" action="{{route('receivable.entry.invoice.export')}}">
+                @csrf
+                <input hidden name="invoice_ids" id="invoice_ids_bst">
+                <input hidden name="export_invoice_model" value="bst">
+                <div class="checkbox-container">
+                    <x-form.input class="fv-row mb-10" label="From" required="true" placeholder="Input From"
+                                  name="from"/>
+                </div>
+                <button onclick="processSelected('btn_bst','invoice_ids_bst')"
+                        id="btn_bst" class="btn btn-primary">
                     Export
                 </button>
             </form>
