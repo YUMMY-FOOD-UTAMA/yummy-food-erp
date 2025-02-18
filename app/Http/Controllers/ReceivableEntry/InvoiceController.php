@@ -81,16 +81,12 @@ class InvoiceController extends Controller
         Excel::import($import, $file);
         $data = $import->getProcessedData();
 
-//        foreach ($data as $invoice) {
-//            $existsInvoice = Invoice::where("number", $invoice['invoice_number'])->withTrashed()->first();
-//            if ($existsInvoice) {
-//                return redirect()->back()->with([
-//                    'status' => "error",
-//                    'message' => "Invoice Number already exists, check in data invoice or check in trashed"
-//                ]);
-//            }
-//        }
+        $invoiceNumbers= [];
+        foreach ($data as $invoice) {
+            $invoiceNumbers[] = $invoice["invoice_number"];
+        }
 
+        Invoice::whereIn('invoice_number', $invoiceNumbers)->forceDelete();
         $res = Transaction::doTx(function () use ($data, $request) {
             foreach ($data as $invoice) {
                 $customer = CustomerInvoice::firstOrCreate(

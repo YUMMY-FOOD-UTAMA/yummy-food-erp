@@ -114,7 +114,7 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
     public function columnFormats(): array
     {
         return [
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'B' => 'mm/dd/yyyy',
             'I' => NumberFormat::FORMAT_TEXT,
             'J' => NumberFormat::FORMAT_TEXT,
             'Q' => NumberFormat::FORMAT_TEXT,
