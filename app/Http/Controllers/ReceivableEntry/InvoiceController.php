@@ -86,12 +86,28 @@ class InvoiceController extends Controller
             $invoiceNumbers[] = $invoice["invoice_number"];
         }
 
+        $invoices = Invoice::whereIn('number', $invoiceNumbers)->get();
+
+        $receiptNumbers = $invoices->whereNotNull('receipt_number')->pluck('number')->toArray();
+
+        if (!empty($receiptNumbers)) {
+            $receiptNumberMsgValidation = implode("<br>•", $receiptNumbers);
+
+            return redirect()->back()->with([
+                'status' => 'error',
+                'message' => "Duplicate Invoice Detected<br><br>An invoice with the same number already exists in the system. Please review the following duplicate entries:<br>•" . $receiptNumberMsgValidation . "<br><br>Additionally, the receipt for this invoice has already been issued.\nKindly delete the existing invoices before proceeding with a new entry."
+            ]);
+        }
+
         Invoice::whereIn('number', $invoiceNumbers)->forceDelete();
         $res = Transaction::doTx(function () use ($data, $request) {
             foreach ($data as $invoice) {
                 $customer = CustomerInvoice::firstOrCreate(
-                    ['name' => $invoice['customer_name']],
-                    ['address' => $invoice['address'], "account_name" => ""]
+                    [
+                        'name' => $invoice['customer_name'],
+                        'account_name' => $invoice['buyer_account_name'],
+                    ],
+                    ['address' => $invoice['address'], "account_name" => $invoice['buyer_account_name']]
                 );
 
                 $invoiceCreate = Invoice::create([
@@ -204,11 +220,14 @@ class InvoiceController extends Controller
             $pdf = null;
 
             if ($exportModel === "bst") {
+                $totalReceiptNumber = $invoices->whereNotNull('receipt_number')->count();
                 $totalInvoiceNumber = $invoices->count();
-                $totalBuyerOrderNumber = $invoices->count();
+                $totalBuyerOrderNumber = $invoices->filter(function ($invoice) {
+                    return $invoice->products->contains(fn($product) => !empty($product->buyer_order_number));
+                })->count();
                 $bstNumber = $invoicesRepo->generateBSTNumber();
                 Invoice::whereIn('id', $invoiceIDs)->update(['bst_number' => $bstNumber]);
-                $filename = str_replace(".", "", $bstNumber).".pdf";
+                $filename = str_replace(".", "", $bstNumber) . ".pdf";
                 $timestamp = Carbon::now('Asia/Jakarta')->format('d/m/Y');
                 $pdf = Pdf::loadView('invoice.export.export-bst-pdf', [
                     'invoices' => $invoices,
@@ -218,6 +237,7 @@ class InvoiceController extends Controller
                     'totalInvoiceNumber' => $totalInvoiceNumber,
                     'totalBuyerOrderNumber' => $totalBuyerOrderNumber,
                     'grandTotal' => $grandTotal,
+                    'totalReceiptNumber' => $totalReceiptNumber,
                 ]);
             } else {
                 $receiptNumber = $invoicesRepo->generateReceiptNumber();
