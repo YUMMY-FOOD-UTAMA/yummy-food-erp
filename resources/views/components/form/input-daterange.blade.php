@@ -10,7 +10,9 @@
     'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
     'withRange'=>false,
     'maximum_range_date' =>null,
-    'minimum_range_date'=>null
+    'minimum_range_date'=>null,
+    'nameStartDate'=>'start_date',
+    'nameEndDate'=>'end_date'
 ])
 
 <div {{$attributes->merge(['class' => ''])}}>
@@ -21,14 +23,14 @@
                title="{{$tooltip}}"></i>
         @endif
     </label>
-    <input type="date" name="start_date" id="start_date{{$uuid}}" hidden=""
-           value="{{old('start_date',$defaultValueStartDate)}}">
-    <input type="date" name="end_date" id="end_date{{$uuid}}" hidden=""
-           value="{{old('end_date',$defaultValueEndDate)}}">
+    <input type="date" name="{{$nameStartDate}}" id="start_date{{$uuid}}" hidden=""
+           value="{{old($nameStartDate,$defaultValueStartDate)}}">
+    <input type="date" name="{{$nameEndDate}}" id="end_date{{$uuid}}" hidden=""
+           value="{{old($nameEndDate,$defaultValueEndDate)}}">
     <input class="form-control form-control-solid form-control-{{$sizeForm}}"
            placeholder="{{$placeholder}}" id="{{$id.$uuid}}"/>
-    <x-input-error :messages="$errors->get('start_date')" class="mt-2"></x-input-error>
-    <x-input-error :messages="$errors->get('end_date')" class="mt-2"></x-input-error>
+    <x-input-error :messages="$errors->get($nameStartDate)" class="mt-2"></x-input-error>
+    <x-input-error :messages="$errors->get($nameEndDate)" class="mt-2"></x-input-error>
 </div>
 @push('script')
     <script>

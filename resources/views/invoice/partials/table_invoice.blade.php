@@ -3,6 +3,8 @@
         <th style="width: 20px; vertical-align: middle; text-align: left;">
             <input type="checkbox" id="selectAllExportInvoice" onclick="toggleSelectAll(this)">
         </th>
+        <th style="vertical-align: middle; text-align: left;">Date Imported</th>
+        <th style="vertical-align: middle; text-align: left;">Time Imported</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
         <th style="vertical-align: middle; text-align: left;">Invoice Date</th>
@@ -10,7 +12,7 @@
         <th style="vertical-align: middle; text-align: left;">Grand Total Include Tax</th>
         <th style="vertical-align: middle; text-align: left;">Kwitansi Number</th>
         <th style="vertical-align: middle; text-align: left;">Billing Status</th>
-        <th class="text-end" style="width: 250px; min-width: 70px; max-width: 250px;">Actions</th>
+        <th class="text-end" style="width: 250px; min-width: 70px; max-width: 180px;">Actions</th>
     @endslot
     @slot('slotTbodyTr')
         @foreach($invoices as $invoice)
@@ -21,11 +23,13 @@
                            value="{{ $invoice->id }}">
                 </td>
                 {{--                @endif--}}
+                <td>{{ \Carbon\Carbon::parse($invoice->createdAt())->format('d/m/y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($invoice->createdAt())->format('H:i') }}</td>
                 <td>{{$invoice->customer->name}}</td>
                 <td>{{$invoice->customer->account_name}}</td>
                 <td>{{$invoice->date}}</td>
                 <td>{{$invoice->number}}</td>
-                <td>{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"])}}</td>
+                <td  style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"],false,true,true)}}</td>
                 <td>{{$invoice->receipt_number}}</td>
                 <td>
                     @if ($invoice->status === 'done')
@@ -39,15 +43,15 @@
                 <td>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalDetailInvoice{{$invoice->id}}"
-                       class="btn btn-primary btn-sm mx-1 edit-td-action-btn mb-2"
+                       class="btn btn-sm edit-td-action-btn mb-2"
                     >
-                        Detail
+                        <img src="{{asset('assets/images/View.svg')}}" alt="Detail" width="16" height="16">
                     </a>
                     <a href="" data-bs-toggle="modal"
                        data-bs-target="#modalExportInvoice{{$invoice->id}}"
-                       class="btn btn-success btn-sm mx-1 edit-td-action-btn mb-2"
+                       class="btn btn-sm edit-td-action-btn mb-2"
                     >
-                        Export
+                        <img src="{{asset('assets/images/Export.svg')}}" alt="Detail" width="16" height="16">
                     </a>
                     @if($isTrash)
                         @can('receivable.entry.invoice.restore')
@@ -63,8 +67,8 @@
                     @else
                         @can('receivable.entry.invoice.delete')
                             <a href="#" onclick="submitDeleteForm(event, 'deleteform_{{$invoice->id}}')"
-                               class="btn btn-danger btn-sm mx-1 edit-td-action-btn mb-2">
-                                Delete
+                               class="btn btn-sm edit-td-action-btn mb-2">
+                                <img src="{{asset('assets/images/Delete.svg')}}" alt="Detail" width="16" height="16">
                             </a>
                             <form action="{{route('receivable.entry.invoice.delete',$invoice->id)}}"
                                   id="deleteform_{{$invoice->id}}" method="POST">

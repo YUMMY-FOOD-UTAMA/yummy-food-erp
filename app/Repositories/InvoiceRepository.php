@@ -70,12 +70,38 @@ class InvoiceRepository
         return $receiptNumber;
     }
 
+    public function generateBSTNumber()
+    {
+        $now = Carbon::now('Asia/Jakarta');
+        $year = $now->format('y');
+        $month = $now->format('m');
+        $day = $now->format('d');
+
+        $bstPrefix = "BST.{$year}{$month}{$day}";
+
+        $latestBst = Invoice::where('bst_number', 'like', "{$bstPrefix}%")
+            ->orderBy('bst_number', 'desc')
+            ->first();
+
+        if ($latestBst) {
+            $lastNumber = (int)substr($latestBst->bst_number, -2);
+            $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $nextNumber = '001';
+        }
+        $bstNumber = "{$bstPrefix}{$nextNumber}";
+
+        return $bstNumber;
+    }
+
     public function getAll()
     {
         $pageSize = $this->request->query('page_size', ListPageSize::defaultPageSize());
         $searchKeyword = $this->request->query('search');
         $startDate = $this->request->query('start_date');
         $endDate = $this->request->query('end_date');
+        $startCreatedDate = $this->request->query('start_created_at');
+        $endCreatedDate = $this->request->query('end_created_at');
         $customerID = $this->request->query('customer_invoice_id');
         $productInvoiceID = $this->request->query('product_invoice_id');
         $invoiceNo = $this->request->query('invoice_no');
@@ -114,6 +140,9 @@ class InvoiceRepository
                 \DB::raw("STR_TO_DATE(date, '%e-%b-%Y')"),
                 [$startDate, $endDate]
             );
+        }
+        if ($startCreatedDate && $endCreatedDate) {
+            $invoices->whereBetween('created_at', [$startCreatedDate, $endCreatedDate]);
         }
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);
