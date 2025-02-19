@@ -122,7 +122,7 @@
             <th style="width:80px; max-width: 80px; text-align: center;">Kwitansi Number</th>
             <th style="width:105px; max-width: 105px; text-align: center;">Buyer Order Number</th>
             <th style="width:80px; max-width: 80px; text-align: center;">Invoice Number</th>
-            <th style="width:80px; max-width: 80px; text-align: center;">Grand Total Inc Tax</th>
+            <th style="width:80px; max-width: 80px; text-align: center;">Amount</th>
         </tr>
         </thead>
         <tbody>
