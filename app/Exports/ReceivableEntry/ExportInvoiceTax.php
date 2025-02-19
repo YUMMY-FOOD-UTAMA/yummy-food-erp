@@ -3,6 +3,7 @@
 namespace App\Exports\ReceivableEntry;
 
 use App\Models\Invoice\Invoice;
+use Carbon\Carbon;
 use DateTime;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
@@ -68,10 +69,10 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
         $data[] = [];
         foreach ($this->invoices as $i => $invoice) {
             $rowIndex++;
-            $date = DateTime::createFromFormat('j-M-Y', $invoice->date);
+            $date = Carbon::createFromFormat('j-M-Y', $invoice->date)->format("m/d/Y");
             $data[] = [
                 $rowIndex,
-                Date::dateTimeToExcel($date),
+                $date,
                 'Normal',
                 $this->request->get('code_transaction') ?? '04',
                 $this->request->get('additional_information') ?? '',
@@ -98,6 +99,7 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
         $sheet->mergeCells('A1:B1');
         $sheet->getStyle('A1:B1')->getFont()->setBold(true);
         $sheet->getStyle('A1:B1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('B1:B1000')->getAlignment()->setHorizontal('right');
         $sheet->getStyle('A3:Q3')->getFont()->setBold(true);
     }
 
@@ -114,7 +116,6 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
     public function columnFormats(): array
     {
         return [
-            'B' => 'mm/dd/yyyy',
             'I' => NumberFormat::FORMAT_TEXT,
             'J' => NumberFormat::FORMAT_TEXT,
             'Q' => NumberFormat::FORMAT_TEXT,
