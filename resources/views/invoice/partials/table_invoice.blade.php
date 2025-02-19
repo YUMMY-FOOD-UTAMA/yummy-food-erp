@@ -3,16 +3,16 @@
         <th style="width: 20px; vertical-align: middle; text-align: left;">
             <input type="checkbox" id="selectAllExportInvoice" onclick="toggleSelectAll(this)">
         </th>
-        <th style="vertical-align: middle; text-align: left;">Date Imported</th>
-        <th style="vertical-align: middle; text-align: left;">Time Imported</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 75px; max-width: 75px;">Date Imported</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 70px; max-width: 70px;">Time Imported</th>
         <th style="vertical-align: middle; text-align: left;">Customer Name</th>
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
-        <th style="vertical-align: middle; text-align: left;">Invoice Date</th>
-        <th style="vertical-align: middle; text-align: left;">Invoice Number</th>
-        <th style="vertical-align: middle; text-align: left;">Grand Total Include Tax</th>
-        <th style="vertical-align: middle; text-align: left;">Kwitansi Number</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 100px; max-width: 100px;">Invoice Date</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 110px; max-width: 110px;">Invoice Number</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 90px; max-width: 90px;">Grand Total Include Tax</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 94px; max-width: 94px;">Kwitansi Number</th>
         <th style="vertical-align: middle; text-align: left;">Billing Status</th>
-        <th class="text-end" style="width: 250px; min-width: 70px; max-width: 180px;">Actions</th>
+        <th class="text-end" style="width: 185px; min-width: 185px; max-width: 185px;">Actions</th>
     @endslot
     @slot('slotTbodyTr')
         @foreach($invoices as $invoice)
