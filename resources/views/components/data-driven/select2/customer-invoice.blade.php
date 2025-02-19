@@ -2,7 +2,7 @@
     @if($type == "inline")
         <label class="col-lg-4 col-form-label {{$required ? 'required':''}} fw-semibold fs-6">{{$label}}</label>
         <div class="col-lg-8 fv-row">
-            <select name="customer_invoice_id" aria-label="Select a {{$label}}" id="customer_invoice_id{{$uuid}}"
+            <select name="{{$nameForm}}" aria-label="Select a {{$label}}" id="customer_invoice_id{{$uuid}}"
                     class="form-select form-select-solid form-select-{{$sizeForm}}">
                 @if ($customerInvoice)
                     <option value="{{ $customerInvoice->id }}" selected>
@@ -13,7 +13,7 @@
         </div>
     @elseif($type=="row")
         <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">{{$label}}</label>
-        <select name="customer_invoice_id" aria-label="Select a {{$label}}" id="customer_invoice_id{{$uuid}}"
+        <select name="{{$nameForm}}" aria-label="Select a {{$label}}" id="customer_invoice_id{{$uuid}}"
                 class="form-select form-select-solid form-select-{{$sizeForm}}">
             @if ($customerInvoice)
                 <option value="{{ $customerInvoice->id }}" selected>
