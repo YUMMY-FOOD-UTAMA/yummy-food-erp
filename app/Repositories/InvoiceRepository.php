@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Models\Customer\Customer;
+use App\Models\Invoice\CustomerInvoice;
 use App\Models\Invoice\Invoice;
 use App\Utils\Primitives\ListPageSize;
 use Carbon\Carbon;
@@ -103,6 +105,8 @@ class InvoiceRepository
         $startCreatedDate = $this->request->query('start_created_at');
         $endCreatedDate = $this->request->query('end_created_at');
         $customerID = $this->request->query('customer_invoice_id');
+        $customerName = $this->request->query('customer_name');
+        $customerName = CustomerInvoice::where('id', $customerName)->first()->name ?? null;
         $productInvoiceID = $this->request->query('product_invoice_id');
         $invoiceNo = $this->request->query('invoice_no');
         $invoiceID = $this->request->query('invoice_id');
@@ -140,6 +144,11 @@ class InvoiceRepository
                 \DB::raw("STR_TO_DATE(date, '%e-%b-%Y')"),
                 [$startDate, $endDate]
             );
+        }
+        if ($customerName) {
+            $invoices->whereHas('customer', function ($query) use ($customerName) {
+                $query->where('name', $customerName);
+            });
         }
         if ($startCreatedDate && $endCreatedDate) {
             $invoices->whereBetween('created_at', [$startCreatedDate, $endCreatedDate]);
