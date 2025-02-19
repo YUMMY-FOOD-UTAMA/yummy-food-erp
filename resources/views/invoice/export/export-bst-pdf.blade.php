@@ -120,7 +120,7 @@
             <th style="text-align: center">Customer Name</th>
             <th style="text-align: center">Customer Account</th>
             <th style="width:80px; max-width: 80px; text-align: center;">Kwitansi Number</th>
-            <th style="width:100px; max-width: 100px; text-align: center;">Buyer Order Number</th>
+            <th style="width:105px; max-width: 105px; text-align: center;">Buyer Order Number</th>
             <th style="width:80px; max-width: 80px; text-align: center;">Invoice Number</th>
             <th style="width:80px; max-width: 80px; text-align: center;">Grand Total Inc Tax</th>
         </tr>
@@ -132,15 +132,18 @@
                 <td style="text-align: left;">{{$invoice->customer->name}}</td>
                 <td style="text-align: left;">{{$invoice->customer->account_name}}</td>
                 <td style="text-align: left;">{{$invoice->receipt_number}}</td>
-                <td style="text-align: left;">{{$invoice->products[0]->buyer_order_number}}</td>
+                <td style="text-align: left;">
+                    {{ isset($invoice->products[0]) ? $invoice->products[0]->buyer_order_number : '' }}
+                </td>
                 <td>{{$invoice->number}}</td>
                 <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"],false,true,true)}}</td>
             </tr>
         @endforeach
         <tr>
-            <td colspan="3" rowspan="4"
+            <td colspan="2" rowspan="3"
                 style="vertical-align: top; padding-bottom: 0; border-left: 0; border-bottom: 0; border-right: 0;"></td>
             <td style="text-align: center"><span style="font-weight: bold;">Total</span></td>
+            <td style="text-align: center"><span style="font-weight: bold;">{{$totalReceiptNumber}}</span></td>
             <td style="text-align: center"><span style="font-weight: bold;">{{$totalBuyerOrderNumber}}</span></td>
             <td style="text-align: center"><span style="font-weight: bold;">{{$totalInvoiceNumber}}</span></td>
             <td style="text-align: right"><span style="font-weight: bold;">{{\App\Utils\Util::rupiah($grandTotal,false,false,true)}}</span></td>

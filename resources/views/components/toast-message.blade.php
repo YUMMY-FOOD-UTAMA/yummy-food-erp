@@ -6,14 +6,15 @@
             "progressBar": true,
             "positionClass": "toastr-top-center",
             "preventDuplicates": true,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
+            "showDuration": "5000000",
+            "hideDuration": "5000000",
+            "timeOut": "5000000",
+            "extendedTimeOut": "5000000",
             "showEasing": "swing",
             "hideEasing": "linear",
             "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
+            "hideMethod": "fadeOut",
+            "enableHtml": true,
         };
     </script>
 @endpush
@@ -22,7 +23,7 @@
         <script>
             @switch(session('status'))
             @case('error')
-            toastr.error("{{session('message')}}");
+            toastr.error(`{!! session('message') !!}`);
             @break
             @case('info')
             toastr.info("{{session('message')}}");
