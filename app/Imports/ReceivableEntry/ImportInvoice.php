@@ -28,10 +28,12 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         $isBuyerName = false;
         $buyerAddress = '';
         $buyerName = '';
+        $buyerAccountName = '';
         foreach ($buyerData as $index => $row) {
 
             if ($isBuyerName) {
                 $buyerName = $row[0];
+                $buyerAccountName = $buyerData[$index+1][0];
                 $isBuyerAddr = true;
                 $isBuyerName = false;
                 continue;
@@ -63,6 +65,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         return [
             'buyerAddress' => trim($buyerAddress),
             'buyerName' => $buyerName,
+            'buyerAccountName' => $buyerAccountName,
         ];
     }
 
@@ -239,6 +242,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
             'term_of_delivery' => $invoiceData['termOfDelivery'],
             'supplier_ref' => $invoiceData['supplierRef'],
             'supplier_name' => "YUMMY FOOD UTAMA",
+            'buyer_account_name' => $buyerData["buyerAccountName"],
         ];
         $this->processedData = $invoices;
     }
@@ -266,6 +270,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         $buyerOrderNumber = '';
         $productTotalAmount = 0;
         $productTotalDiscount = 0;
+        $buyerAccountName = '';
         foreach ($rows as $index => $row) {
             if ($row[0] == 'Date') {
                 $fetch = true;
@@ -292,6 +297,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                             'term_of_delivery' => $termsOfDelivery,
                             'supplier_ref' => $supplierRef,
                             'supplier_name' => $supplierName,
+                            'buyer_account_name' => $buyerAccountName,
                         ];
                         $productTotalAmount = 0;
                         $productTotalDiscount = 0;
@@ -306,6 +312,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     $invoiceDate = Date::excelToDateTimeObject($row[0])->format('j-M-Y');
                     $invoiceNo = ltrim($row[4], ": ");
                     $buyerName = $row[2];
+                    $buyerAccountName = $row[1];
                     $buyerAddress = $row[3];
                     $termsOfDelivery = $row[14];
                     $termOfPayment = $row[12];
@@ -326,7 +333,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     $discountPrice = $grossProduct - $totalPriceProduct;
                     $productTotalDiscount += $discountPrice;
                     $discount = $grossProduct > 0 ? ($discountPrice / $grossProduct) * 100 : 0;
-                    if ($discount != 0){
+                    if ($discount != 0) {
                         $discount = $discount / 100;
                     }
                     $productTotalAmount += $grossProduct;
@@ -338,7 +345,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                         'rate' => $rate,
                         'unit' => $unit,
                         'discount' => $discount,
-                        'discount_price'=>$discountPrice,
+                        'discount_price' => $discountPrice,
                         'net_rate' => $netRate,
                         'amount' => $totalPriceProduct,
                         'delivery_note' => $deliveryNote,
