@@ -12,7 +12,7 @@
             data-control="select2" required data-dropdown-parent="#modal_createInvoice"
             data-placeholder="Type Import Invoice"
             class="form-select form-select-solid form-select-lg">
-        <option value="single_invoice">Single Invoice</option>
         <option value="multiple_invoice">Multiple/Group Invoice</option>
+        <option value="single_invoice">Single Invoice</option>
     </select>
 @endslot

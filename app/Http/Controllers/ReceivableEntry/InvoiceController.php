@@ -81,16 +81,12 @@ class InvoiceController extends Controller
         Excel::import($import, $file);
         $data = $import->getProcessedData();
 
-//        foreach ($data as $invoice) {
-//            $existsInvoice = Invoice::where("number", $invoice['invoice_number'])->withTrashed()->first();
-//            if ($existsInvoice) {
-//                return redirect()->back()->with([
-//                    'status' => "error",
-//                    'message' => "Invoice Number already exists, check in data invoice or check in trashed"
-//                ]);
-//            }
-//        }
+        $invoiceNumbers = [];
+        foreach ($data as $invoice) {
+            $invoiceNumbers[] = $invoice["invoice_number"];
+        }
 
+        Invoice::whereIn('number', $invoiceNumbers)->forceDelete();
         $res = Transaction::doTx(function () use ($data, $request) {
             foreach ($data as $invoice) {
                 $customer = CustomerInvoice::firstOrCreate(
@@ -178,7 +174,7 @@ class InvoiceController extends Controller
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-without-tax', ['invoice' => $invoice, 'timestamp' => $timestamp]);
             }
             return $pdf->download($filename);
-        } else if ($exportModel == "kwitansi_model1" || $exportModel == "kwitansi_model2") {
+        } else if ($exportModel == "kwitansi_model1" || $exportModel == "kwitansi_model2" || $exportModel == "bst") {
             if (count($invoiceIDs) <= 0) {
                 redirect()->back()->with([
                     'status' => "error",
@@ -186,14 +182,11 @@ class InvoiceController extends Controller
                 ]);
             }
 
-            $invoices = new InvoiceRepository();
-            $invoices->setRequest($request);
-            $invoices->setInvoiceIDs($invoiceIDs);
-            $invoices->setWithOutPagination(true);
-            $receiptNumber = $invoices->generateReceiptNumber();
-            $invoices = $invoices->getAll();
-
-            Invoice::whereIn('id', $invoiceIDs)->update(['receipt_number' => $receiptNumber]);
+            $invoicesRepo = new InvoiceRepository();
+            $invoicesRepo->setRequest($request);
+            $invoicesRepo->setInvoiceIDs($invoiceIDs);
+            $invoicesRepo->setWithOutPagination(true);
+            $invoices = $invoicesRepo->getAll();
 
             $grandTotal = 0;
             $formatInvoiceNumber = "";
@@ -207,21 +200,45 @@ class InvoiceController extends Controller
 
             $formatInvoiceNumber = str_replace("/", "-", $formatInvoiceNumber);
             $timestamp = "Jakarta, " . $timestamp;
-            $filename = "Kwitansi_{$invoices[0]->customer->name}_{$formatInvoiceNumber}.pdf";
-
-            $urL = config('app.url') . '/public-uri/invoice-payment/' . $receiptNumber;
-
-            $qrCodePath = "qr-codes/{$receiptNumber}.png";
-            Storage::disk('public')->put($qrCodePath, QrCode::format('png')->size(200)->generate($urL));
 
             $pdf = null;
-            if ($exportModel === "kwitansi_model1") {
-                $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-1', ['invoices' => $invoices,
-                    'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
-            } else if ($exportModel === "kwitansi_model2") {
-                $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-2', ['invoices' => $invoices,
-                    'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
+
+            if ($exportModel === "bst") {
+                $totalInvoiceNumber = $invoices->count();
+                $totalBuyerOrderNumber = $invoices->count();
+                $bstNumber = $invoicesRepo->generateBSTNumber();
+                Invoice::whereIn('id', $invoiceIDs)->update(['bst_number' => $bstNumber]);
+                $filename = str_replace(".", "", $bstNumber).".pdf";
+                $timestamp = Carbon::now('Asia/Jakarta')->format('d/m/Y');
+                $pdf = Pdf::loadView('invoice.export.export-bst-pdf', [
+                    'invoices' => $invoices,
+                    'bstNumber' => $bstNumber,
+                    'timestamp' => $timestamp,
+                    'from' => $request->get('from'),
+                    'totalInvoiceNumber' => $totalInvoiceNumber,
+                    'totalBuyerOrderNumber' => $totalBuyerOrderNumber,
+                    'grandTotal' => $grandTotal,
+                ]);
+            } else {
+                $receiptNumber = $invoicesRepo->generateReceiptNumber();
+                Invoice::whereIn('id', $invoiceIDs)->update(['receipt_number' => $receiptNumber]);
+
+                $filename = "Kwitansi_{$invoices[0]->customer->name}_{$formatInvoiceNumber}.pdf";
+                $urL = config('app.url') . '/public-uri/invoice-payment/' . $receiptNumber;
+
+                $qrCodePath = "qr-codes/{$receiptNumber}.png";
+                Storage::disk('public')->put($qrCodePath, QrCode::format('png')->size(200)->generate($urL));
+
+
+                if ($exportModel === "kwitansi_model1") {
+                    $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-1', ['invoices' => $invoices,
+                        'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
+                } else if ($exportModel === "kwitansi_model2") {
+                    $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-2', ['invoices' => $invoices,
+                        'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
+                }
             }
+
             return $pdf->download($filename);
         } else {
             $invoices = new InvoiceRepository();

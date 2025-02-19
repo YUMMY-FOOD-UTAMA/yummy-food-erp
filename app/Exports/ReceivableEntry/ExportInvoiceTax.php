@@ -114,7 +114,7 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
     public function columnFormats(): array
     {
         return [
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'B' => 'mm/dd/yyyy',
             'I' => NumberFormat::FORMAT_TEXT,
             'J' => NumberFormat::FORMAT_TEXT,
             'Q' => NumberFormat::FORMAT_TEXT,
@@ -165,7 +165,7 @@ class ExportInvoiceTaxBody implements FromArray, WithTitle, WithHeadings, WithCo
                     $unit,
                     ceil($item->rate),
                     $item->quantity,
-                    ceil($item->calculate()["discount_total"]),
+                    ceil($item->calculate()["discount_total"]) != 0 ? ceil($item->calculate()["discount_total"]) : '0',
                     ceil($item->calculate()["dpp"]),
                     ceil($item->calculate()["dpp_etc_value"]),
                     12, // Tarif PPN tetap
