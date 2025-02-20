@@ -22,7 +22,7 @@
                     <form action="{{route('receivable.entry.invoice.deletes')}}" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button onclick="processSelected('deleted_select_box_btn')"
+                        <button onclick="processSelected('deleted_select_box_btn',null,true)"
                                 id="deleted_select_box_btn" style="pointer-events: none" class="btn btn-danger ms-3">
                             Delete
                         </button>
@@ -45,20 +45,30 @@
 @endsection
 @push('script')
     <script>
-        function processSelected(btnID, invoiceIDsInput) {
+        function processSelected(btnID, invoiceIDsInput, isDeleted) {
             const selectedIds = Array.from(document.querySelectorAll('.select-item-invoice:checked'))
                 .map(cb => cb.value);
-
-            if (selectedIds.length === 0) {
-                toastr.warning('No items selected.')
-                return;
-            }
 
             if (invoiceIDsInput && invoiceIDsInput != '') {
                 document.getElementById(invoiceIDsInput).value = selectedIds.join(',');
             }
             document.getElementById('deleted_invoice_ids').value = selectedIds.join(',');
-            document.getElementById(btnID).submit();
+            if (!isDeleted) {
+                const formData = new FormData();
+                formData.append('invoice_ids', selectedIds.join(','));
+                formData.append('export_invoice_model', "kwitansi_model2");
+
+                fetch('{{route('receivable.entry.invoice.export')}}', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    setTimeout(() => window.location.reload(), 1000);
+                }).catch(
+                    error => {
+                        setTimeout(() => window.location.reload(), 1000);
+                    })
+            }
+
         }
     </script>
 @endpush
