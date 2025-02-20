@@ -258,7 +258,6 @@ class InvoiceController extends Controller
                         'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
                 }
             }
-
             return $pdf->download($filename);
         } else {
             $invoices = new InvoiceRepository();

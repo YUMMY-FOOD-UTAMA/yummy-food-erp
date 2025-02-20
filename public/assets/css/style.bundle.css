@@ -46781,7 +46781,7 @@ body {
   padding: 0px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 12px !important;
+  font-size: 11px !important;
   font-weight: 400;
   font-family: Inter, Helvetica, "sans-serif";
 }
@@ -47462,8 +47462,8 @@ body,
     margin-bottom: 0px;
   }
   :root {
-    --bs-app-sidebar-width: 265px;
-    --bs-app-sidebar-width-actual: 265px;
+    --bs-app-sidebar-width: 245px;
+    --bs-app-sidebar-width-actual: 245px;
     --bs-app-sidebar-gap-start: 0px;
     --bs-app-sidebar-gap-end: 0px;
     --bs-app-sidebar-gap-top: 0px;

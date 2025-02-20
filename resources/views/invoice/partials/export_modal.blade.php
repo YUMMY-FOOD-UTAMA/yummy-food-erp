@@ -213,7 +213,7 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" onclick="processSelected()" class="btn btn-primary">
                     Export
                 </button>
             </form>
@@ -227,7 +227,7 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" onclick="processSelected()" class="btn btn-primary">
                     Export
                 </button>
             </form>
