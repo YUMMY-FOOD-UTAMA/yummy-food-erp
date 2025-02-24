@@ -39,6 +39,8 @@ class Employee extends Model
 
     public function phoneNumbers()
     {
-        return $this->phone_numbers = $this->phone_numbers ? explode(',', $this->phone_numbers) : [];
+        return is_string($this->phone_numbers)
+            ? explode(',', $this->phone_numbers)
+            : (is_array($this->phone_numbers) ? $this->phone_numbers : json_decode($this->phone_numbers, true) ?? []);
     }
 }

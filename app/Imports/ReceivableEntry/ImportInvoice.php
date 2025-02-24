@@ -355,6 +355,24 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                 }
             }
         }
+        if ($invoiceNo != ''){
+            $invoices[] = [
+                'invoice_number' => $invoiceNo,
+                'invoice_date' => $invoiceDate,
+                'supplier_address' => $supplierAddress,
+                'customer_name' => $buyerName,
+                'address' => $buyerAddress,
+                'products' => $products,
+                'product_total_amount' => $productTotalAmount,
+                'product_total_discount' => $productTotalDiscount,
+                'ppn' => $ppn,
+                'term_of_payment' => $termOfPayment,
+                'term_of_delivery' => $termsOfDelivery,
+                'supplier_ref' => $supplierRef,
+                'supplier_name' => $supplierName,
+                'buyer_account_name' => $buyerAccountName,
+            ];
+        }
         $this->processedData = $invoices;
     }
 
