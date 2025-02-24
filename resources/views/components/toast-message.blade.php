@@ -26,13 +26,13 @@
             toastr.error(`{!! session('message') !!}`);
             @break
             @case('info')
-            toastr.info("{{session('message')}}");
+            toastr.info(`{!! session('message') !!}`);
             @break
             @case('warning')
-            toastr.warning("{{session('message')}}");
+            toastr.warning(`{!! session('message') !!}`);
             @break
             @default
-            toastr.success("{{session('message')}}");
+            toastr.success(`{!! session('message') !!}`);
             @break
             @endswitch
         </script>
