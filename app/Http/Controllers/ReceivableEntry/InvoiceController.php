@@ -90,13 +90,19 @@ class InvoiceController extends Controller
 
         $receiptNumbers = $invoices->whereNotNull('receipt_number')->pluck('number')->toArray();
 
+        $msgWarn = null;
         if (!empty($receiptNumbers)) {
-            $receiptNumberMsgValidation = implode("<br>•", $receiptNumbers);
+            $data = array_filter($data, function ($item) use ($receiptNumbers) {
+                return !in_array($item['invoice_number'], $receiptNumbers);
+            });
+            $data = array_values($data);
+            $invoiceNumbers = array_filter($invoiceNumbers, function ($item) use ($receiptNumbers) {
+                return !in_array($item, $receiptNumbers);
+            });
+            $invoiceNumbers = array_values($invoiceNumbers);
 
-            return redirect()->back()->with([
-                'status' => 'error',
-                'message' => "Duplicate Invoice Detected<br><br>An invoice with the same number already exists in the system. Please review the following duplicate entries:<br>•" . $receiptNumberMsgValidation . "<br><br>Additionally, the receipt for this invoice has already been issued.\nKindly delete the existing invoices before proceeding with a new entry."
-            ]);
+            $receiptNumberMsgValidation = implode("<br>•", $receiptNumbers);
+            $msgWarn = "Duplicate Invoice Detected<br><br>An invoice with the same number already exists in the system. Please review the following duplicate entries:<br>•" . $receiptNumberMsgValidation . "<br><br>Additionally, the receipt for this invoice has already been issued.\nKindly delete the existing invoices before proceeding with a new entry.";
         }
 
         Invoice::whereIn('number', $invoiceNumbers)->forceDelete();
@@ -144,6 +150,13 @@ class InvoiceController extends Controller
         });
         if ($res) {
             return redirect()->back()->with($res);
+        }
+
+        if ($msgWarn) {
+            return redirect()->back()->with([
+                'status' => 'warning',
+                'message' => $msgWarn
+            ]);
         }
 
         return redirect()->back()->with([
