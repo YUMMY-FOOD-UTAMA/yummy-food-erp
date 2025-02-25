@@ -33,7 +33,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
 
             if ($isBuyerName) {
                 $buyerName = $row[0];
-                $buyerAccountName = $buyerData[$index+1][0];
+                $buyerAccountName = $buyerData[$index + 1][0];
                 $isBuyerAddr = true;
                 $isBuyerName = false;
                 continue;
@@ -318,6 +318,9 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     $termOfPayment = $row[12];
                     $supplierRef = '-';
                 } else {
+                    if (strtolower($row[1]) == "grand total") {
+                        continue;
+                    }
                     $unit = "pcs";
                     if (str_contains(strtolower($row[1]), 'pack') || str_contains(strtolower($row[1]), 'pail')) {
                         $unit = "pail";
@@ -355,7 +358,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                 }
             }
         }
-        if ($invoiceNo != ''){
+        if ($invoiceNo != '') {
             $invoices[] = [
                 'invoice_number' => $invoiceNo,
                 'invoice_date' => $invoiceDate,

@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Employee;
 
 use App\Models\User;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
-class EditUserRequest extends FormRequest
+class EditEmployeeRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +19,7 @@ class EditUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:15'],
             'full_name' => ['required', 'string', 'max:50'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
-            'phone_number' => ['string', 'max:15', Rule::unique(User::class)->ignore($this->user()->id)],
+            'phone_number' => ['nullable', 'string', 'max:15', Rule::unique(User::class)],
             'bio' => ['nullable', 'string', 'max:255'],
             'date_of_birth' => ['date', 'date_format:Y-m-d'],
             'address' => ['string', 'max:255'],
@@ -32,6 +29,14 @@ class EditUserRequest extends FormRequest
             'district_id' => ['nullable', 'integer', 'exists:districts,id'],
             'sub_district_id' => ['nullable', 'integer', 'exists:sub_districts,id'],
             'sub_district_village_id' => ['nullable', 'integer', 'exists:sub_district_villages,id'],
+            'email' => [
+                'required',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                Rule::unique(User::class)->ignore($this->request->get('id')),
+            ],
         ];
     }
 }

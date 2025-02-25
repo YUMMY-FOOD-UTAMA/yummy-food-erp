@@ -21,7 +21,7 @@ class CreateUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:15'],
             'full_name' => ['required', 'string', 'max:50'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
-            'phone_number' => ['nullable', 'string', 'max:15', Rule::unique(User::class)],
+            'phone_number' => ['nullable', 'string', 'max:15'],
             'bio' => ['nullable', 'string', 'max:255'],
             'date_of_birth' => ['date', 'date_format:Y-m-d'],
             'address' => ['string', 'max:255'],
