@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'api'], function () {
         Route::get('/employees', [EmployeeController::class, 'apiGet'])->name('api.get.employees');
+        Route::get('/employee/{id}', [EmployeeController::class, 'apiFindOne'])->name('api.get.employee');
         Route::get('/invoices', [InvoiceController::class, 'apiGet'])->name('api.get.invoices');
         Route::get('/product-invoices', [InvoiceController::class, 'apiGetProductInvoice'])->name('api.get.product-invoices');
         Route::get('/customer-invoices', [CustomerInvoiceController::class, 'apiGet'])->name('api.get.customer-invoices');

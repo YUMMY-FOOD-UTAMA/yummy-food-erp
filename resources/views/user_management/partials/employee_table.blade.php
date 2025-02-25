@@ -33,10 +33,12 @@
                                            modal-view-i-d="modal_view{{$employee->id}}"/>
                 @else
                     <x-table.action-button
-                        modal-view-i-d="modal_view{{$employee->id}}"
-                        soft-delete-route-name="user-management.employee.destroy"
-                        soft-delete-route="{{route('user-management.employee.destroy',$employee->id)}}"
-                        delete-preview="{{$employee->user->email}}"/>
+                            edit-route-name="user-management.employee.show"
+                            :edit-route="route('user-management.employee.show',$employee->id)"
+                            modal-view-i-d="modal_view{{$employee->id}}"
+                            soft-delete-route-name="user-management.employee.destroy"
+                            soft-delete-route="{{route('user-management.employee.destroy',$employee->id)}}"
+                            delete-preview="{{$employee->user->email}}"/>
                 @endif
 
             </tr>
