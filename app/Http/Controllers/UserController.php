@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\EditUserRequest;
 use App\Http\Requests\User\CreateUserRequest;
-use App\Http\Requests\User\EditUserRequest;
 use App\Models\User;
 use App\Utils\Helpers\FileHelper;
 use App\Utils\Helpers\Transaction;

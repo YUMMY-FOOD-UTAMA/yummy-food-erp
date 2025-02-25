@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Employee\CreateEmployeeRequest;
+use App\Http\Requests\Employee\EditEmployeeRequest;
 use App\Models\Division\SubDepartment;
 use App\Models\Employee;
 use App\Models\EmployeeConfigs;
@@ -15,6 +16,7 @@ use App\Utils\Helpers\Transaction;
 use App\Utils\Primitives\Enum\EmployeeConfigs as EmployeeConfigsEnum;
 use App\Utils\Primitives\ListPageSize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -97,7 +99,6 @@ class EmployeeController extends Controller
                 'district_id' => $request->district_id,
                 'province_id' => $request->province_id,
                 'timezone' => $request->timezone,
-                'phone' => $request->phone,
                 'full_name' => $request->full_name,
                 'avatar' => $image,
                 'address' => $request->address,
@@ -148,7 +149,9 @@ class EmployeeController extends Controller
             }
 
             if (!empty($employeeConfigs)) {
-                EmployeeConfigs::create($employeeConfigs);
+                foreach ($employeeConfigs as $employeeConfig) {
+                    EmployeeConfigs::create($employeeConfig);
+                }
             }
         });
 
@@ -164,15 +167,153 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::withTrashed()->firstOrFail($id);
+        $employee = Employee::withTrashed()->where('id', $id)->firstOrFail();
         if (!$employee) {
             abort(404);
         }
+
+        $groupedConfigs = $employee->employeeConfigs
+            ->whereIn('type', [
+                EmployeeConfigsEnum::CRM_APPROVAL_SCHEDULE_VISIT,
+                EmployeeConfigsEnum::CRM_APPROVAL_SALES_MAPPING,
+            ])
+            ->groupBy('type')
+            ->map(function ($items, $type) {
+                return [
+                    'type' => $type,
+                    'externalEmployees' => $items->pluck('externalEmployee')->toArray(),
+                ];
+            })
+            ->values();
+
+        $employee->employeeConfigs = $groupedConfigs;
+
+
+        $subDepartments = SubDepartment::all();
+        $levelGrades = LevelGrade::all();
+        $roles = Role::all();
+
+        return view('user_management.edit', compact(
+            'employee',
+            'subDepartments',
+            'levelGrades',
+            'roles'
+        ));
     }
 
-    public function update(Request $request, $id)
+    public function update(EditEmployeeRequest $request, Employee $employee)
     {
+        $emailVerifiedAt = $employee->user->email_verified_at;
+        if (isset($data['email']) && $data['email'] !== $employee->user->email) {
+            $emailVerifiedAt = null;
+        }
 
+        $oldImage = null;
+        $image = $employee->user->avatar;
+        if ($request->hasFile('avatar')) {
+            $image = FileHelper::optimizeAndUploadPicture($request->file('avatar'), $this->avatarPath);
+            $oldImage = $employee->user->avatar;
+        }
+
+        $password = $employee->user->password;
+        if ($request->password != "") {
+            $password = bcrypt($request->password);
+        }
+
+        $phoneNumbers = [];
+        if ($request->phone_numbers) {
+            foreach ($request->phone_numbers as $phoneNumber) {
+                if (!empty($phoneNumber['phone_number'])) {
+                    $phoneNumbers[] = $phoneNumber['phone_number'];
+                }
+            }
+        }
+        $phoneNumbersString = implode(',', $phoneNumbers);
+
+        $employeeConfigs = [];
+        if ($request->APPROVAL_SALES_MAPPING) {
+            foreach ($request->APPROVAL_SALES_MAPPING as $key => $value) {
+                if (!empty($value['employee_id'])) {
+                    $employeeConfigs[] = [
+                        "feature" => EmployeeConfigsEnum::FEATURE_CRM,
+                        "type" => EmployeeConfigsEnum::CRM_APPROVAL_SALES_MAPPING,
+                        "external_id" => $value["employee_id"],
+                        "employee_id" => $employee->id,
+                    ];
+                }
+            }
+        }
+        if ($request->APPROVAL_SCHEDULE_VISIT) {
+            foreach ($request->APPROVAL_SCHEDULE_VISIT as $key => $value) {
+                if (!empty($value['employee_id'])) {
+                    $employeeConfigs[] = [
+                        "feature" => EmployeeConfigsEnum::FEATURE_CRM,
+                        "type" => EmployeeConfigsEnum::CRM_APPROVAL_SCHEDULE_VISIT,
+                        "external_id" => $value["employee_id"],
+                        "employee_id" => $employee->id,
+                    ];
+                }
+            }
+        }
+
+        $res = Transaction::doTx(function () use ($request, $employee, $image, $phoneNumbersString, $password, $emailVerifiedAt, $oldImage, $employeeConfigs) {
+            User::where('id', $employee->user->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $password,
+                'date_of_birth' => $request->date_of_birth,
+                'gender' => $request->gender,
+                'sub_district_village_id' => $request->sub_district_village_id,
+                'sub_district_id' => $request->sub_district_id,
+                'district_id' => $request->district_id,
+                'province_id' => $request->province_id,
+                'timezone' => $request->timezone,
+                'full_name' => $request->full_name,
+                'avatar' => $image,
+                'address' => $request->address,
+                'bio' => $request->bio,
+                'is_active' => true,
+                'email_verified_at' => $emailVerifiedAt,
+            ]);
+
+            if ($request->role_name) {
+                $employee->user->removeRole($employee->user->roleName());
+                $employee->user->assignRole($request->role_name);
+            }
+
+            Employee::where('id', $employee->id)->update([
+                'join_date' => $request->join_date,
+                'position' => $request->position,
+                'nik' => $request->nik,
+                'status' => $request->status,
+                'date_of_exchange_status' => $request->date_of_exchange_status,
+                'level_grade_id' => $request->level_grade_id,
+                'sub_department_id' => $request->sub_department_id,
+                'phone_numbers' => $phoneNumbersString,
+            ]);
+
+
+            EmployeeConfigs::where('employee_id', $employee->id)->delete();
+
+            if (!empty($employeeConfigs)) {
+                foreach ($employeeConfigs as $employeeConfig) {
+                    EmployeeConfigs::create($employeeConfig);
+                }
+            }
+
+            if (isset($oldImage)) {
+                FileHelper::deleteImage($this->avatarPath, $oldImage);
+            }
+        });
+
+        if ($res) {
+            dd($res);
+            return Redirect::back()->withInput($request->all())->with($res);
+        }
+        return redirect()->back()->withInput($request->all())->with([
+            'status' => 'success',
+            'message' => 'Update employee successfully'
+        ]);
     }
 
     public function destroy(Employee $employee)
@@ -210,5 +351,14 @@ class EmployeeController extends Controller
 
         $employees = $employees->getAll();
         return $this->successResponse($employees);
+    }
+
+    public function apiFindOne($id)
+    {
+        $employee = Employee::where('id', $id)->with([
+            'user'
+        ])->firstOrFail();
+
+        return $this->successResponse($employee);
     }
 }
