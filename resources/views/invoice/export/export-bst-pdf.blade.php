@@ -11,8 +11,8 @@
             size: 21cm 29.7cm;
             margin-top: 2cm;
             margin-bottom: 2cm;
-            margin-left: 1.5cm;
-            margin-right: 1.5cm;
+            margin-left: 0.8cm;
+            margin-right: 0.8cm;
         }
 
         .table-header {
@@ -122,6 +122,7 @@
             <th style="width:80px; max-width: 80px; text-align: center;">Kwitansi Number</th>
             <th style="width:105px; max-width: 105px; text-align: center;">Buyer Order Number</th>
             <th style="width:80px; max-width: 80px; text-align: center;">Invoice Number</th>
+            <th style="width:75px; max-width: 75px; text-align: center;">Invoice Date</th>
             <th style="width:80px; max-width: 80px; text-align: center;">Amount</th>
         </tr>
         </thead>
@@ -132,9 +133,10 @@
                 <td style="text-align: left;">{{$invoice->customer->name}}</td>
                 <td style="text-align: left;">{{$invoice->customer->account_name}}</td>
                 <td style="text-align: left;">{{$invoice->receipt_number}}</td>
-                <td style="text-align: left;">
+                <td style="text-align: center;">
                     {{ isset($invoice->products[0]) ? $invoice->products[0]->buyer_order_number : '' }}
                 </td>
+                <td>{{$invoice->date}}</td>
                 <td>{{$invoice->number}}</td>
                 <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"],false,true,true)}}</td>
             </tr>
@@ -146,6 +148,7 @@
             <td style="text-align: center"><span style="font-weight: bold;">{{$totalReceiptNumber}}</span></td>
             <td style="text-align: center"><span style="font-weight: bold;">{{$totalBuyerOrderNumber}}</span></td>
             <td style="text-align: center"><span style="font-weight: bold;">{{$totalInvoiceNumber}}</span></td>
+            <td style="text-align: center"><span style="font-weight: bold;">{{$totalInvoiceDate}}</span></td>
             <td style="text-align: right"><span style="font-weight: bold;">{{\App\Utils\Util::rupiah($grandTotal,false,false,true)}}</span></td>
         </tr>
         </tbody>

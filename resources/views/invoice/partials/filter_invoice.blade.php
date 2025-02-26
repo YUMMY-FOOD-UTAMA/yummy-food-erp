@@ -16,4 +16,7 @@
                                            :product-invoice-i-d="request('product_invoice_id')"/>
     <x-data-driven.select2.invoice size-form="sm" class="col-12 col-md-3 mb-5" type="row"
                                    :invoice-i-d="request('invoice_id')"/>
+    <x-form.select-box name="bst_number" label="BST Number" form-method="GET"
+                       class="col-12 col-md-3 mb-5" type="row" placeholder="Select BST Number..." value-key="bst_number" name-key="bst_number"
+                       size-form="sm" :items="$bstNumbers" :default-value="request()->bst_number"/>
 </x-table.advance-filter>
