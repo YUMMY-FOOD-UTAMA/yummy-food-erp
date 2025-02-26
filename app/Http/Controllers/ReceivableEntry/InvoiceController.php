@@ -31,8 +31,12 @@ class InvoiceController extends Controller
         $invoices = new InvoiceRepository();
         $invoices->setRequest($request);
         $invoices = $invoices->getAll();
+
+        $uniqueBstNumbers = Invoice::whereNotNull("bst_number")->select('bst_number')
+            ->groupBy('bst_number')->get('bst_number');
         return view('invoice.index', [
-            'invoices' => $invoices
+            'invoices' => $invoices,
+            'bstNumbers' => $uniqueBstNumbers,
         ]);
     }
 
@@ -235,11 +239,12 @@ class InvoiceController extends Controller
             if ($exportModel === "bst") {
                 $totalReceiptNumber = $invoices->whereNotNull('receipt_number')->count();
                 $totalInvoiceNumber = $invoices->count();
+                $totalInvoiceDate = $invoices->count();
                 $totalBuyerOrderNumber = $invoices->filter(function ($invoice) {
                     return $invoice->products->contains(fn($product) => !empty($product->buyer_order_number));
                 })->count();
                 $bstNumber = $invoicesRepo->generateBSTNumber();
-                Invoice::whereIn('id', $invoiceIDs)->update(['bst_number' => $bstNumber]);
+                Invoice::whereIn('id', $invoiceIDs)->update(['bst_number' => $bstNumber, 'bst_status' => "close"]);
                 $filename = str_replace(".", "", $bstNumber) . ".pdf";
                 $timestamp = Carbon::now('Asia/Jakarta')->format('d/m/Y');
                 $pdf = Pdf::loadView('invoice.export.export-bst-pdf', [
@@ -251,6 +256,7 @@ class InvoiceController extends Controller
                     'totalBuyerOrderNumber' => $totalBuyerOrderNumber,
                     'grandTotal' => $grandTotal,
                     'totalReceiptNumber' => $totalReceiptNumber,
+                    'totalInvoiceDate' => $totalInvoiceDate,
                 ]);
             } else {
                 $receiptNumber = $invoicesRepo->generateReceiptNumber();

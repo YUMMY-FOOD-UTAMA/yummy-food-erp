@@ -11,6 +11,7 @@
         <th style="vertical-align: middle; text-align: left; min-width: 110px; max-width: 110px;">Invoice Number</th>
         <th style="vertical-align: middle; text-align: left; min-width: 90px; max-width: 90px;">Grand Total Include Tax</th>
         <th style="vertical-align: middle; text-align: left; min-width: 94px; max-width: 94px;">Kwitansi Number</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 94px; max-width: 94px;">BST Number</th>
         <th style="vertical-align: middle; text-align: left;">Billing Status</th>
         <th class="text-end" style="width: 185px; min-width: 185px; max-width: 185px;">Actions</th>
     @endslot
@@ -31,13 +32,14 @@
                 <td>{{$invoice->number}}</td>
                 <td  style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"],false,true,true)}}</td>
                 <td>{{$invoice->receipt_number}}</td>
+                <td>{{$invoice->bst_number}}</td>
                 <td>
-                    @if ($invoice->status === 'done')
-                        <span style="color: green; font-weight: bold;">Done</span>
-                    @elseif ($invoice->status === 'pending')
-                        <span style="color: orange; font-weight: bold;">Pending</span>
+                    @if ($invoice->bst_status === 'close')
+                        <span style="color: #007bff; font-weight: bold;">Close</span>
+                    @elseif ($invoice->bst_status === 'open')
+                        <span style="color: #fd7e14; font-weight: bold;">Open</span>
                     @else
-                        <span>{{ $invoice->status }}</span>
+                        <span>{{ $invoice->bst_status }}</span>
                     @endif
                 </td>
                 <td>
