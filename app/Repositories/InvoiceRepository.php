@@ -110,6 +110,7 @@ class InvoiceRepository
         $productInvoiceID = $this->request->query('product_invoice_id');
         $invoiceNo = $this->request->query('invoice_no');
         $invoiceID = $this->request->query('invoice_id');
+        $bstNumber = $this->request->query('bst_number');
 
         $invoices = Invoice::with([
             'products',
@@ -167,7 +168,9 @@ class InvoiceRepository
         if ($invoiceNo) {
             $invoices->where('number', $invoiceNo);
         }
-
+        if ($bstNumber) {
+            $invoices->where('bst_number', $bstNumber);
+        }
 
         if ($this->withOutPagination) {
             $invoices = $invoices->orderByDesc('created_at')->get();

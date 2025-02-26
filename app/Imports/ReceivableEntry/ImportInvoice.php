@@ -250,6 +250,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
 
     public function multipleInvoice(Collection $rows)
     {
+        set_time_limit(300);
         //
         $invoices = [];
         $fetch = false;
@@ -303,14 +304,18 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                         $productTotalDiscount = 0;
                         $products = [];
                     }
-                    $doAndDoDate = ltrim($row[15], ': ');
+                    $invoiceNo = ltrim($row[4], ": ");
+                    $doAndDoDate = explode(':', $row[15]);
+//                    if ($invoiceNo == "GI 25/02/1856") {
+//                        print_r($doAndDoDate[1]);
+//                    }
+                    $doAndDoDate = $doAndDoDate[1];
                     preg_match('/^(.*?)\s+dt\.(.*)$/', $doAndDoDate, $matches);
                     $deliveryNote = trim($matches[1] ?? '');
                     $deliveryNoteDate = trim($matches[2] ?? '');
                     preg_match('/^(.*?)\s+dt\.(.*)$/', $row[11], $matchesBuyerOrder);
                     $buyerOrderNumber = $matchesBuyerOrder[1];
                     $invoiceDate = Date::excelToDateTimeObject($row[0])->format('j-M-Y');
-                    $invoiceNo = ltrim($row[4], ": ");
                     $buyerName = $row[2];
                     $buyerAccountName = $row[1];
                     $buyerAddress = $row[3];
