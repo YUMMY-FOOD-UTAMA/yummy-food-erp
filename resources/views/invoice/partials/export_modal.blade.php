@@ -156,7 +156,7 @@
                          class="img-preview">
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    Export
+                    Print
                 </button>
             </form>
         @endslot
@@ -170,7 +170,7 @@
                          class="img-preview">
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    Export
+                    Print
                 </button>
             </form>
         @endslot
@@ -186,7 +186,7 @@
                          class="img-preview">
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    Export
+                    Print
                 </button>
             </form>
         @endslot
@@ -200,7 +200,7 @@
                          class="img-preview">
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    Export
+                    Print
                 </button>
             </form>
         @endslot

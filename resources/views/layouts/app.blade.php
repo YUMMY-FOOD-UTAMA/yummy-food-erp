@@ -72,6 +72,7 @@
 
                     params.set(key, value || '');
                 }
+                params.set("page", '1')
 
                 window.location.href = url.origin + url.pathname + '?' + params.toString();
             }
