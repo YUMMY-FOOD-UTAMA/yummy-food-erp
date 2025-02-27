@@ -272,6 +272,8 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         $productTotalAmount = 0;
         $productTotalDiscount = 0;
         $buyerAccountName = '';
+        $deliveryNoteDateAndDeliveryNotes = [];
+        $buyerOrderNumbers = [];
         foreach ($rows as $index => $row) {
             if ($row[0] == 'Date') {
                 $fetch = true;
@@ -284,6 +286,45 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     }
                     if ($isAppendInvoice) {
                         $isAppendInvoice = false;
+                        if (count($products) == count($deliveryNoteDateAndDeliveryNotes) - 1) {
+                            for ($i = 0; $i < count($products); $i++) {
+                                preg_match('/^(.*?)\s+dt\.(.*)$/', $deliveryNoteDateAndDeliveryNotes[$i + 1], $matchesDeliveryNoteDate);
+                                $deliveryNoteProduct = trim($matchesDeliveryNoteDate[1]);
+                                $deliveryNoteDateProduct = trim($matchesDeliveryNoteDate[2]);
+                                $products[$i] = [
+                                    'name' => $products[$i]["name"],
+                                    'quantity' => $products[$i]["quantity"],
+                                    'rate' => $products[$i]["rate"],
+                                    'unit' => $products[$i]["unit"],
+                                    'discount' => $products[$i]["discount"],
+                                    'discount_price' => $products[$i]["discount_price"],
+                                    'net_rate' => $products[$i]["net_rate"],
+                                    'amount' => $products[$i]["amount"],
+                                    'delivery_note' => $deliveryNoteProduct,
+                                    'buyer_order_number' => $products[$i]["buyer_order_number"],
+                                    'delivery_note_date' => $deliveryNoteDateProduct,
+                                ];
+                            }
+                        }
+                        if (count($products) == count($buyerOrderNumbers)) {
+                            for ($i = 0; $i < count($products); $i++) {
+                                preg_match('/^(.*?)\s+dt\.(.*)$/', $buyerOrderNumbers[$i], $matchesBuyerOrderProduct);
+                                $buyerOrderNumberProduct = $matchesBuyerOrderProduct[1];
+                                $products[$i] = [
+                                    'name' => $products[$i]["name"],
+                                    'quantity' => $products[$i]["quantity"],
+                                    'rate' => $products[$i]["rate"],
+                                    'unit' => $products[$i]["unit"],
+                                    'discount' => $products[$i]["discount"],
+                                    'discount_price' => $products[$i]["discount_price"],
+                                    'net_rate' => $products[$i]["net_rate"],
+                                    'amount' => $products[$i]["amount"],
+                                    'delivery_note' => $products[$i]["delivery_note"],
+                                    'buyer_order_number' => $buyerOrderNumberProduct,
+                                    'delivery_note_date' => $products[$i]["delivery_note_date"],
+                                ];
+                            }
+                        }
                         $invoices[] = [
                             'invoice_number' => $invoiceNo,
                             'invoice_date' => $invoiceDate,
@@ -303,18 +344,26 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                         $productTotalAmount = 0;
                         $productTotalDiscount = 0;
                         $products = [];
+                        $deliveryNoteDateAndDeliveryNotes = [];
+                        $buyerOrderNumbers = [];
                     }
                     $invoiceNo = ltrim($row[4], ": ");
-                    $doAndDoDate = explode(':', $row[15]);
-//                    if ($invoiceNo == "GI 25/02/1856") {
-//                        print_r($doAndDoDate[1]);
-//                    }
-                    $doAndDoDate = $doAndDoDate[1];
+
+                    $row[15] = str_replace(",", "", $row[15]);
+                    $deliveryNoteDateAndDeliveryNotes = explode(':', $row[15]);
+                    $doAndDoDate = $deliveryNoteDateAndDeliveryNotes[1];
                     preg_match('/^(.*?)\s+dt\.(.*)$/', $doAndDoDate, $matches);
                     $deliveryNote = trim($matches[1] ?? '');
                     $deliveryNoteDate = trim($matches[2] ?? '');
+
+                    $buyerOrderNumbers = explode(',', $row[11]);
                     preg_match('/^(.*?)\s+dt\.(.*)$/', $row[11], $matchesBuyerOrder);
                     $buyerOrderNumber = $matchesBuyerOrder[1];
+                    if ($invoiceNo == "GI 25/02/1856") {
+                        print_r($deliveryNoteDateAndDeliveryNotes);
+                        print_r($buyerOrderNumbers);
+                    }
+
                     $invoiceDate = Date::excelToDateTimeObject($row[0])->format('j-M-Y');
                     $buyerName = $row[2];
                     $buyerAccountName = $row[1];

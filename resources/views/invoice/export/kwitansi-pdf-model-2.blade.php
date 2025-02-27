@@ -74,8 +74,7 @@
 
     <p style="font-size: 15px; margin-top: 20px; font-weight: normal; font-style: italic;">
         Untuk Pembayaran Via Transfer dapat dilakukan melalui:<br>
-        Bank BNI Cab 22 Melawai Raya 199.578.889.6 an PT. Yummy Food Utama<br>
-        Bank Mandiri Cab Cimanggis 129.000.476062.1 an PT. Yummy Food Utama
+        Bank BNI Cab 22 Melawai Raya 199.578.889.6 an PT. Yummy Food Utama
     </p>
 </div>
 </body>
