@@ -8,6 +8,7 @@ use App\Models\Invoice\Invoice;
 use App\Utils\Primitives\ListPageSize;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceRepository
 {
@@ -152,7 +153,7 @@ class InvoiceRepository
             });
         }
         if ($startCreatedDate && $endCreatedDate) {
-            $invoices->whereBetween('created_at', [$startCreatedDate, $endCreatedDate]);
+            $invoices->whereBetween(DB::raw('DATE(created_at)'), [$startCreatedDate, $endCreatedDate]);
         }
         if ($invoiceID) {
             $invoices->where('id', $invoiceID);
