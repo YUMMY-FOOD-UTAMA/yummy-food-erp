@@ -49,7 +49,8 @@ trait AuditTrait
 
     public function createdAt()
     {
-        return $this->created_at->setTimezone(Auth::user()->timezone)->format('Y-m-d H:i:s');
+        return $this->created_at
+            ->format('Y-m-d H:i:s');
     }
 
     public function createdAtOnlyDate()
