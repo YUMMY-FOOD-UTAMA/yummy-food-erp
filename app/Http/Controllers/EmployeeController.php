@@ -38,7 +38,8 @@ class EmployeeController extends Controller
         $levelGrades = LevelGrade::all();
         $roles = Role::all();
         $pageSizes = ListPageSize::pageSizes();
-        $title = 'user management';
+        $title = 'employee management';
+//        return view('v2.employee_management.index', compact(
         return view('user_management.index', compact(
             'title',
             'employees',
