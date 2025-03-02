@@ -19,6 +19,9 @@ class InvoiceRepository
     private bool $withOutPagination = false;
     private string $receiptNumber = "";
 
+    private bool $receiptNumberNotNull = false;
+    private bool $bstNumberNotNull = false;
+
     public function setRequest(Request $request): void
     {
         $this->request = $request;
@@ -47,6 +50,16 @@ class InvoiceRepository
     public function setReceiptNumber(string $receiptNumber): void
     {
         $this->receiptNumber = $receiptNumber;
+    }
+
+    public function setReceiptNumberNotNull(bool $receiptNumberNotNull): void
+    {
+        $this->receiptNumberNotNull = $receiptNumberNotNull;
+    }
+
+    public function setBstNumberNotNull(bool $bstNumberNotNull): void
+    {
+        $this->bstNumberNotNull = $bstNumberNotNull;
     }
 
     public function generateReceiptNumber()
@@ -129,6 +142,12 @@ class InvoiceRepository
         }
         if ($this->receiptNumber) {
             $invoices = $invoices->where('receipt_number', $this->receiptNumber);
+        }
+        if ($this->receiptNumberNotNull) {
+            $invoices = $invoices->whereNotNull('receipt_number');
+        }
+        if ($this->bstNumberNotNull) {
+            $invoices = $invoices->whereNotNull('bst_number');
         }
         if ($searchKeyword) {
             $invoices->where(function ($query) use ($searchKeyword) {

@@ -48,13 +48,19 @@
                 @csrf
                 <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model1">
                 <input hidden name="export_invoice_model" value="kwitansi_model1">
+                <input hidden name="type" value="" id="type_input_kwitansi_model1">
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
-                <button onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1')"
+                <button onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1',false,'print','type_input_kwitansi_model1')"
                         class="btn btn-primary">
-                    Export
+                    Print
+                </button>
+                <button
+                    onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1',false,'update_and_print','type_input_kwitansi_model1')"
+                    class="btn btn-primary">
+                    Update & Print
                 </button>
             </form>
         @endslot
@@ -63,13 +69,19 @@
                 @csrf
                 <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model2">
                 <input hidden name="export_invoice_model" value="kwitansi_model2">
+                <input hidden name="type" value="" id="type_input_kwitansi_model2">
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
-                <button onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2')"
+                <button onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2',false,'print','type_input_kwitansi_model2')"
                         id="btn_kwitansi_model2" class="btn btn-primary">
-                    Export
+                    Print
+                </button>
+                <button
+                    onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2',false,'update_and_print','type_input_kwitansi_model2')"
+                    id="btn_kwitansi_model2" class="btn btn-primary">
+                    Update & Print
                 </button>
             </form>
         @endslot
@@ -94,7 +106,7 @@
 
                 <button onclick="processSelected('btn_tax_invoice_export','tax_invoice_export')"
                         id="btn_tax_invoice_export" class="btn btn-primary">
-                    Export
+                    Print
                 </button>
             </form>
         @endslot
@@ -103,13 +115,18 @@
                 @csrf
                 <input hidden name="invoice_ids" id="invoice_ids_bst">
                 <input hidden name="export_invoice_model" value="bst">
+                <input hidden name="type" value="" id="type_input_bst">
                 <div class="checkbox-container">
                     <x-form.input class="fv-row mb-10" label="From" required="true" placeholder="Input From"
                                   name="from"/>
                 </div>
-                <button onclick="processSelected('btn_bst','invoice_ids_bst')"
+                <button onclick="processSelected('btn_bst','invoice_ids_bst',false,'print','type_input_bst')"
                         id="btn_bst" class="btn btn-primary">
-                    Export
+                    Print
+                </button>
+                <button onclick="processSelected('btn_bst','invoice_ids_bst',false,'update_and_print','type_input_bst')"
+                        id="btn_bst" class="btn btn-primary">
+                    Update & Print
                 </button>
             </form>
         @endslot
@@ -209,12 +226,16 @@
                 @csrf
                 <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
                 <input hidden name="export_invoice_model" value="kwitansi_model1">
+                <input hidden name="type" value="" id="type_input_kwitansi_model1{{$invoice->id}}">
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
-                <button type="submit" onclick="processSelected()" class="btn btn-primary">
-                    Export
+                <button type="submit" onclick="processSelected(null,null,null,'print','type_input_kwitansi_model1{{$invoice->id}}')" class="btn btn-primary">
+                    Print
+                </button>
+                <button type="submit" onclick="processSelected(null,null,null,'update_and_print','type_input_kwitansi_model1{{$invoice->id}}')" class="btn btn-primary">
+                    Update & Print
                 </button>
             </form>
         @endslot
@@ -223,12 +244,16 @@
                 @csrf
                 <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
                 <input hidden name="export_invoice_model" value="kwitansi_model2">
+                <input hidden name="type" value="" id="type_input_kwitansi_model2{{$invoice->id}}">
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
-                <button type="submit" onclick="processSelected()" class="btn btn-primary">
-                    Export
+                <button type="submit" onclick="processSelected(null,null,null,'print','type_input_kwitansi_model2{{$invoice->id}}')" class="btn btn-primary">
+                    Print
+                </button>
+                <button type="submit" onclick="processSelected(null,null,null,'update_and_print','type_input_kwitansi_model2{{$invoice->id}}')" class="btn btn-primary">
+                    Update & Print
                 </button>
             </form>
         @endslot
