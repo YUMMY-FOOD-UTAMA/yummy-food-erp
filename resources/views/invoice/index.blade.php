@@ -45,10 +45,10 @@
 @endsection
 @push('script')
     <script>
-        function processSelected(btnID, invoiceIDsInput, isDeleted) {
+        function processSelected(btnID, invoiceIDsInput, isDeleted, type, typeID) {
             const selectedIds = Array.from(document.querySelectorAll('.select-item-invoice:checked'))
                 .map(cb => cb.value);
-
+            document.getElementById(typeID).value = type
             if (invoiceIDsInput && invoiceIDsInput != '') {
                 document.getElementById(invoiceIDsInput).value = selectedIds.join(',');
             }
@@ -57,7 +57,7 @@
                 const formData = new FormData();
                 formData.append('invoice_ids', selectedIds.join(','));
                 formData.append('export_invoice_model', "kwitansi_model2");
-
+                formData.append('type', type)
                 fetch('{{route('receivable.entry.invoice.export')}}', {
                     method: 'POST',
                     body: formData
