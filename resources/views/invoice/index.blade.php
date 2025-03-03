@@ -48,7 +48,9 @@
         function processSelected(btnID, invoiceIDsInput, isDeleted, type, typeID) {
             const selectedIds = Array.from(document.querySelectorAll('.select-item-invoice:checked'))
                 .map(cb => cb.value);
-            document.getElementById(typeID).value = type
+            if (typeID && typeID != ''){
+                document.getElementById(typeID).value = type
+            }
             if (invoiceIDsInput && invoiceIDsInput != '') {
                 document.getElementById(invoiceIDsInput).value = selectedIds.join(',');
             }
