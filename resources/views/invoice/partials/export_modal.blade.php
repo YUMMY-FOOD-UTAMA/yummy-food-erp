@@ -53,13 +53,14 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
-                <button onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1',false,'print','type_input_kwitansi_model1')"
-                        class="btn btn-primary">
+                <button
+                    onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1',false,'print','type_input_kwitansi_model1')"
+                    class="btn btn-primary">
                     Print
                 </button>
                 <button
                     onclick="processSelected('btn_kwitansi_model1','invoice_ids_kwitansi_model1',false,'update_and_print','type_input_kwitansi_model1')"
-                    class="btn btn-primary">
+                    class="btn btn-success">
                     Update & Print
                 </button>
             </form>
@@ -74,13 +75,14 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
-                <button onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2',false,'print','type_input_kwitansi_model2')"
-                        id="btn_kwitansi_model2" class="btn btn-primary">
+                <button
+                    onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2',false,'print','type_input_kwitansi_model2')"
+                    id="btn_kwitansi_model2" class="btn btn-primary">
                     Print
                 </button>
                 <button
                     onclick="processSelected('btn_kwitansi_model2','invoice_ids_kwitansi_model2',false,'update_and_print','type_input_kwitansi_model2')"
-                    id="btn_kwitansi_model2" class="btn btn-primary">
+                    id="btn_kwitansi_model2" class="btn btn-success">
                     Update & Print
                 </button>
             </form>
@@ -106,7 +108,7 @@
 
                 <button onclick="processSelected('btn_tax_invoice_export','tax_invoice_export')"
                         id="btn_tax_invoice_export" class="btn btn-primary">
-                    Print
+                    Export
                 </button>
             </form>
         @endslot
@@ -125,7 +127,7 @@
                     Print
                 </button>
                 <button onclick="processSelected('btn_bst','invoice_ids_bst',false,'update_and_print','type_input_bst')"
-                        id="btn_bst" class="btn btn-primary">
+                        id="btn_bst" class="btn btn-success">
                     Update & Print
                 </button>
             </form>
@@ -231,10 +233,14 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
-                <button type="submit" onclick="processSelected(null,null,null,'print','type_input_kwitansi_model1{{$invoice->id}}')" class="btn btn-primary">
+                <button type="submit"
+                        onclick="processSelected(null,null,null,'print','type_input_kwitansi_model1{{$invoice->id}}')"
+                        class="btn btn-primary">
                     Print
                 </button>
-                <button type="submit" onclick="processSelected(null,null,null,'update_and_print','type_input_kwitansi_model1{{$invoice->id}}')" class="btn btn-primary">
+                <button type="submit"
+                        onclick="processSelected(null,null,null,'update_and_print','type_input_kwitansi_model1{{$invoice->id}}')"
+                        class="btn btn-success">
                     Update & Print
                 </button>
             </form>
@@ -249,10 +255,14 @@
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
-                <button type="submit" onclick="processSelected(null,null,null,'print','type_input_kwitansi_model2{{$invoice->id}}')" class="btn btn-primary">
+                <button type="submit"
+                        onclick="processSelected(null,null,null,'print','type_input_kwitansi_model2{{$invoice->id}}')"
+                        class="btn btn-primary">
                     Print
                 </button>
-                <button type="submit" onclick="processSelected(null,null,null,'update_and_print','type_input_kwitansi_model2{{$invoice->id}}')" class="btn btn-primary">
+                <button type="submit"
+                        onclick="processSelected(null,null,null,'update_and_print','type_input_kwitansi_model2{{$invoice->id}}')"
+                        class="btn btn-success">
                     Update & Print
                 </button>
             </form>
