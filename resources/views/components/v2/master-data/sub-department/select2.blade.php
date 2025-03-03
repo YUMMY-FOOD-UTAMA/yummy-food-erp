@@ -5,6 +5,7 @@
     'sizeForm'=>"lg",
     'name'=>'sub_department_id',
     'dataDropdownParent'=>null,
+    'errorMessageId'=>''
 ])
 
 <div {{$attributes->merge(['class' => ''])}}>
@@ -15,6 +16,9 @@
                     {!! $dataDropdownParent ? 'data-dropdown-parent="#' . $dataDropdownParent . '"' : '' !!}
                     class="form-select form-select-solid form-select-{{$sizeForm}}">
             </select>
+            <ul class="error-message text-sm text-red-600 dark:text-red-400 space-y-1" style="display: none"
+                id="{{$errorMessageId}}">
+            </ul>
         </div>
     @elseif($type=="row")
         <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">Sub
@@ -23,6 +27,9 @@
                 {!! $dataDropdownParent ? 'data-dropdown-parent="#' . $dataDropdownParent . '"' : '' !!}
                 class="form-select form-select-solid form-select-{{$sizeForm}}">
         </select>
+        <ul class="error-message text-sm text-red-600 dark:text-red-400 space-y-1" style="display: none"
+            id="{{$errorMessageId}}">
+        </ul>
     @endif
 </div>
 

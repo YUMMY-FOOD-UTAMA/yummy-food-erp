@@ -110,6 +110,30 @@
                 window.location.href = currentUrl.toString();
             }
         </script>
+
+        <script>
+            function handleErrorResponse(xhr, prefix) {
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    let errors = xhr.responseJSON.errors;
+
+                    Object.keys(errors).forEach(function (fieldName) {
+                        let fieldErrorId = `#${fieldName}${prefix}`;
+                        let errorMessages = errors[fieldName];
+
+                        if ($(fieldErrorId).length) {
+                            let errorList = errorMessages.map(msg => `<li style="color: red">${msg}</li>`).join('');
+                            $(fieldErrorId).html(errorList).show();
+                        }
+                    });
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: xhr.responseJSON.message,
+                    confirmButtonText: 'OK'
+                });
+            }
+        </script>
         @stack('script')
         </body>
 </html>
