@@ -156,6 +156,15 @@
     </script>
 
     <script>
+        function updateGenderSelection(value) {
+            if (value === 'Male') {
+                $('#gender_edit_employee_male').prop('checked', true).closest('label').addClass('active');
+                $('#gender_edit_employee_female').prop('checked', false).closest('label').removeClass('active');
+            } else if (value === 'Female') {
+                $('#gender_edit_employee_female').prop('checked', true).closest('label').addClass('active');
+                $('#gender_edit_employee_male').prop('checked', false).closest('label').removeClass('active');
+            }
+        }
         $(document).on("click", "#{{$btnDetailViewId}}", function () {
             let employeeData = $(this).data("employee");
 
@@ -163,6 +172,7 @@
                 url: "{{config("app.urlapi")}}/api/v1/employee/detail/" + employeeData.id,
                 dataType: 'json',
                 success: function (data) {
+
                     data = data.data
                     console.log(data)
                     $('#full_name_edit_employee').val(data.user.full_name)
@@ -173,6 +183,10 @@
                     $('#position_edit_employee').val(data.position)
                     $('#join_date_edit_employee').val(data.join_date)
                     $('#date_of_exchange_status_edit_employee').val(data.date_of_exchange_status)
+                    $('#gender_edit_employee').val(data.date_of_exchange_status)
+                    $('#address_edit_employee').val(data.user.address)
+                    $('#avatar_placeholder_edit_employee').css('background-image', `url("${data.user.avatar}")`);
+                    updateGenderSelection(data.user.gender)
 
                     let select2Roles = $('#role_id_select2_edit')
                     let option = new Option(data.user.role_name, data.user.role_id, true, true);

@@ -67,11 +67,11 @@
                             <Unit>{{$unit}}</Unit>
                             <Price>{{ceil($item->rate)}}</Price>
                             <Qty>{{$item->quantity}}</Qty>
-                            <TotalDiscount>{{ceil($item->calculate()["discount_total"])}}</TotalDiscount>
-                            <TaxBase>{{ceil($item->calculate()["dpp"])}}</TaxBase>
-                            <OtherTaxBase>{{ceil($item->calculate()["dpp_etc_value"])}}</OtherTaxBase>
+                            <TotalDiscount>{{ceil($item->calculate($ppn)["discount_total"])}}</TotalDiscount>
+                            <TaxBase>{{ceil($item->calculate($ppn)["dpp"])}}</TaxBase>
+                            <OtherTaxBase>{{ceil($item->calculate($ppn)["dpp_etc_value"])}}</OtherTaxBase>
                             <VATRate>12</VATRate>
-                            <VAT>{{ceil($item->calculate()["ppn12"])}}</VAT>
+                            <VAT>{{ceil($item->calculate($ppn)["ppn12"])}}</VAT>
                             <STLGRate>0</STLGRate>
                             <STLG>0</STLG>
                         </GoodService>

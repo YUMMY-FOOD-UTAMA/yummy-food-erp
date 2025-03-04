@@ -142,14 +142,14 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         $rowDiscount = 0;
         $rowNetRate = 0;
         $rowAmount = 0;
-        $ppn = '';
+        $ppn = 12;
         $totalAmountProduct = 0;
         $totalDiscountProduct = 0;
 
         foreach ($productData as $index => $row) {
             foreach ($row as $key => $value) {
                 if ((strtolower($value) === 'ppn' || strtolower($value) === 'total')) {
-                    $ppn = 11;
+                    $ppn = 12;
                     break 2;
                 }
             }
@@ -259,7 +259,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         $invoiceNo = '';
         $buyerName = '';
         $buyerAddress = '';
-        $ppn = 11;
+        $ppn = 12;
         $termsOfDelivery = '';
         $termOfPayment = '';
         $supplierRef = '';
