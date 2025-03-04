@@ -6,11 +6,8 @@
     'name' => '',
     'defaultValue' => '',
     'id' => '',
-    'type' => 'text',
     'placeholder' => '',
     'required' => false,
-    'mustUpperCase' => false,
-    'withClipboard' => false,
     'errorMessageId'=>'',
 ])
 
@@ -40,21 +37,13 @@
         @endif
 
         <div class="d-flex w-100 align-items-center">
-            <input type="{{$type}}"
+            <input type="text"
                    {{$required ? 'required' : ''}}
                    class="form-control form-control-solid form-control-{{$sizeForm}}"
                    placeholder="{{$placeholder}}"
                    name="{{$name}}"
                    value="{{old($name,$defaultValue)}}"
-                   id="{{$id}}"
-                   style="{{$mustUpperCase ? 'text-transform: uppercase;' : ''}}"
-                   oninput="{{$mustUpperCase ? 'this.value = this.value.toUpperCase();' : ''}}"/>
-
-            @if($withClipboard)
-                <a class="btn btn-light-primary ms-2" data-clipboard-target="#{{$id}}">
-                    Copy
-                </a>
-            @endif
+                   id="{{$id}}"/>
         </div>
 
         <ul class="error-message text-sm text-red-600 dark:text-red-400 space-y-1" style="display: none"
@@ -63,29 +52,18 @@
     </div>
 
     @push('script')
-        @if($withClipboard)
-            <script>
-                const target = document.getElementById('{{$id}}');
-                const button = target.nextElementSibling;
-
-                var clipboard = new ClipboardJS(button, {
-                    target: target,
-                });
-
-                clipboard.on('success', function (e) {
-                    const currentLabel = button.innerHTML;
-
-                    if (button.innerHTML === 'Copied!') {
-                        return;
-                    }
-
-                    button.innerHTML = 'Copied!';
-
-                    setTimeout(function () {
-                        button.innerHTML = currentLabel;
-                    }, 3000)
-                });
-            </script>
-        @endif
+        <script>
+            $("#{{$id}}").daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    minYear: 1901,
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    },
+                    maxYear: parseInt(moment().format("YYYY"), 12)
+                }, function (start, end, label) {
+                }
+            );
+        </script>
     @endpush
 @endif
