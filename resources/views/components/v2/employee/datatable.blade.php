@@ -8,7 +8,6 @@
 @push('css')
     <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css"/>
 @endpush
-<input type="hidden" id="employee_datatable_checkbox">
 <table id="{{$id}}" class="table table-bordered table-row-bordered gy-3 gs-5">
     <thead>
     <tr class="fw-semibold fs-6 text-gray-800">
@@ -43,7 +42,7 @@
                 $.get("{{config('app.urlapi')}}/api/v1/employee/get-all", {
                         page_size: data.length,
                         page: (data.start / data.length) + 1,
-                        sort_direction: "asc",
+                        sort_direction: "desc",
                         sort_field: "employees.created_at",
                         ...filters
                     },

@@ -5,6 +5,7 @@
     'sizeForm'=>"lg",
     'name'=>'role_id',
     'dataDropdownParent'=>null,
+    'errorMessageId'=>''
 ])
 
 <div {{$attributes->merge(['class' => ''])}}>
@@ -13,9 +14,11 @@
         <div class="col-lg-8 fv-row">
             <select name="{{$name}}" aria-label="Select a Role" id="{{$id}}"
                     {!! $dataDropdownParent ? 'data-dropdown-parent="#' . $dataDropdownParent . '"' : '' !!}
-
                     class="form-select form-select-solid form-select-{{$sizeForm}}">
             </select>
+            <ul class="error-message text-sm text-red-600 dark:text-red-400 space-y-1" style="display: none"
+                id="{{$errorMessageId}}">
+            </ul>
         </div>
     @elseif($type=="row")
         <label class="d-flex align-items-center fs-6 {{$required?'required':''}} fw-semibold mb-2">Role</label>
@@ -23,6 +26,9 @@
                 {!! $dataDropdownParent ? 'data-dropdown-parent="#' . $dataDropdownParent . '"' : '' !!}
                 class="form-select form-select-solid form-select-{{$sizeForm}}">
         </select>
+        <ul class="error-message text-sm text-red-600 dark:text-red-400 space-y-1" style="display: none"
+            id="{{$errorMessageId}}">
+        </ul>
     @endif
 </div>
 
@@ -45,7 +51,6 @@
                     },
                     processResults: function (data, params) {
                         params.page = params.page || 1;
-                        console.log(data.data)
                         return {
                             results: data.data.map(function (item) {
                                 return {

@@ -52,7 +52,7 @@
                                          name="role_id"/>
             </x-v2.table.filter-section>
             <div class="card-body pt-0">
-                <x-v2.employee-management.datatable/>
+                <x-v2.employee.datatable/>
             </div>
         </div>
     </x-v2.section-content>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                    <x-v2.employee-management.form-create/>
+                    <x-v2.employee.form-create/>
                 </div>
             </div>
         </div>
