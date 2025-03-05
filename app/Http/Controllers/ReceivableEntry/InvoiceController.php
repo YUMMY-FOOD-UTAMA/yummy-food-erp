@@ -202,17 +202,17 @@ class InvoiceController extends Controller
             $pdf = null;
             if ($exportModel === "invoice_model1") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice, 'timestamp' => $timestamp,
-                    'ppn', $request->ppn]);
+                    'ppn' => $request->ppn]);
             } else if ($exportModel === "invoice_model2") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-2', ['invoice' => $invoice, 'timestamp' => $timestamp,
-                    'ppn', $request->ppn]);
+                    'ppn' => $request->ppn]);
             } else if ($exportModel === "invoice_model3_tax") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-with-tax', ['invoice' => $invoice, 'timestamp' => $timestamp,
-                    'ppn', $request->ppn,
+                    'ppn' => $request->ppn,
                     'taxNumber' => $request->get('tax_number')]);
             } else if ($exportModel === "invoice_model3_no_tax") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-without-tax', ['invoice' => $invoice, 'timestamp' => $timestamp,
-                    'ppn', $request->ppn]);
+                    'ppn' => $request->ppn]);
             }
             return $pdf->download($filename);
         } else if ($exportModel == "kwitansi_model1" || $exportModel == "kwitansi_model2" || $exportModel == "bst") {
