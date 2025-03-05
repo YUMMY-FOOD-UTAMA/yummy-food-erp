@@ -1,8 +1,8 @@
 @props([
     'viewOnly' => false,
-    'image' => null,
     'name' => 'image',
-    'errorMessageId' => 'image_error'
+    'errorMessageId' => 'image_error',
+    'idPlaceholderImage'=>'image_placeholder_id'
 ])
 
 <style>
@@ -22,8 +22,8 @@
     </div>
 @else
     <div class="image-input image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
-        <div class="image-input-wrapper w-125px h-125px"
-             style="background-image: url({{ FileHelper::getImage($image) }}); max-width: 200px; object-fit: cover">
+        <div class="image-input-wrapper w-125px h-125px" id="{{$idPlaceholderImage}}"
+             style="max-width: 200px; object-fit: cover">
         </div>
         <label class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
                data-kt-image-input-action="change" data-bs-toggle="tooltip" data-bs-dismiss="click"

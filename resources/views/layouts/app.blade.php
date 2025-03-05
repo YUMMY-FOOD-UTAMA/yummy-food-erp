@@ -134,6 +134,7 @@
                 });
             }
         </script>
+        <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
         @stack('script')
         </body>
 </html>

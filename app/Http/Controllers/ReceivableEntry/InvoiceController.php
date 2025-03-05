@@ -60,7 +60,7 @@ class InvoiceController extends Controller
 
         $grandTotal = 0;
         foreach ($invoices as $invoice) {
-            $grandTotal += $invoice->calculate()["grand_total"];
+            $grandTotal += $invoice->calculate($invoice->ppn)["grand_total"];
         }
         return view('invoice.invoice-payment', compact('invoices', 'receiptNumber', 'grandTotal'));
     }
@@ -191,20 +191,28 @@ class InvoiceController extends Controller
                 ]);
             }
 
+            $invoice->update([
+                'ppn' => $request->ppn
+            ]);
+
             $timestamp = Carbon::now('Asia/Jakarta')->format('d-M-Y');
             $timestamp = "Jakarta, " . $timestamp;
             $formatInvoiceNumber = str_replace("/", "-", $invoice->number);
             $filename = "Invoice_{$invoice->customer->name}_{$formatInvoiceNumber}.pdf";
             $pdf = null;
             if ($exportModel === "invoice_model1") {
-                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-1', ['invoice' => $invoice, 'timestamp' => $timestamp,
+                    'ppn' => $request->ppn]);
             } else if ($exportModel === "invoice_model2") {
-                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-2', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-2', ['invoice' => $invoice, 'timestamp' => $timestamp,
+                    'ppn' => $request->ppn]);
             } else if ($exportModel === "invoice_model3_tax") {
                 $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-with-tax', ['invoice' => $invoice, 'timestamp' => $timestamp,
+                    'ppn' => $request->ppn,
                     'taxNumber' => $request->get('tax_number')]);
             } else if ($exportModel === "invoice_model3_no_tax") {
-                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-without-tax', ['invoice' => $invoice, 'timestamp' => $timestamp]);
+                $pdf = Pdf::loadView('invoice.export.invoice-pdf-model-3-without-tax', ['invoice' => $invoice, 'timestamp' => $timestamp,
+                    'ppn' => $request->ppn]);
             }
             return $pdf->download($filename);
         } else if ($exportModel == "kwitansi_model1" || $exportModel == "kwitansi_model2" || $exportModel == "bst") {
@@ -231,13 +239,14 @@ class InvoiceController extends Controller
                     'message' => "You export invoice or bst but the numbers are all empty"
                 ]);
             }
+            Invoice::whereIn('id', $invoiceIDs)->update(['ppn' => $request->ppn]);
 
             $grandTotal = 0;
             $formatInvoiceNumber = "";
             $invoices = $invoices->sortByDesc('date');
             $timestamp = $invoices->first()->date;
             foreach ($invoices as $invoice) {
-                $grandTotal += $invoice->calculate()["grand_total"];
+                $grandTotal += $invoice->calculate($request->ppn)["grand_total"];
                 $formatInvoiceNumber = $formatInvoiceNumber . " " . $invoice->number;
             }
             $grandTotalAsIndonesia = Util::amountToIndonesia($grandTotal);
@@ -258,7 +267,7 @@ class InvoiceController extends Controller
                 if ($request->type != "print") {
                     $bstNumber = $invoicesRepo->generateBSTNumber();
                     Invoice::whereIn('id', $invoiceIDs)->update(['bst_number' => $bstNumber, 'bst_status' => "close"]);
-                }else{
+                } else {
                     $bstNumber = $invoices->whereNotNull('bst_number')->first()->bst_number;
                 }
                 $filename = str_replace(".", "", $bstNumber) . ".pdf";
@@ -273,12 +282,13 @@ class InvoiceController extends Controller
                     'grandTotal' => $grandTotal,
                     'totalReceiptNumber' => $totalReceiptNumber,
                     'totalInvoiceDate' => $totalInvoiceDate,
+                    'ppn' => $request->get('ppn'),
                 ]);
             } else {
                 if ($request->type != "print") {
                     $receiptNumber = $invoicesRepo->generateReceiptNumber();
                     Invoice::whereIn('id', $invoiceIDs)->update(['receipt_number' => $receiptNumber]);
-                }else{
+                } else {
                     $receiptNumber = $invoices->whereNotNull('receipt_number')->first()->receipt_number;
                 }
 
@@ -290,10 +300,12 @@ class InvoiceController extends Controller
 
                 if ($exportModel === "kwitansi_model1") {
                     $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-1', ['invoices' => $invoices,
-                        'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
+                        'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp,
+                        'ppn' => $request->get('ppn')]);
                 } else if ($exportModel === "kwitansi_model2") {
                     $pdf = Pdf::loadView('invoice.export.kwitansi-pdf-model-2', ['invoices' => $invoices,
-                        'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp]);
+                        'grand_total' => $grandTotal, 'grand_total_as_indonesia' => $grandTotalAsIndonesia, 'receiptNumber' => $receiptNumber, 'timestamp' => $timestamp,
+                        'ppn' => $request->get('ppn')]);
                 }
             }
             return $pdf->download($filename);
@@ -304,7 +316,8 @@ class InvoiceController extends Controller
             $invoices->setWithOutPagination(true);
             $invoices = $invoices->getAll();
             $invoices = $invoices->sortByDesc('date');
-
+            $ppn = $request->get('ppn');
+            Invoice::whereIn('id', $invoiceIDs)->update(['ppn' => $ppn]);
             $formatInvoiceNumber = "";
             if (count($invoices) > 0) {
                 $firstInvoice = $invoices->first()->number;
@@ -325,7 +338,8 @@ class InvoiceController extends Controller
                 $fileName = "Faktur Pajak Xml_{$monthName}_{$formatInvoiceNumber}.xml";
                 $xml = view('invoice.export.xml_tax_invoice', compact(
                     'invoices',
-                    'request'
+                    'request',
+                    'ppn'
                 ))->render();
 
                 return response()->streamDownload(function () use ($xml) {

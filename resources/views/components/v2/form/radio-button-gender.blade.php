@@ -1,7 +1,8 @@
 @props([
     'name'=>'gender',
     'defaultValue'=>null,
-    'label'=>'Gender'
+    'label'=>'Gender',
+    'id'=>'gender'
 ])
 <div {{ $attributes->merge(['class' => '']) }}>
     <label class="fs-6 fw-semibold mb-2">{{$label}}
@@ -14,7 +15,7 @@
                 class="btn btn-outline btn-outline-dashed btn-active-light-primary {{old('gender',$defaultValue) == 'Male' ? 'active':''}} d-flex text-start p-6"
                 data-kt-button="true">
                 <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                    <input class="form-check-input" type="radio"
+                    <input id="{{$id}}_male" class="form-check-input" type="radio"
                            {{old($name,$defaultValue) == 'Male' ? 'checked':''}}
                            name="{{$name}}" value="Male"/>
                 </span>
@@ -28,7 +29,7 @@
                 class="btn btn-outline btn-outline-dashed btn-active-light-primary {{old('gender',$defaultValue) == 'Female' ? 'active':''}} d-flex text-start p-6"
                 data-kt-button="true">
                 <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                    <input class="form-check-input" type="radio"
+                    <input id="{{$id}}_female" class="form-check-input" type="radio"
                            {{old($name,$defaultValue) == 'Female' ? 'checked':''}}
                            name="{{$name}}" value="Female"/>
                 </span>
