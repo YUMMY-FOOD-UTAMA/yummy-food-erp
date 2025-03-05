@@ -26,14 +26,22 @@ class Invoice extends Model
         return $this->hasMany(ProductInvoice::class);
     }
 
-    public function calculate()
+    public function calculate($ppn)
     {
         $subTotal = $this->product_total_amount;
         $discountTotal = $this->product_total_discount;
         $dpp = $subTotal - $discountTotal;
-        $dppEtcValue = round($dpp * 11 / 12, 2);
-        $ppn12 = round($dppEtcValue * 12 / 100, 2);
+
+        if ($ppn == 0) {
+            $dppEtcValue = 0;
+            $ppn12 = 0;
+        } else {
+            $dppEtcValue = round($dpp * 11 / $ppn, 2);
+            $ppn12 = round($dppEtcValue * $ppn / 100, 2);
+        }
+
         $grandTotal = round($dpp + $ppn12, 2);
+
         return [
             'sub_total' => round($subTotal, 2),
             'dpp_etc_value' => $dppEtcValue,
@@ -42,5 +50,6 @@ class Invoice extends Model
             'grand_total' => $grandTotal,
             'discount_total' => round($discountTotal, 2),
         ];
+
     }
 }

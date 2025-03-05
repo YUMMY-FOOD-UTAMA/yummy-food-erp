@@ -175,23 +175,23 @@
                 </div>
             </td>
             <td>Sub Total</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'],false,true,true)}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($ppn)['dpp'],false,true,true)}}</td>
         </tr>
         <tr>
             <td>DPP</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp'],false,true,true)}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($ppn)['dpp'],false,true,true)}}</td>
         </tr>
         <tr>
             <td>DPP Nilai lain</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['dpp_etc_value'],false,true,true)}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($ppn)['dpp_etc_value'],false,true,true)}}</td>
         </tr>
         <tr>
             <td>PPN 12%</td>
-            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['ppn12'],false,true,true)}}</td>
+            <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($ppn)['ppn12'],false,true,true)}}</td>
         </tr>
         <tr>
             <td style="font-weight: bold;">Grand Total</td>
-            <td style="font-weight: bold; text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()['grand_total'],false,false,true)}}</td>
+            <td style="font-weight: bold; text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($ppn)['grand_total'],false,false,true)}}</td>
         </tr>
         <tr>
             <td style="border: 0"></td>

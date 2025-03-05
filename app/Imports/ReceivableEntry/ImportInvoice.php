@@ -142,14 +142,14 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         $rowDiscount = 0;
         $rowNetRate = 0;
         $rowAmount = 0;
-        $ppn = '';
+        $ppn = 12;
         $totalAmountProduct = 0;
         $totalDiscountProduct = 0;
 
         foreach ($productData as $index => $row) {
             foreach ($row as $key => $value) {
                 if ((strtolower($value) === 'ppn' || strtolower($value) === 'total')) {
-                    $ppn = 11;
+                    $ppn = 12;
                     break 2;
                 }
             }
@@ -259,7 +259,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
         $invoiceNo = '';
         $buyerName = '';
         $buyerAddress = '';
-        $ppn = 11;
+        $ppn = 12;
         $termsOfDelivery = '';
         $termOfPayment = '';
         $supplierRef = '';
@@ -360,7 +360,9 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     $buyerOrderNumbers = explode(',', $row[11]);
                     preg_match('/^(.*?)\s+dt\.(.*)$/', $row[11], $matchesBuyerOrder);
                     $buyerOrderNumber = $matchesBuyerOrder[1];
-
+                    if ($invoiceNo == "GI 25/02/2311") {
+                        dd($deliveryNoteDateAndDeliveryNotes);
+                    }
                     $invoiceDate = Date::excelToDateTimeObject($row[0])->format('j-M-Y');
                     $buyerName = $row[2];
                     $buyerAccountName = $row[1];

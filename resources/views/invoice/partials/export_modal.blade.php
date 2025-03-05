@@ -49,6 +49,16 @@
                 <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model1">
                 <input hidden name="export_invoice_model" value="kwitansi_model1">
                 <input hidden name="type" value="" id="type_input_kwitansi_model1">
+                <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                    <span class="required">PPN</span>
+                </label>
+                <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                        data-control="select2" required data-dropdown-parent="#invoiceExportAllInOne"
+                        data-placeholder="Select Code Transaction"
+                        class="form-select form-select-solid form-select-lg mb-3">
+                    <option value="12">PPN 12%</option>
+                    <option value="0">PPN 0%</option>
+                </select>
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
@@ -71,6 +81,16 @@
                 <input hidden name="invoice_ids" id="invoice_ids_kwitansi_model2">
                 <input hidden name="export_invoice_model" value="kwitansi_model2">
                 <input hidden name="type" value="" id="type_input_kwitansi_model2">
+                <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                    <span class="required">PPN</span>
+                </label>
+                <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                        data-control="select2" required data-dropdown-parent="#invoiceExportAllInOne"
+                        data-placeholder="Select Code Transaction"
+                        class="form-select form-select-solid form-select-lg mb-3">
+                    <option value="12">PPN 12%</option>
+                    <option value="0">PPN 0%</option>
+                </select>
                 <div class="checkbox-container">
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
@@ -92,6 +112,16 @@
                 @csrf
                 <input hidden name="invoice_ids" id="tax_invoice_export" value="{{$invoice? $invoice->id :""}}">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#invoiceExportAllInOne"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                         <span class="required">Select Tax Invoice</span>
                     </label>
@@ -118,6 +148,16 @@
                 <input hidden name="invoice_ids" id="invoice_ids_bst">
                 <input hidden name="export_invoice_model" value="bst">
                 <input hidden name="type" value="" id="type_input_bst">
+                <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                    <span class="required">PPN</span>
+                </label>
+                <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                        data-control="select2" required data-dropdown-parent="#invoiceExportAllInOne"
+                        data-placeholder="Select Code Transaction"
+                        class="form-select form-select-solid form-select-lg mb-3">
+                    <option value="12">PPN 12%</option>
+                    <option value="0">PPN 0%</option>
+                </select>
                 <div class="checkbox-container">
                     <x-form.input class="fv-row mb-10" label="From" required="true" placeholder="Input From"
                                   name="from"/>
@@ -171,6 +211,16 @@
                 <input hidden name="invoice_id" value="{{$invoice? $invoice->id :""}}">
                 <input hidden name="export_invoice_model" value="invoice_model1">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <img src="{{asset('assets/images/invoice/invoice-model1.png')}}" alt="Invoice Model 1"
                          class="img-preview">
                 </div>
@@ -185,6 +235,16 @@
                 <input hidden name="invoice_id" value="{{$invoice? $invoice->id :""}}">
                 <input hidden name="export_invoice_model" value="invoice_model2">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <img src="{{asset('assets/images/invoice/invoice-model2.png')}}" alt="Invoice Model 1"
                          class="img-preview">
                 </div>
@@ -199,6 +259,16 @@
                 <input hidden name="invoice_id" value="{{$invoice? $invoice->id :""}}">
                 <input hidden name="export_invoice_model" value="invoice_model3_tax">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <x-form.input class="fv-row mb-10" label="tax Number" required="true" placeholder="Input Tax Number"
                                   name="tax_number"/>
                     <img src="{{asset('assets/images/invoice/invoice-model3-with-tax.png')}}" alt="Invoice Model 1"
@@ -215,6 +285,16 @@
                 <input hidden name="invoice_id" value="{{$invoice? $invoice->id :""}}">
                 <input hidden name="export_invoice_model" value="invoice_model3_no_tax">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <img src="{{asset('assets/images/invoice/invoice-model3-without-tax.png')}}" alt="Invoice Model 1"
                          class="img-preview">
                 </div>
@@ -230,6 +310,16 @@
                 <input hidden name="export_invoice_model" value="kwitansi_model1">
                 <input hidden name="type" value="" id="type_input_kwitansi_model1{{$invoice->id}}">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <img src="{{asset('assets/images/invoice/kwitansi-model1.png')}}" alt="Kwitansi Model 1"
                          class="img-preview">
                 </div>
@@ -252,6 +342,16 @@
                 <input hidden name="export_invoice_model" value="kwitansi_model2">
                 <input hidden name="type" value="" id="type_input_kwitansi_model2{{$invoice->id}}">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <img src="{{asset('assets/images/invoice/kwitansi-model2.png')}}" alt="Kwitansi Model 2"
                          class="img-preview">
                 </div>
@@ -272,6 +372,16 @@
                 @csrf
                 <input hidden name="invoice_ids" value="{{$invoice? $invoice->id :""}}">
                 <div class="checkbox-container">
+                    <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
+                        <span class="required">PPN</span>
+                    </label>
+                    <select name="ppn" aria-label="Select Code Transaction" data-allow-clear="true"
+                            data-control="select2" required data-dropdown-parent="#modalExportInvoice{{$invoice->id}}"
+                            data-placeholder="Select Code Transaction"
+                            class="form-select form-select-solid form-select-lg mb-3">
+                        <option value="12">PPN 12%</option>
+                        <option value="0">PPN 0%</option>
+                    </select>
                     <label class="d-flex align-items-center fs-6 fw-semibold mt-2 mb-2">
                         <span class="required">Select Tax Invoice</span>
                     </label>

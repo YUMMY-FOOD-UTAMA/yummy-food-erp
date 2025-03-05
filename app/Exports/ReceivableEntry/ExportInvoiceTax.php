@@ -20,18 +20,20 @@ class ExportInvoiceTax implements WithMultipleSheets
 {
     protected $invoices;
     protected $request;
+    protected $ppn;
 
     public function __construct($invoices, $request)
     {
         $this->invoices = $invoices;
         $this->request = $request;
+        $this->ppn = $request->get("ppn");
     }
 
     public function sheets(): array
     {
         return [
             new ExportInvoiceTaxHeader($this->invoices, $this->request),
-            new ExportInvoiceTaxBody($this->invoices),
+            new ExportInvoiceTaxBody($this->invoices, $this->ppn),
         ];
     }
 }
@@ -126,10 +128,12 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
 class ExportInvoiceTaxBody implements FromArray, WithTitle, WithHeadings, WithColumnWidths, WithStyles
 {
     protected $invoices;
+    protected $ppn;
 
-    public function __construct($invoices)
+    public function __construct($invoices, $ppn)
     {
         $this->invoices = $invoices;
+        $this->ppn = $ppn;
     }
 
     public function title(): string
@@ -166,11 +170,11 @@ class ExportInvoiceTaxBody implements FromArray, WithTitle, WithHeadings, WithCo
                     $unit,
                     ceil($item->rate),
                     $item->quantity,
-                    ceil($item->calculate()["discount_total"]) != 0 ? ceil($item->calculate()["discount_total"]) : '0',
-                    ceil($item->calculate()["dpp"]),
-                    ceil($item->calculate()["dpp_etc_value"]),
+                    ceil($item->calculate($this->ppn)["discount_total"]) != 0 ? ceil($item->calculate($this->ppn)["discount_total"]) : '0',
+                    ceil($item->calculate($this->ppn)["dpp"]),
+                    ceil($item->calculate($this->ppn)["dpp_etc_value"]),
                     12, // Tarif PPN tetap
-                    ceil($item->calculate()["ppn12"]),
+                    ceil($item->calculate($this->ppn)["ppn12"]),
                     0,
                     0,
                 ];

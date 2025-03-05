@@ -138,7 +138,7 @@
                 </td>
                 <td>{{$invoice->date}}</td>
                 <td>{{$invoice->number}}</td>
-                <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate()["grand_total"],false,true,true)}}</td>
+                <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($invoice->ppn)["grand_total"],false,true,true)}}</td>
             </tr>
         @endforeach
         <tr>
