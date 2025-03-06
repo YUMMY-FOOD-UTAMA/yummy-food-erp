@@ -22,10 +22,11 @@
             </div>
 
             @if ($exportRoute)
-                <button type="button" id="{{$exportRoute."btn"}}"
-                        {{$attributes->merge(['style' => ''])}} class="btn btn-success"
-                        data-bs-toggle="modal"
-                        data-bs-target="#{{$exportModalID}}">
+                @can($exportRoute)
+                    <button type="button" id="{{$exportRoute."btn"}}"
+                            {{$attributes->merge(['style' => ''])}} class="btn btn-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#{{$exportModalID}}">
                     <span class="svg-icon svg-icon-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
@@ -39,10 +40,10 @@
                                   fill="currentColor"/>
                         </svg>
                     </span>
-                    Export
-                </button>
+                        Export
+                    </button>
+                @endcan
             @endif
-
             {{$slotExtraBtn ?? ''}}
         </div>
 
@@ -109,7 +110,7 @@
         });
         @endif
 
-        document.getElementById("search_button").addEventListener("click", function() {
+        document.getElementById("search_button").addEventListener("click", function () {
             let searchInput = document.getElementById("search_keyword").value;
 
             window.location.href = window.location.pathname + "?search=" + encodeURIComponent(searchInput);

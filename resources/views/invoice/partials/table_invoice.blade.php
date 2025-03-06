@@ -9,7 +9,9 @@
         <th style="vertical-align: middle; text-align: left;">Customer Account</th>
         <th style="vertical-align: middle; text-align: left; min-width: 100px; max-width: 100px;">Invoice Date</th>
         <th style="vertical-align: middle; text-align: left; min-width: 110px; max-width: 110px;">Invoice Number</th>
-        <th style="vertical-align: middle; text-align: left; min-width: 90px; max-width: 90px;">Grand Total Include Tax</th>
+        <th style="vertical-align: middle; text-align: left; min-width: 90px; max-width: 90px;">Grand Total Include
+            Tax
+        </th>
         <th style="vertical-align: middle; text-align: left; min-width: 94px; max-width: 94px;">Kwitansi Number</th>
         <th style="vertical-align: middle; text-align: left; min-width: 94px; max-width: 94px;">BST Number</th>
         <th style="vertical-align: middle; text-align: left;">Billing Status</th>
@@ -30,7 +32,7 @@
                 <td>{{$invoice->customer->account_name}}</td>
                 <td>{{$invoice->date}}</td>
                 <td>{{$invoice->number}}</td>
-                <td  style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($invoice->ppn)["grand_total"],false,true,true)}}</td>
+                <td style="text-align: right">{{\App\Utils\Util::rupiah($invoice->calculate($invoice->ppn)["grand_total"],false,true,true)}}</td>
                 <td>{{$invoice->receipt_number}}</td>
                 <td>{{$invoice->bst_number}}</td>
                 <td>
@@ -49,12 +51,14 @@
                     >
                         <img src="{{asset('assets/images/View.svg')}}" alt="Detail" width="16" height="16">
                     </a>
-                    <a href="" data-bs-toggle="modal"
-                       data-bs-target="#modalExportInvoice{{$invoice->id}}"
-                       class="btn btn-sm edit-td-action-btn mb-2"
-                    >
-                        <img src="{{asset('assets/images/Export.svg')}}" alt="Detail" width="16" height="16">
-                    </a>
+                    @can('receivable.entry.invoice.export')
+                        <a href="" data-bs-toggle="modal"
+                           data-bs-target="#modalExportInvoice{{$invoice->id}}"
+                           class="btn btn-sm edit-td-action-btn mb-2"
+                        >
+                            <img src="{{asset('assets/images/Export.svg')}}" alt="Detail" width="16" height="16">
+                        </a>
+                    @endcan
                     @if($isTrash)
                         @can('receivable.entry.invoice.restore')
                             <form action="{{route('receivable.entry.invoice.restore',$invoice->id)}}" method="POST">
@@ -80,14 +84,18 @@
                             </form>
                         @endcan
                     @endif
+
                     <x-modal id="modalDetailInvoice{{$invoice->id}}"
                              title="Data {{$invoice->number}}" size="1000">
                         @include('invoice.partials.invoice_detail',['invoice' => $invoice])
                     </x-modal>
-                    <x-modal id="modalExportInvoice{{$invoice->id}}"
-                             title="Export {{$invoice->number}}" size="1000">
-                        @include('invoice.partials.export_modal',['onlyReceipt' => false,'invoice'=>$invoice])
-                    </x-modal>
+
+                    @can('receivable.entry.invoice.export')
+                        <x-modal id="modalExportInvoice{{$invoice->id}}"
+                                 title="Export {{$invoice->number}}" size="1000">
+                            @include('invoice.partials.export_modal',['onlyReceipt' => false,'invoice'=>$invoice])
+                        </x-modal>
+                    @endcan
                 </td>
             </tr>
         @endforeach

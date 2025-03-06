@@ -19,16 +19,19 @@
                                              export-route="receivable.entry.invoice.export"
                                              name="Invoice">
                 @slot('slotExtraBtn')
-                    <form action="{{route('receivable.entry.invoice.deletes')}}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button onclick="processSelected('deleted_select_box_btn',null,true)"
-                                id="deleted_select_box_btn" style="pointer-events: none" class="btn btn-danger ms-3">
-                            Delete
-                        </button>
-                        <input type="hidden" name="invoice_ids" id="deleted_invoice_ids">
+                    @can('receivable.entry.invoice.deletes')
+                        <form action="{{route('receivable.entry.invoice.deletes')}}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button onclick="processSelected('deleted_select_box_btn',null,true)"
+                                    id="deleted_select_box_btn" style="pointer-events: none"
+                                    class="btn btn-danger ms-3">
+                                Delete
+                            </button>
+                            <input type="hidden" name="invoice_ids" id="deleted_invoice_ids">
 
-                    </form>
+                        </form>
+                    @endcan
                 @endslot
             </x-table.basic-filter-and-export>
             <x-modal id="invoiceExportAllInOne"
@@ -48,7 +51,7 @@
         function processSelected(btnID, invoiceIDsInput, isDeleted, type, typeID) {
             const selectedIds = Array.from(document.querySelectorAll('.select-item-invoice:checked'))
                 .map(cb => cb.value);
-            if (typeID && typeID != ''){
+            if (typeID && typeID != '') {
                 document.getElementById(typeID).value = type
             }
             if (invoiceIDsInput && invoiceIDsInput != '') {

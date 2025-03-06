@@ -112,7 +112,7 @@
                     value="receivable.crm.schedule-visit.create,receivable.crm.schedule-visit.store"
                     :checked="in_array('receivable.crm.schedule-visit.create,receivable.crm.schedule-visit.store', old('permissions', $permissions ?? []))
                             || in_array('receivable.crm.schedule-visit.create', old('permissions', $permissions ?? []))"
-                    >
+                >
                     Create Sales Schedule Visit
                 </x-Form.CheckboxInput>
                 <x-Form.CheckboxInput
@@ -273,6 +273,36 @@
                 :checked="in_array('receivable.customer.restore', old('permissions', $permissions ?? []))">
                 Restore Customer
             </x-Form.CheckboxInput>
+        </div>
+
+        <h6>Receivable Entry</h6>
+        {{-- Invoice --}}
+        <div class="ms-5">
+            <h6>Invoice
+            </h6>
+            <div class="ms-3 mb-10">
+                <x-Form.CheckboxInput name="permissions[]" class="mb-3"
+                                      value="receivable.entry.invoice.index"
+                                      :checked="in_array('receivable.entry.invoice.index', old('permissions', $permissions ?? []))">
+                    View Invoice
+                </x-Form.CheckboxInput>
+                <x-Form.CheckboxInput name="permissions[]" class="mb-3"
+                                      value="receivable.entry.invoice.imports"
+                                      :checked="in_array('receivable.entry.invoice.imports', old('permissions', $permissions ?? []))">
+                    Import Invoice
+                </x-Form.CheckboxInput>
+                <x-Form.CheckboxInput name="permissions[]" class="mb-3"
+                                      value="receivable.entry.invoice.export"
+                                      :checked="in_array('receivable.entry.invoice.export', old('permissions', $permissions ?? []))">
+                    Export Invoice
+                </x-Form.CheckboxInput>
+
+                <x-Form.CheckboxInput name="permissions[]" class="mb-3"
+                                      value="receivable.entry.invoice.delete,receivable.entry.invoice.deletes"
+                                      :checked="in_array('receivable.entry.invoice.delete,receivable.entry.invoice.deletes', old('permissions', $permissions ?? []))">
+                    Delete Invoice
+                </x-Form.CheckboxInput>
+            </div>
         </div>
     </div>
 </div>
