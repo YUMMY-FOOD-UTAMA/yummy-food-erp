@@ -292,7 +292,11 @@ class InvoiceController extends Controller
                     $receiptNumber = $invoices->whereNotNull('receipt_number')->first()->receipt_number;
                 }
 
-                $filename = "Kwitansi_{$invoices[0]->customer->name}_{$formatInvoiceNumber}.pdf";
+                if (count($invoices) > 1) {
+                    $filename = "Kwitansi {$invoices[0]->number} s/d {$invoices[count($invoices)-1]->number}.pdf";
+                } else {
+                    $filename = "Kwitansi {$invoices[0]->number}.pdf";
+                }
                 $urL = config('app.url') . '/public-uri/invoice-payment/' . $receiptNumber;
 
                 $qrCodePath = "qr-codes/{$receiptNumber}.png";
