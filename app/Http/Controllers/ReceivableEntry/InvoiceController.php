@@ -293,7 +293,7 @@ class InvoiceController extends Controller
                 }
 
                 if (count($invoices) > 1) {
-                    $filename = "Kwitansi {$invoices[0]->number} s/d {$invoices[count($invoices)-1]->number}.pdf";
+                    $filename = "Kwitansi {$invoices[0]->number} sd {$invoices[count($invoices)-1]->number}.pdf";
                 } else {
                     $filename = "Kwitansi {$invoices[0]->number}.pdf";
                 }
