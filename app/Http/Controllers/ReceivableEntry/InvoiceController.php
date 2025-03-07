@@ -292,10 +292,10 @@ class InvoiceController extends Controller
                     $receiptNumber = $invoices->whereNotNull('receipt_number')->first()->receipt_number;
                 }
 
-                if (count($invoices) > 1) {
-                    $filename = "Kwitansi {$invoices[0]->number} sd {$invoices[count($invoices)-1]->number}.pdf";
+                if (count($formatInvoiceNumber) > 1) {
+                    $filename = "Kwitansi {$formatInvoiceNumber[0]} sd {$formatInvoiceNumber[count($formatInvoiceNumber)-1]->number}.pdf";
                 } else {
-                    $filename = "Kwitansi {$invoices[0]->number}.pdf";
+                    $filename = "Kwitansi {$formatInvoiceNumber[0]}.pdf";
                 }
                 $urL = config('app.url') . '/public-uri/invoice-payment/' . $receiptNumber;
 
