@@ -49,7 +49,7 @@ trait AuditTrait
 
     public function createdAt()
     {
-        return $this->created_at
+        return $this->created_at->setTimezone(Auth::user()->timezone)
             ->format('Y-m-d H:i:s');
     }
 
