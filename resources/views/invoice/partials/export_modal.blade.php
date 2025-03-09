@@ -404,6 +404,10 @@
                                       label="Number Document Buyer"
                                       name="number_document_buyer"/>
 
+                    <x-form.text-area class="fv-row mb-10 mt-2" auto-resize="true"
+                                      label="Period Document Supporting"
+                                      name="period_document_supporting"/>
+
                 </div>
 
                 <button type="submit" class="btn btn-primary">
