@@ -11,15 +11,21 @@
                 <TaxInvoiceOpt>Normal</TaxInvoiceOpt>
                 <TrxCode>{{$request->get('code_transaction')}}</TrxCode>
                 @if($request->get('additional_information'))
-                    <AddInfo> {{$request->get('additional_information')}} </AddInfo>
+                    <AddInfo>{{$request->get('additional_information')}}</AddInfo>
                 @else
                     <AddInfo/>
                 @endif
 
                 @if($request->get('supporting_document'))
-                    <CustomDoc> {{$request->get('supporting_document')}} </CustomDoc>
+                    <CustomDoc>{{$request->get('supporting_document')}}</CustomDoc>
                 @else
                     <CustomDoc/>
+                @endif
+
+                @if($request->get('period_document_supporting'))
+                    <CustomDocMonthYear>{{$request->get('period_document_supporting')}}</CustomDocMonthYear>
+                @else
+                    <CustomDocMonthYear/>
                 @endif
 
                 <RefDesc>{{$invoice->number}}</RefDesc>
