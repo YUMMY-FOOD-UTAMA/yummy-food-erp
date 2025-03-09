@@ -24,6 +24,7 @@ class ExportInvoiceTax implements WithMultipleSheets
 
     public function __construct($invoices, $request)
     {
+        ;
         $this->invoices = $invoices;
         $this->request = $request;
         $this->ppn = $request->get("ppn");
@@ -60,6 +61,7 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
             ['NPWP Penjual', '', '0013470778007000'],
             ['', ''],
             ['Baris', 'Tanggal Faktur', 'Jenis Faktur', 'Kode Transaksi', 'Keterangan Tambahan', 'Dokumen Pendukung',
+                'Period Dok Pendukung',
                 'Referensi', 'Cap Fasilitas', 'ID TKU Penjual', 'NPWP/NIK Pembeli', 'Jenis ID Pembeli', 'Negara Pembeli', 'Nomor Dokumen Pembeli',
                 'Nama Pembeli', 'Alamat Pembeli', 'Email Pembeli', 'ID TKU Pembeli'],
         ];
@@ -79,6 +81,7 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
                 $this->request->get('code_transaction') ?? '04',
                 $this->request->get('additional_information') ?? '',
                 $this->request->get('supporting_document') ?? '',
+                $this->request->get('period_document_supporting') ?? '',
                 $invoice->number,
                 $this->request->get('facility_stamp') ?? '',
                 '0013470778007000000000',
@@ -109,9 +112,9 @@ class ExportInvoiceTaxHeader implements FromArray, WithTitle, WithColumnWidths, 
     {
         return [
             'A' => 8, 'B' => 20, 'C' => 16, 'D' => 16, 'E' => 25,
-            'F' => 25, 'G' => 20, 'H' => 20, 'I' => 26, 'J' => 26,
-            'K' => 26, 'L' => 26, 'M' => 26, 'N' => 30, 'O' => 130,
-            'P' => 80, 'Q' => 30,
+            'F' => 25, 'G' => 25, 'H' => 20, 'I' => 26, 'J' => 26,
+            'K' => 26, 'L' => 26, 'M' => 26, 'N' => 30, 'O' => 80,
+            'P' => 130, 'Q' => 30, 'R' => 30,
         ];
     }
 

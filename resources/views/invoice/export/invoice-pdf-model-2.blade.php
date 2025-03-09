@@ -60,6 +60,7 @@
         .min-w-80px {
             min-width: 80px;
         }
+
         .min-w-60px {
             min-width: 60px;
         }
@@ -111,11 +112,23 @@
             <td style="text-align: left;">{{ $invoice->number }}</td>
         </tr>
         <tr>
-            <td rowspan="3" style="vertical-align: top;width: 320px; max-width: 320px">
+            <td rowspan="5" style="vertical-align: top;width: 320px; max-width: 320px">
                 <span style="font-weight: bold;">{{ $invoice->customer->name }}</span>
                 <br>
                 {!! $invoice->customer->address !!}
             </td>
+            <td></td>
+            <td style=" width: 120px; max-width: 120px">Delivery Note Num</td>
+            <td style="text-align: right">:</td>
+            <td style="text-align: left;">{{ $invoice->products[0]->delivery_note }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style=" width: 120px; max-width: 120px">Buyer Order Num</td>
+            <td style="text-align: right">:</td>
+            <td style="text-align: left;">{{ $invoice->products[0]->buyer_order_number }}</td>
+        </tr>
+        <tr>
             <td></td>
             <td>Date</td>
             <td style="text-align: right;">:</td>
