@@ -360,9 +360,7 @@ class ImportInvoice implements ToCollection, WithEvents, WithCalculatedFormulas
                     $buyerOrderNumbers = explode(',', $row[11]);
                     preg_match('/^(.*?)\s+dt\.(.*)$/', $row[11], $matchesBuyerOrder);
                     $buyerOrderNumber = $matchesBuyerOrder[1];
-                    if ($invoiceNo == "GI 25/02/2311") {
-                        dd($deliveryNoteDateAndDeliveryNotes);
-                    }
+
                     $invoiceDate = Date::excelToDateTimeObject($row[0])->format('j-M-Y');
                     $buyerName = $row[2];
                     $buyerAccountName = $row[1];
