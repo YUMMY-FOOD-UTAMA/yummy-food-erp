@@ -472,6 +472,45 @@
                 </div>
                 @endrole
 
+                @if(Auth::user()->hasPermissionStartingWith('master-data.'))
+                    <div data-kt-menu-trigger="click"
+                         class="menu-item menu-accordion {{Route::is('master-data.*') ? 'show':''}}">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
+                                         viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M3 7h18M3 7V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7m-2 10V12m-6 5v-6m-6 6v-4"/>
+                                    </svg>
+                                </i>
+                            </span>
+                            <span class="menu-title">Master Data</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            @can('master-data.customer-invoice.index')
+                                <div class="menu-item">
+                                    <a class="menu-link {{Route::is('master-data.customer-invoice.*') ? 'active':''}}"
+                                       href="{{route('master-data.customer-invoice.index')}}">
+                                        <span class="menu-icon">
+                                            <i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M3 4h18l-2 12H5L3 4zm4 12a2 2 0 110 4 2 2 0 010-4zm10 0a2 2 0 110 4 2 2 0 010-4z"/>
+                                                </svg>
+                                            </i>
+                                        </span>
+                                        <span class="menu-title">Customer Invoice</span>
+                                    </a>
+                                </div>
+                            @endcan
+                        </div>
+                    </div>
+                @endif
+
                 @can('management_setting.index')
                     <div class="menu-item">
                         <a class="menu-link {{Route::is('management_setting.*')? 'active':''}}"

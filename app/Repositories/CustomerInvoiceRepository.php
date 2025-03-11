@@ -44,7 +44,7 @@ class CustomerInvoiceRepository
             $customerInvoices = $customerInvoices->whereHas('invoices');
         }
         if ($searchKeyword) {
-            $customerInvoices->where(function ($query) use ($searchKeyword) {
+            $customerInvoices = $customerInvoices->where(function ($query) use ($searchKeyword) {
                 $query->where('name', 'like', '%' . $searchKeyword . '%')
                     ->orWhere('account_name', 'like', '%' . $searchKeyword . '%');
             });
