@@ -24,7 +24,7 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
-Route::get('/s',function (){
+Route::get('/s', function () {
     return view('invoice.export.export-bst-pdf');
 });
 
@@ -158,6 +158,13 @@ Route::middleware('auth')->group(function () {
 
         });
 
+        Route::group(['prefix' => 'master-data'], function () {
+            Route::group(['prefix' => 'customer-invoice'], function () {
+                Route::get('/', [CustomerInvoiceController::class, 'index'])->name('master-data.customer-invoice.index');
+                Route::get('/{id}', [CustomerInvoiceController::class, 'edit'])->name('master-data.customer-invoice.edit');
+                Route::put('/{id}', [CustomerInvoiceController::class, 'update'])->name('master-data.customer-invoice.update');
+            });
+        });
     });
 });
 
