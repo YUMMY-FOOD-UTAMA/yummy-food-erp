@@ -65,14 +65,19 @@ class InvoiceRepository
     public function generateReceiptNumber()
     {
         // Get current date with specified format `yymmdd`
-        $currentDate = Carbon::now('Asia/Jakarta')
-            ->format('ymd');
+        $currentDate = Carbon::now('Asia/Jakarta')->format('ymd');
+        // Get current date to throw exception
+        $throw = Carbon::now('Asia/Jakarta')->format('Y-m-d');
         // Set format for receipt number
         $receiptNumberFomat = "IR.{$currentDate}";
         // Get new sequence of receipt numbers with specified receipt number format
-        $newSequenceNumber = Invoice::selectRaw('COALESCE(COUNT(receipt_number)+ 1, 1) AS new_sequence')
+        $newSequenceNumber = Invoice::selectRaw('COALESCE(CAST(SUBSTR(MAX(receipt_number),10) AS INT) + 1, 1) AS new_sequence')
             ->where('receipt_number', 'LIKE', "{$receiptNumberFomat}%")    
             ->first();
+        // throw exception when new sequence number reached limit
+        if ($newSequenceNumber->new_sequence > 999) {
+            throw new \Exception("Reach limit Receipt Number in current day ({$throw})", 400);
+        }
         // Set format for incrementing sequence number
         $newSequenceNumber = str_pad($newSequenceNumber->new_sequence, 3, '0', STR_PAD_LEFT);
         // Set new receipt number
@@ -84,19 +89,23 @@ class InvoiceRepository
     public function generateBSTNumber()
     {
         // Get current date with specified format `yymmdd`
-        $currentDate = Carbon::now('Asia/Jakarta')
-            ->format('ymd');
+        $currentDate = Carbon::now('Asia/Jakarta')->format('ymd');
         // get current month with specified format `yymm`
-        $currentMonth = Carbon::now('Asia/Jakarta')
-        ->format('ym');
+        $currentMonth = Carbon::now('Asia/Jakarta')->format('ym');
+        // Get current date to throw exception
+        $throw = Carbon::now('Asia/Jakarta')->format('F');
         // Set format for BST number
         $bstNumberFomat = "BST.{$currentDate}";
         // Set format for BST number checker
         $bstNumberChecker = "BST.{$currentMonth}";
         // Get new sequence of BST numbers with specified BST number format
-        $newSequenceNumber = Invoice::selectRaw('COALESCE(COUNT(bst_number) + 1, 1) AS new_sequence')
+        $newSequenceNumber = Invoice::selectRaw('COALESCE(CAST(SUBSTR(MAX(bst_number),11) AS INT) + 1, 1) AS new_sequence')
             ->where('bst_number', 'LIKE', "{$bstNumberChecker}%")    
             ->first();
+        // throw exception when new sequence number reached limit
+        if ($newSequenceNumber->new_sequence > 999) {
+            throw new \Exception("Reach limit BST Number in current month ({$throw})", 400);
+        }
         // Set format for incrementing sequence number
         $newSequenceNumber = str_pad($newSequenceNumber->new_sequence, 3, '0', STR_PAD_LEFT);
         // Set new BST number
