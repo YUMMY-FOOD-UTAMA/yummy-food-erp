@@ -64,50 +64,45 @@ class InvoiceRepository
 
     public function generateReceiptNumber()
     {
-        $now = Carbon::now('Asia/Jakarta');
-        $year = $now->format('y');
-        $month = $now->format('m');
-        $day = $now->format('d');
-
-        $receiptPrefix = "IR.{$year}{$month}{$day}";
-
-        $latestReceipt = Invoice::where('receipt_number', 'like', "{$receiptPrefix}%")
-            ->orderBy('receipt_number', 'desc')
+        // Get current date with specified format `yymmdd`
+        $currentDate = Carbon::now('Asia/Jakarta')
+            ->format('ymd');
+        // Set format for receipt number
+        $receiptNumberFomat = "IR.{$currentDate}";
+        // Get new sequence of receipt numbers with specified receipt number format
+        $newSequenceNumber = Invoice::selectRaw('COALESCE(COUNT(receipt_number)+ 1, 1) AS new_sequence')
+            ->where('receipt_number', 'LIKE', "{$receiptNumberFomat}%")    
             ->first();
-
-        if ($latestReceipt) {
-            $lastNumber = (int)substr($latestReceipt->receipt_number, -2);
-            $nextNumber = str_pad($lastNumber + 1, 2, '0', STR_PAD_LEFT);
-        } else {
-            $nextNumber = '01';
-        }
-        $receiptNumber = "{$receiptPrefix}{$nextNumber}";
-
-        return $receiptNumber;
+        // Set format for incrementing sequence number
+        $newSequenceNumber = str_pad($newSequenceNumber->new_sequence, 3, '0', STR_PAD_LEFT);
+        // Set new receipt number
+        $newReceiptNumber = "{$receiptNumberFomat}{$newSequenceNumber}";
+        // return new receipt number
+        return $newReceiptNumber;
     }
 
     public function generateBSTNumber()
     {
-        $now = Carbon::now('Asia/Jakarta');
-        $year = $now->format('y');
-        $month = $now->format('m');
-        $day = $now->format('d');
-
-        $bstPrefix = "BST.{$year}{$month}{$day}";
-
-        $latestBst = Invoice::where('bst_number', 'like', "{$bstPrefix}%")
-            ->orderBy('bst_number', 'desc')
+        // Get current date with specified format `yymmdd`
+        $currentDate = Carbon::now('Asia/Jakarta')
+            ->format('ymd');
+        // get current month with specified format `yymm`
+        $currentMonth = Carbon::now('Asia/Jakarta')
+        ->format('ym');
+        // Set format for BST number
+        $bstNumberFomat = "BST.{$currentDate}";
+        // Set format for BST number checker
+        $bstNumberChecker = "BST.{$currentMonth}";
+        // Get new sequence of BST numbers with specified BST number format
+        $newSequenceNumber = Invoice::selectRaw('COALESCE(COUNT(bst_number) + 1, 1) AS new_sequence')
+            ->where('bst_number', 'LIKE', "{$bstNumberChecker}%")    
             ->first();
-
-        if ($latestBst) {
-            $lastNumber = (int)substr($latestBst->bst_number, -2);
-            $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
-        } else {
-            $nextNumber = '001';
-        }
-        $bstNumber = "{$bstPrefix}{$nextNumber}";
-
-        return $bstNumber;
+        // Set format for incrementing sequence number
+        $newSequenceNumber = str_pad($newSequenceNumber->new_sequence, 3, '0', STR_PAD_LEFT);
+        // Set new BST number
+        $newBstNumber = "{$bstNumberFomat}{$newSequenceNumber}";
+        // return new BST number
+        return $newBstNumber;
     }
 
     public function getAll()
