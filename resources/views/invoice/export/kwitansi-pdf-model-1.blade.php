@@ -76,6 +76,7 @@
     <p style="font-size: 15px; margin-top: 20px; font-weight: normal; font-style: italic;">
         Untuk Pembayaran Via Transfer dapat dilakukan melalui:<br>
         BCA Cab KCP Hasanudin 523.0313.204 a.n. PT. Yummy Food Utama
+        Bank Mandiri Cabang Cimanggis: 129.000.476062.1 a.n PT. Yummy Food Utama
     </p>
 
 </div>
